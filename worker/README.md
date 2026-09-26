@@ -87,3 +87,12 @@ esiste per non rovinare. Controlla che i 28 commenti di `dati.js` sopravvivano, 
 salvataggio ordinario cambi **solo** la riga della versione, che il risultato sia
 JavaScript valido, e che una riscrittura senza le sue ancore venga **rifiutata**
 invece di produrre un file mezzo fatto.
+
+## Dopo un ricollegamento della Git integration
+
+⚠️ **Ricollegare il repo in dashboard NON avvia una build** (misurato il 2026-09-26, spostando i
+due Worker nei repo dei loro siti): la spia `rev` resta quella di prima finché non arriva un
+push che tocca `worker/`, oppure finché non si avvia una build a mano dalla scheda delle build.
+La verifica è sempre la spia: un GET al Worker deve mostrare il `rev` del codice appena
+pubblicato. L'avviso *logpush is not enabled for this account* che la pagina delle impostazioni
+mostra a ogni apertura riguarda l'esportazione dei log, a pagamento, e non c'entra.
