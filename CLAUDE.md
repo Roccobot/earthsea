@@ -6983,7 +6983,7 @@ sulla card, nella riga che il motore chiama `.rank-title`.
 
 **Dal 2026-08-23** Terramare ha un Worker proprio, `earthsea-admin-proxy`
 (`proxy/earthsea/`), e `ADMIN_PROXY_URL_DEFAULT` punta a lui. Le regole del Worker vivono
-in [`proxy/CLAUDE.md`](../../proxy/CLAUDE.md) e qui non si duplicano: qui c'è solo quello
+in `proxy/CLAUDE.md` del repo `Roccobot/roccobot.github.io` e qui non si duplicano: qui c'è solo quello
 che serve sapere **da questo lato**.
 
 - ⚠️⚠️ **Perché non si eredita l'URL di Arda, e va saputo prima di 'semplificare'**: quel
