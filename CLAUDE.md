@@ -1,12 +1,17 @@
-# CLAUDE.md: 'I Grandi di Terramare' (`earthsea/top/`)
+# CLAUDE.md: 'I Grandi di Terramare' (repo `Roccobot/earthsea`)
 
 > **Cos'è questo file.** Le regole del progetto **'I Grandi di Terramare'**
-> (<https://roccobot.github.io/earthsea/top/>): che cos'è deciso, che cosa è solo
+> (<https://roccobot.github.io/earthsea/>): che cos'è deciso, che cosa è solo
 > provvisorio, e le trappole nate dal fatto che il motore è una **copia adattata** di
-> 'I Grandi di Arda'. Si carica quando si legge un file di questa cartella.
+> 'I Grandi di Arda'.
 > ⚠️ Le regole **trasversali** (protocollo di avvio, scala di priorità, regole non
-> derogabili, lingua, git e go-live) vivono nel `CLAUDE.md` di **root**, che si carica
-> sempre: quello resta l'hub, e questo file non lo sostituisce.
+> derogabili, lingua, git e go-live) vivono nel `CLAUDE.md` di root di
+> `Roccobot/roccobot.github.io`: quello resta l'hub, e questo file non lo sostituisce.
+> ⚠️ **Dalla `2.76` (2026-09-26) il sito vive in un repo suo**: prima era la cartella
+> `earthsea/top/` del sito di base, all'indirizzo `roccobot.github.io/earthsea/top/`. Il
+> contenuto di `top/` è passato alla radice, `res/` è rimasta dov'era (i suoi indirizzi non
+> sono cambiati), e in `top/` resta una sola paginetta che rimanda al nuovo indirizzo
+> conservando parametri e ancora, per i link salvati e le app installate. Il ramo è `main`.
 
 ## ⚠️⚠️⚠️ SI MODIFICANO `index.src.html` E `admin.src.js`: `index.html` E `admin.js` SONO GENERATI
 
@@ -26,7 +31,7 @@
 
 Dalla `2.70` (collaudo della `2.67`, approvato dall'utente il 2026-09-25). Il sorgente
 commentato è **`index.src.html`**; la pagina pubblicata, **`index.html`**, la genera la GitHub
-Action `.github/workflows/earthsea-minify.yml` con `.github/scripts/minify.mjs earthsea/top` (dalla 15.64 di Arda lo script è condiviso fra i due siti) a ogni
+Action `.github/workflows/earthsea-minify.yml` con `.github/scripts/minify.mjs .` (dalla 15.64 di Arda lo script è lo stesso dei due siti, e dalla `2.76` ogni repo ne tiene una copia) a ogni
 push su `master` che tocca il sorgente, e la committa lei (`github-actions[bot]`). Il perché è
 il peso: i commenti erano il 61% del codice servito, e la pagina compressa scende da circa 316
 a **92,5 KB**.
@@ -35,7 +40,7 @@ a **92,5 KB**.
   dello sdoppiamento, e i numeri di riga che citano valgono in `index.src.html`. Chi apre
   `index.html` trova una riga sola di codice minificato, e una modifica fatta lì la
   cancella il build successivo.
-- **Chi prova in locale** lancia `node .github/scripts/minify.mjs earthsea/top` dalla radice (con
+- **Chi prova in locale** lancia `node .github/scripts/minify.mjs .` dalla radice (con
   esbuild installato) e serve la cartella come sempre; `index.src.html` si apre anche da sé,
   perché le sue risorse hanno gli stessi percorsi.
 - ⚠️ **Il badge di ripiego della versione si scrive nel sorgente**, come tutto il resto, e
@@ -3524,7 +3529,7 @@ leggere prima di toccare il numero.
 
 ## 🖼️ L'anteprima social (Open Graph)
 
-Dalla `0.75`. Il file è `earthsea/top/og-image.jpg`, **1200x630** (1,91:1), fornito
+Dalla `0.75`. Il file è `og-image.jpg`, alla radice del repo, **1200x630** (1,91:1), fornito
 dall'utente: un ragazzo che tocca il muso di un drago bianco sulla scogliera, al tramonto.
 Serve `og:image`, `og:image:width/height/alt` e `twitter:image`, e con lui `twitter:card`
 passa da `summary` a **`summary_large_image`**, o l'anteprima resterebbe il quadratino.
@@ -4288,7 +4293,7 @@ risultato che si tocca arriva **evidenziato in oro** e il segno **sfuma in due s
 scorrimento con la centratura **non è stato toccato**, ed era la sola cosa che lui ha
 dichiarato già perfetta.
 
-⚠️⚠️ **Il criterio e le trappole vivono in [`arda/top/CLAUDE.md`](../../arda/top/CLAUDE.md),
+⚠️⚠️ **Il criterio e le trappole vivono in il `CLAUDE.md` di 'I Grandi di Arda',
 § '✨ Il velo ORO sulla card raggiunta, e il canale che il Bagliore occupava'**: là è nato il
 caso peggiore (l'anello vecchio spegneva il Bagliore, che su quella pagina occupa il
 `box-shadow`), e là vivono le due metriche della visibilità, la tensione fra velo e contrasto
@@ -5313,7 +5318,7 @@ bordo illuminato, **solo sul tema scuro**.
   con **tinta e alfa proprie**: là la tavolozza è neutra e il fondo del Pannello è caldo, quindi
   l'alone azzurro di qui sembrerebbe la luce di un altro ambiente. Le due tarature sono state
   **pareggiate a misura**, e il metodo (confronto A/B sullo stesso sito, non contro il fondo
-  lontano) vive in [`arda/top/CLAUDE.md`](../../arda/top/CLAUDE.md), § 'Il bagliore intorno al
+  lontano) vive in il `CLAUDE.md` di 'I Grandi di Arda', § 'Il bagliore intorno al
   Pannello': è là perché è là che è nato il problema di pareggiare due tinte diverse.
 
 #### 🌒 La decorazione d'angolo
@@ -6908,7 +6913,7 @@ zero, cioè un rilievo falso che accusa proprio il rimedio appena applicato.
 
 ⚠️⚠️ **DALLA `1.90` C'È ANCHE UN PRESIDIO AUTOMATICO, e qui NON si accende mai**: la regola
 generale (le due lingue sullo stesso numero di righe, con l'a-capo forzato dove divergono)
-vive in [`arda/top/CLAUDE.md`](../../arda/top/CLAUDE.md), § 'Il titolone: le due lingue sullo
+vive in il `CLAUDE.md` di 'I Grandi di Arda', § 'Il titolone: le due lingue sullo
 STESSO numero di righe', perché è là che il difetto esisteva davvero. Il codice è **identico**
 sui due siti, e qui resta inerte per un fatto **misurato**: `Il mondo di Terramare` e `The
 World of Earthsea` rendono lo stesso numero di righe a ogni larghezza da **280 a 1600px**.
@@ -7147,7 +7152,7 @@ alla volta, con una prova in browser dopo ognuno.
 
 **SlimVer** (`x.xx`) come 'I Grandi di Arda', fonte unica in `var datiVersion` in testa a
 `dati.js`, e la sonda di pubblicazione è quel campo su
-<https://roccobot.github.io/earthsea/top/dati.js>.
+<https://roccobot.github.io/earthsea/dati.js>.
 
 ⚠️ Il numero scritto nel badge HTML è **solo il ripiego** per il caso in cui `dati.js` non
 carichi, ma va tenuto allineato: nato dalla copia, portava il **15.11 di Arda**, cioè il

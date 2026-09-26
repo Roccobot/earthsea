@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#060a14">
 <title>Earthsea Top by Roccobot</title>
 <meta name="description" content="I grandi dell'arcipelago di Terramare - The great ones of the Earthsea archipelago">
-<link rel="canonical" href="https://roccobot.github.io/earthsea/top/">
+<link rel="canonical" href="https://roccobot.github.io/earthsea/">
 <!-- Open Graph: anteprima del link. Testi neutri perché il sito è bilingue.
      ⚠️ MANCA l'immagine di anteprima, e manca di proposito: quella di 'I Grandi di Arda'
      è l'Occhio di Sauron, che qui sarebbe fuori luogo, e una grafica propria è un lavoro
@@ -15,8 +15,8 @@
 <meta property="og:site_name" content="Earthsea Top">
 <meta property="og:title" content="Earthsea Top by Roccobot">
 <meta property="og:description" content="I grandi dell'arcipelago di Terramare - The great ones of the Earthsea archipelago">
-<meta property="og:url" content="https://roccobot.github.io/earthsea/top/">
-<meta property="og:image" content="https://roccobot.github.io/earthsea/top/og-image.jpg?v=2">
+<meta property="og:url" content="https://roccobot.github.io/earthsea/">
+<meta property="og:image" content="https://roccobot.github.io/earthsea/og-image.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Earthsea Top - un ragazzo tocca il muso di un drago bianco sulla scogliera, al tramonto">
@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Earthsea Top by Roccobot">
 <meta name="twitter:description" content="I grandi dell'arcipelago di Terramare - The great ones of the Earthsea archipelago">
-<meta name="twitter:image" content="https://roccobot.github.io/earthsea/top/og-image.jpg?v=2">
+<meta name="twitter:image" content="https://roccobot.github.io/earthsea/og-image.jpg?v=2">
 <!-- Favicon e icone dell'app: il GLIFO DEL FAB, non un disegno a parte, generati da
      `.memo/scripts/earthsea-icons.js`, che lo estrae da questo stesso file. Se il simbolo
      cambia si rigenerano, invece di divergere in silenzio: qui è cambiato quattro volte in
@@ -58,7 +58,7 @@
      ⚠️ Il fondo è `#0D1A22` e non `#08131A` come nella proposta: l'utente ha chiesto
      un tema scuro 'leggermente meno scuro'. Alzare il fondo ABBASSA tutti i
      contrasti, quindi `--gold-deep` è stato schiarito con lui (era 3,22 sul fondo
-     vecchio, sarebbe scesso a 2,93). I numeri stanno in `earthsea/top/CLAUDE.md`. */
+     vecchio, sarebbe scesso a 2,93). I numeri vivono in `CLAUDE.md`. */
   --ink: #0d1a22;
   --ink-deep: #071016;
   --parchment: #e6ece9;
@@ -78,7 +78,7 @@
      (istruzione dell'utente: *del turchese mi interessa la tonalità, puoi schiarirlo come
      meglio credi*): il colore pieno del FAB è pensato per un disco opaco con un glifo
      bianco sopra, mentre qui serve per bordi, testo e veli traslucidi su fondo scuro, dove
-     una tinta scura sparisce. I contrasti misurati stanno in `earthsea/top/CLAUDE.md`. */
+     una tinta scura sparisce. I contrasti misurati vivono in `CLAUDE.md`. */
   --sel: #7ab4de;
   --sel-bd: rgba(122,180,222,0.55);
   --sel-bg: rgba(122,180,222,0.15);
@@ -3637,11 +3637,11 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.75</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.76</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
-  <h1 id="title"><a id="title-link" href="https://roccobot.github.io/earthsea/top/">Il mondo di Terramare</a></h1>
+  <h1 id="title"><a id="title-link" href="https://roccobot.github.io/earthsea/">Il mondo di Terramare</a></h1>
   <p class="subtitle" id="subtitle">I grandi dell'arcipelago di Terramare, dagli uomini ai draghi</p>
   <svg class="flourish" viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 15 Q 50 5, 100 15 Q 150 25, 200 15" stroke="#8b8b8b" stroke-width="0.8" fill="none" opacity="0.6"/>
@@ -5746,7 +5746,7 @@ var CARDCOLORS_FALLBACK = {
   // dividerebbe la famiglia su un dato che il più delle volte non c'è.
   // ⚠️ I valori sono MISURATI, non provvisori: nel tema chiaro fanno anche da TESTO (il
   // vero nome prende la tinta), quindi devono passare AA e non solo distinguersi. I
-  // numeri stanno in `earthsea/top/CLAUDE.md`.
+  // numeri vivono in `CLAUDE.md`.
   // ⚠️ La QUINTA famiglia non è una razza: sono i personaggi APOCRIFI, quelli dei due
   // racconti-prototipo, che vivono nella seconda tabella. La tinta è un BLU ACCIAIO
   // perché è la sola casella di tinta che le altre quattro lasciano libera: misurate
@@ -6220,7 +6220,7 @@ var ICON_LABEL = {
     // ⚠️⚠️ I SEI TESTI SONO DELL'UTENTE, DETTATI ALLA LETTERA il 2026-09-14, e si
     // riportano identici: li ha scritti lui *così come devono diventare*. Misurati coi
     // font veri prima di applicarli (§ 'Le etichette nuove: la misura che le ha ammesse'
-    // in `earthsea/top/CLAUDE.md`).
+    // in `CLAUDE.md`).
     // ⚠️ `stregone/incantatore` nomina le DUE rese italiane dello stesso grado: Mondadori
     // scrive `stregone`, Nord `incantatore`, e il sito segue Nord sui nomi ma qui li porta
     // tutti e due perché l'etichetta deve farsi riconoscere da chi ha in mano un volume
@@ -6260,7 +6260,7 @@ var ICON_LABEL = {
     // manifesta. La sostanza è che un Signore dei Draghi può dialogare con un drago con la
     // certezza di restarne vivo, e quella certezza nasce dal rispetto raro che i draghi
     // nutrono verso quei pochi umani, cioè da una parità riconosciuta. Il perché disteso
-    // in `earthsea/top/CLAUDE.md`, § 'I TRE badge annunciati: il criterio di uno solo';
+    // in `CLAUDE.md`, § 'I TRE badge annunciati: il criterio di uno solo';
     // attestazioni e portatori in `rules/Earthsea.md`, § 'Signore dei Draghi'.
     signoredraghi: "Signore dei Draghi (i draghi lo considerano loro pari)",
     // ⚠️⚠️ IL BADGE NUOVO parla dei TESTI, non della storia: dice che il vero nome di quel
@@ -6872,7 +6872,7 @@ function sottotitoloDi(p, it){
 // dell'utente, 2026-08-24), col contesto sotto. Trenta voci su 120 ce l'hanno: chi è
 // solo menzionato di sfuggita resta col campo vuoto, ed è una scelta, non una lacuna.
 // ⚠️ Il testo italiano è MONDADORI coi nomi del SITO: è un mix voluto e dichiarato
-// (vedi `earthsea/top/CLAUDE.md`, § sulle citazioni). Nelle trenta scelte non è servita
+// (vedi `CLAUDE.md`, § sulle citazioni). Nelle trenta scelte non è servita
 // nessuna sostituzione, quindi oggi sono tutte verbatim, ma il patto resta quello.
 // Il blocco della citazione, con la gemella anti-jitter sul RIQUADRO INTERO e FUORI da
 // lui (0.89): due riquadri completi nella stessa cella di griglia, quello visibile e
@@ -10152,7 +10152,7 @@ let adminPassword = '';
 // committato le voci di Terramare SOPRA il dataset di Arda, con la versione bumpata
 // e il deploy tutto verde: distruzione silenziosa dell'altro sito. La salvaguardia
 // non è caduta, è stata sostituita da un Worker separato (`proxy/earthsea/`) che
-// scrive su `earthsea/top/dati.js`. ⚠️ Chi vedesse `arda-admin-proxy` qui dentro non
+// scrive sul `dati.js` del repo `Roccobot/earthsea`. ⚠️ Chi vedesse `arda-admin-proxy` qui dentro non
 // stia a chiedersi se è un refuso: è il difetto che questa nota previene.
 var ADMIN_PROXY_URL_DEFAULT = 'https://earthsea-admin-proxy.roccobot-b90.workers.dev';
 // L'override da localStorage è comodo per i test ma è anche un bersaglio:
