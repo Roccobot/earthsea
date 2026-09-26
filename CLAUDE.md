@@ -6982,8 +6982,8 @@ sulla card, nella riga che il motore chiama `.rank-title`.
 ## 🔐 Il proxy admin è SUO, e la separazione è la salvaguardia
 
 **Dal 2026-08-23** Terramare ha un Worker proprio, `earthsea-admin-proxy`
-(`proxy/earthsea/`), e `ADMIN_PROXY_URL_DEFAULT` punta a lui. Le regole del Worker vivono
-in `proxy/CLAUDE.md` del repo `Roccobot/roccobot.github.io` e qui non si duplicano: qui c'è solo quello
+(`worker/`), e `ADMIN_PROXY_URL_DEFAULT` punta a lui. Le regole del Worker vivono
+in `worker/CLAUDE.md` e qui non si duplicano: qui c'è solo quello
 che serve sapere **da questo lato**.
 
 - ⚠️⚠️ **Perché non si eredita l'URL di Arda, e va saputo prima di 'semplificare'**: quel
@@ -6996,7 +6996,7 @@ che serve sapere **da questo lato**.
   un refuso: è il difetto che questa nota previene.
 - ⚠️ **Il pannello NON diventa admin da solo**: servono i secret sul Worker, e finché non ci
   sono lo sblocco risponde `auth` e il salvataggio `no-github-pat`. Le tre cose da fare in
-  dashboard vivono in `proxy/earthsea/README.md`, e sono dell'utente: richiedono l'accesso
+  dashboard vivono in `worker/README.md`, e sono dell'utente: richiedono l'accesso
   all'account Cloudflare.
 - **La verifica che il Worker giusto risponda** è un GET sul suo URL: torna anche
   `site:"earthsea"`. ⚠️ Vale più di `rev` quando il dubbio è *quale* dei due Worker si sta
@@ -7007,7 +7007,7 @@ che serve sapere **da questo lato**.
   messaggio non dice più 'Terramare non ha ancora un proxy', che sarebbe falso.
 - ⚠️ **Il `dati.js` di questo sito ha 28 righe di COMMENTO** fra le dichiarazioni, e il
   Worker le conserva perché **sostituisce le righe** invece di ricostruire il file (come fa
-  invece quello di Arda). Se un domani si toccasse quella parte, `proxy/CLAUDE.md` dice
+  invece quello di Arda). Se un domani si toccasse quella parte, `worker/CLAUDE.md` dice
   perché, e c'è un banco di prova da lanciare prima.
   - ⚠️ **Chi riscrive UNA riga dell'array deve rimetterci la VIRGOLA finale**, che `json.dumps`
     non produce: ogni riga dell'array la porta tranne l'ultima, e ricucire il corpo con
