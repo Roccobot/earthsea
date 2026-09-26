@@ -3627,7 +3627,7 @@ deciso, e che non va rifatto: delle tinte del sito questa è **l'unica** dentro 
 
 - ⚠️⚠️ **Le misure si fanno sulle DUE BARRE REALI, non su bianco puro**: su `#ffffff` la stessa
   tinta regala un terzo di punto di contrasto, e su quel numero in questo repo si è già preso un
-  abbaglio (`arda/top/CLAUDE.md`, § 'Favicon').
+  abbaglio (il `CLAUDE.md` del repo `Roccobot/arda`, § 'Favicon').
 - ⚠️⚠️ **Il tetto simultaneo è 3,54:1 e NON dipende dalla tonalità**, solo dalla luminanza delle
   due barre: è lo stesso numero calcolato per l'oro di Arda, e ritrovarlo qui lo conferma. Il
   punto di equilibrio esatto per il blu di prima era **`#007af5`** (3,54 / 3,53), e per ogni
@@ -4673,7 +4673,7 @@ dello Schedario, ed è **l'unico** posto dove va l'origine geografica. Prima non
 
 - ⚠️⚠️ **`paese` non c'è più, e sapere che cos'era evita di reintrodurlo**: era un **residuo
   del motore di provenienza**, presente su ogni voce, con valore `gb` su tutte e 360 quelle di
-  `arda/top/dati.js` (il codice di paese della lista da cui quel motore nasce) e **vuoto** su
+  `dati.js` di Arda (il codice di paese della lista da cui quel motore nasce) e **vuoto** su
   tutte quelle di Terramare. Nessuno dei due `index.html` lo leggeva.
   - ⚠️⚠️ **La trappola, che è già scattata**: un campo vuoto su tutte le voci e senza lettori
     **somiglia a un campo libero**. Nella `0.43` vi è finita l'origine di Sege (`Havnor`),
@@ -4746,7 +4746,7 @@ dello Schedario, ed è **l'unico** posto dove va l'origine geografica. Prima non
     - ✅ **Non tocca l'anti-jitter, ed è misurato**: la lista resta alta **31025,52px** al
       centesimo, perché l'altezza della card la governa il blocco dei nomi e non l'origine.
       Provato su 1280, 900 e 390px nelle due lingue, 24 controlli su 24.
-- Ⓘ **In `arda/top/dati.js` `paese` c'è ancora**, `gb` su 360 voci: toglierlo là è una modifica
+- Ⓘ **Nel `dati.js` di Arda `paese` c'è ancora**, `gb` su 360 voci: toglierlo là è una modifica
   al flusso dati di 'I Grandi di Arda', che è fra i casi **pesanti** (conferma esplicita), e
   nessuno l'ha chiesta.
 
