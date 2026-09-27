@@ -46,7 +46,7 @@ a **92,5 KB**.
 - ⚠️ **Il badge di ripiego della versione si scrive nel sorgente**, come tutto il resto, e
   `datiVersion` resta in `dati.js`. Il bump di una modifica al sito tocca quindi
   `index.src.html` e `dati.js`, e `index.html` lo segue da sé col build. ⚠️ Dal 2026-09-27 un
-  hook di Claude (`.memo/scripts/ganci.py` del repo dell'hub) confronta i due numeri a inizio
+  hook di Claude (`.memo/scripts/hook.py` del repo dell'hub) confronta i due numeri a inizio
   sessione e blocca il commit se differiscono, come su Arda.
 - ⚠️ **Il build NON tocca gli spazi del markup e NON rinomina i nomi globali** (lo dice il
   commento in testa allo script): i gestori scritti nel markup e gli accessi `window[nome]`
