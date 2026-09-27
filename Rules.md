@@ -1,9 +1,14 @@
-# CLAUDE.md: 'I Grandi di Terramare' (repo `Roccobot/earthsea`)
+# Rules.md: 'I Grandi di Terramare' (repo `Roccobot/earthsea`)
 
 > **Cos'è questo file.** Le regole del progetto **'I Grandi di Terramare'**
 > (<https://roccobot.github.io/earthsea/>): che cos'è deciso, che cosa è solo
 > provvisorio, e le trappole nate dal fatto che il motore è una **copia adattata** di
-> 'I Grandi di Arda'.
+> 'I Grandi di Arda'. Vale per **tutti gli agenti**: il nucleo, cioè ogni regola in una riga,
+> vive in `AGENTS.md`, e questo file ne dà il testo completo e il perché. Claude Code lo carica
+> da sé, perché `CLAUDE.md` lo importa; gli altri agenti lo leggono quando il lavoro tocca una
+> sua sezione.
+> ⚠️ **Fino al 2026-09-27 questo testo era il `CLAUDE.md` del repo**: una nota che nomina il
+> `CLAUDE.md` di questo repo per una di queste sezioni parla di questo file.
 > ⚠️ Le regole **trasversali** (protocollo di avvio, scala di priorità, regole non
 > derogabili, lingua, git e go-live) vivono nel `CLAUDE.md` di root di
 > `Roccobot/roccobot.github.io`: quello resta l'hub, e questo file non lo sostituisce.
