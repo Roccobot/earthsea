@@ -94,5 +94,7 @@ invece di produrre un file mezzo fatto.
 due Worker nei repo dei loro siti): la spia `rev` resta quella di prima finché non arriva un
 push che tocca `worker/`, oppure finché non si avvia una build a mano dalla scheda delle build.
 La verifica è sempre la spia: un GET al Worker deve mostrare il `rev` del codice appena
-pubblicato. L'avviso *logpush is not enabled for this account* che la pagina delle impostazioni
+pubblicato. ⚠️ **Il push deve arrivare DOPO il ricollegamento**: su questo Worker il primo è
+arrivato prima che la Git integration puntasse a questo repo, e Cloudflare non l'ha costruito;
+su quello di Arda, ricollegato in tempo, il secondo push è bastato. L'avviso *logpush is not enabled for this account* che la pagina delle impostazioni
 mostra a ogni apertura riguarda l'esportazione dei log, a pagamento, e non c'entra.
