@@ -1150,7 +1150,7 @@ Il canone impone che della raccolta *I dodici punti cardinali* si tengano **i du
 racconti di Terramare**, e che il taglio si faccia **allo scarico della fonte**
 (`rules/Earthsea.md`, § 'I due racconti dentro la raccolta *I dodici punti cardinali*').
 ⚠️ Fino al 2026-09-18 quel taglio era stato fatto **a mano una volta sola**, e
-`scripts/earthsea-fonti.py` riscriveva il volume intero a ogni rigenerazione: sul disco
+`scripts/earthsea-sources.py` riscriveva il volume intero a ogni rigenerazione: sul disco
 c'erano 550k e 580k caratteri contro i 39k e 43k che il canone dichiara.
 
 - **La spia che lo ha rivelato è un censimento**, non una rilettura: fra i nomi propri del
@@ -4099,7 +4099,7 @@ tocco si **trascina senza staccare il dito**, verso il basso per ingrandire.
 - ⚠️ **Solo per il dito** (`pointerType === 'touch'`): col mouse ci sono la rotella e il doppio
   clic, e un trascinamento col tasto premuto deve restare pan. Un **secondo dito** annulla il
   gesto e passa la mano al pinch.
-- ⚠️⚠️ **Il banco è `prova-gesto-zoom.js`, in `.memo/scripts/` del repo dell'hub perché serve i due
+- ⚠️⚠️ **Il banco è `test-zoom-gesture.js`, in `.memo/scripts/` del repo dell'hub perché serve i due
   siti, e usa eventi touch VERI via CDP**: i
   sintetici non bastano, perché il viewer chiama `setPointerCapture` a ogni `pointerdown` e
   quel metodo **rifiuta** un `pointerId` che il browser non conosce, quindi il gestore va in
@@ -4177,7 +4177,7 @@ lungo sul FAB apre la ricerca; il tocco **breve** continua ad aprire il Pannello
   non aiuta nessuno. Chi arriva al tetto legge una riga che glielo dice.
 - ⚠️ **Il fuoco si dà DOPO l'animazione di entrata** (220ms): darlo subito, su iOS, fa salire
   la tastiera mentre la modale si muove, e l'entrata si vede a scatti.
-- ⚠️⚠️ **Il banco è `prova-ricerca-sito.js`, in `.memo/scripts/` del repo dell'hub perché serve i
+- ⚠️⚠️ **Il banco è `test-site-search.js`, in `.memo/scripts/` del repo dell'hub perché serve i
   due siti, con eventi touch VERI via CDP**,
   come quello del gesto di zoom e per la stessa ragione: il tocco lungo vive su un
   `pointerdown` con `pointerType` `touch`, e un evento sintetico non lo sveglia. Prova i tre
@@ -4242,7 +4242,7 @@ che chi lo conosce si porta dietro dal telefono.
   toolbar, e la larghezza del Pannello la comanda la **card di legenda** (329,19). ⚠️ Il
   margine residuo è di **due** tasti: il terzo comincerebbe ad allargare il Pannello, e
   allora la misura va rifatta.
-- **Il banco è `scripts/prova-tasto-ricerca.js`**, e la prova che conta è quella del
+- **Il banco è `scripts/test-search-button.js`**, e la prova che conta è quella del
   baricentro: si rasterizza il glifo **letto dal DOM** e si pesano i pixel sull'alfa, perché
   nessuna proprietà CSS dice dove cade l'asse ottico. ⚠️ Il riferimento è **Riordina**, che è
   simmetrico: mediare con la luna sposterebbe la misura dal verso sbagliato (§ del

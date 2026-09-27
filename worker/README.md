@@ -73,12 +73,12 @@ l'altro Worker.
 
 ## Il banco di prova
 
-`prova-riscrittura.mjs` esercita la funzione che riscrive `dati.js` sul file **vero**,
+`test-rewrite.mjs` esercita la funzione che riscrive `dati.js` sul file **vero**,
 in locale e senza toccare niente. Lo prende dalla radice di questo repo, oppure dal
 percorso passato come argomento:
 
 ```bash
-node worker/prova-riscrittura.mjs [percorso di dati.js]
+node worker/test-rewrite.mjs [percorso di dati.js]
 ```
 
 Va lanciato **prima di ogni modifica** a `rewriteDatiFile`, perché l'unico altro modo

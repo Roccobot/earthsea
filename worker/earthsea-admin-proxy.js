@@ -107,7 +107,7 @@ async function safeEqual(a, b) {
 // ⚠️ Ogni sostituzione DEVE trovare la sua ancora: se una non la trova, la funzione
 // ritorna un errore e il chiamante NON scrive niente. Un file mezzo riscritto è
 // peggio di un salvataggio rifiutato.
-// ⚠️ `export` per il banco di prova (`worker/prova-riscrittura.mjs`), che la
+// ⚠️ `export` per il banco di prova (`worker/test-rewrite.mjs`), che la
 // esercita sul dati.js VERO: senza, l'unico modo di provarla sarebbe un salvataggio
 // in produzione, cioè sul file che questa funzione esiste per non rovinare.
 // Cloudflare ignora gli export che non usa.

@@ -42,7 +42,7 @@ diverse.
   - **Presidio sul risultato**: prima del PUT si contano i commenti, e se dopo sono meno di
     prima il salvataggio si ferma. È la verifica che rende la conservazione un fatto invece
     di un'intenzione.
-  - ⚠️ **C'è un banco di prova, e va lanciato**: `node worker/prova-riscrittura.mjs`, nel repo
+  - ⚠️ **C'è un banco di prova, e va lanciato**: `node worker/test-rewrite.mjs`, nel repo
     `Roccobot/earthsea`, esercita quella funzione sul `dati.js` **vero**, in locale: legge quello
     alla radice del repo, oppure il percorso passato come argomento. Va usato **prima di ogni
     modifica** a `rewriteDatiFile`, perché l'unico altro modo di provarla è un salvataggio

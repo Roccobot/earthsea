@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# earthsea-fonti.py - scarica gli epub di Terramare e ne estrae il TESTO PIANO, per il grep.
+# earthsea-sources.py - scarica gli epub di Terramare e ne estrae il TESTO PIANO, per il grep.
 #
 # PERCHÉ ESISTE: la regola di casa vieta di verificare un dato a memoria (`rules/JRRT.md`,
 # § 'Verifica alla lettera', e `rules/Earthsea.md`, § 'Verifica alla lettera: sempre TRAMITE
@@ -10,7 +10,7 @@
 # repo del sito (prima in `.memo/scripts/` del repo dell'hub): scrive i suoi file fuori dal
 # repo, quindi nulla di quello che produce finisce pubblicato.
 #
-# USO:  python3 scripts/earthsea-fonti.py [cartella]
+# USO:  python3 scripts/earthsea-sources.py [cartella]
 #       (default /home/user/fonti; scarica solo quello che manca, poi estrae sempre)
 # POI:  grep -c 'Little Grey' <cartella>/txt/*.txt
 #

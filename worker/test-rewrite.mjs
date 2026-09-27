@@ -4,7 +4,7 @@
 // di provarla sarebbe un salvataggio in produzione, cioè sul file che deve non
 // rovinare. Qui gira a vuoto, in locale, e confronta il risultato con l'originale.
 //
-// Uso:  node worker/prova-riscrittura.mjs [percorso di dati.js]
+// Uso:  node worker/test-rewrite.mjs [percorso di dati.js]
 // Senza argomento legge il `dati.js` alla radice di questo repo, cioè quello vero.
 // Esce 0 se tutte le prove passano, 1 alla prima che fallisce.
 

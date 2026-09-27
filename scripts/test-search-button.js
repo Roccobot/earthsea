@@ -6,7 +6,7 @@
 //
 // USO, dalla radice del repo:
 //   python3 -m http.server 8765 --bind 127.0.0.1 &
-//   NODE_PATH=/opt/node22/lib/node_modules node scripts/prova-tasto-ricerca.js
+//   NODE_PATH=/opt/node22/lib/node_modules node scripts/test-search-button.js
 const { chromium } = require('playwright');
 
 const URL = process.env.PROVA_URL || 'http://127.0.0.1:8765/index.html';
