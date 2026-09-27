@@ -1,0 +1,72 @@
+{
+  "model": "opus",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" avvio",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" turno",
+            "timeout": 40
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" modifica",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" bash",
+            "timeout": 90
+          }
+        ]
+      },
+      {
+        "matcher": "Artifact|AskUserQuestion|mcp__github__create_pull_request|mcp__github__update_pull_request|mcp__github__add_issue_comment|mcp__github__add_reply_to_pull_request_comment|mcp__github__add_comment_to_pending_review|mcp__github__pull_request_review_write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" testo",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "P=; for c in \"$CLAUDE_PROJECT_DIR/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/../roccobot.github.io/.memo/scripts/ganci.py\" \"$CLAUDE_PROJECT_DIR/roccobot.github.io/.memo/scripts/ganci.py\" /home/user/roccobot.github.io/.memo/scripts/ganci.py; do [ -f \"$c\" ] && P=\"$c\" && break; done; [ -n \"$P\" ] || exit 0; exec python3 \"$P\" compatta",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

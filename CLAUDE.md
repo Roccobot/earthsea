@@ -45,7 +45,9 @@ a **92,5 KB**.
   perché le sue risorse hanno gli stessi percorsi.
 - ⚠️ **Il badge di ripiego della versione si scrive nel sorgente**, come tutto il resto, e
   `datiVersion` resta in `dati.js`. Il bump di una modifica al sito tocca quindi
-  `index.src.html` e `dati.js`, e `index.html` lo segue da sé col build.
+  `index.src.html` e `dati.js`, e `index.html` lo segue da sé col build. ⚠️ Dal 2026-09-27 un
+  hook di Claude (`.memo/scripts/ganci.py` del repo dell'hub) confronta i due numeri a inizio
+  sessione e blocca il commit se differiscono, come su Arda.
 - ⚠️ **Il build NON tocca gli spazi del markup e NON rinomina i nomi globali** (lo dice il
   commento in testa allo script): i gestori scritti nel markup e gli accessi `window[nome]`
   restano validi. La certificazione della `2.70`: stato finale delle 222 card identico al
@@ -1148,7 +1150,7 @@ Il canone impone che della raccolta *I dodici punti cardinali* si tengano **i du
 racconti di Terramare**, e che il taglio si faccia **allo scarico della fonte**
 (`rules/Earthsea.md`, § 'I due racconti dentro la raccolta *I dodici punti cardinali*').
 ⚠️ Fino al 2026-09-18 quel taglio era stato fatto **a mano una volta sola**, e
-`.memo/scripts/earthsea-fonti.py` riscriveva il volume intero a ogni rigenerazione: sul disco
+`scripts/earthsea-fonti.py` riscriveva il volume intero a ogni rigenerazione: sul disco
 c'erano 550k e 580k caratteri contro i 39k e 43k che il canone dichiara.
 
 - **La spia che lo ha rivelato è un censimento**, non una rilettura: fra i nomi propri del
@@ -2429,7 +2431,8 @@ chiarezza, l'unico gradino che passa il 3:1 su tutti e due i fondi di card è `L
 
 - ✅⚠️⚠️ **DALLA `2.15` SONO SVG IN LINEA nel sorgente, e non più `img` verso `icons/*.webp`**
   (richiesta dell'utente, 2026-09-14: *passiamo all'SVG inline*). Il markup vive in
-  `BADGE_ICON` e `GENDER_ICON`, i **sorgenti** in `.memo/sorgenti/earthsea-icons/`, e i nove
+  `BADGE_ICON` e `GENDER_ICON`, i **sorgenti** in `orig/` (fino al 2026-09-27 in `.memo/sorgenti/earthsea-icons/` del repo
+  dell'hub), e i nove
   WebP sono stati **cancellati**: non li serviva più nessuno.
   - ⚠️⚠️ **La ragione non è il peso, anche se il peso migliora**: inline le tinte diventano
     raggiungibili dal CSS, che è il solo modo di dare a un badge **due colori diversi nei due
@@ -2804,9 +2807,9 @@ lo `Stregone` ricolorato. Fra la `2.10` e la `2.13` era la stessa forma dello `S
 ### 🐲 I TRE badge annunciati: il criterio di uno solo
 
 ✅ **Sono nel sito dalla `0.42`** (2026-08-23), e sono `signoredraghi`, `maestro`, `arcimago`.
-Le proposte scartate e la storia dei disegni restano in `.memo/proposte/badge-terramare/`
-(cartella non pubblicata da Pages, col suo `COME-SONO-FATTE.md`); qui c'è ciò che vale oltre
-il disegno.
+Le proposte scartate e la storia dei disegni vivevano in `.memo/proposte/badge-terramare/` del
+repo dell'hub, col loro `COME-SONO-FATTE.md`, e il 2026-09-27 sono state cancellate per scelta
+dell'utente: restano nella storia git di quel repo. Qui c'è ciò che vale oltre il disegno.
 
 - **Icone**: `Dragonlord.webp`, `MasterOfRoke.webp`, `ArchmageOfRoke.webp`, WebP **lossless**
   verificato pixel per pixel (scarto massimo per canale **0**), coi nomi in inglese e del
@@ -3557,7 +3560,7 @@ passa da `summary` a **`summary_large_image`**, o l'anteprima resterebbe il quad
 ## 🔖 Favicon e icone dell'app installabile
 
 **Dalla `0.24`**, e sono **lo stesso glifo del FAB**, non un disegno a parte: le genera
-`.memo/scripts/earthsea-icons.js` estraendolo da `index.html`. Se il simbolo cambia si
+`scripts/earthsea-icons.js` estraendolo da `index.html`. Se il simbolo cambia si
 rigenerano invece di divergere in silenzio, ⚠️ e qui non è un rischio teorico: **il logo è
 cambiato cinque volte in quattro giorni**.
 
@@ -4096,7 +4099,8 @@ tocco si **trascina senza staccare il dito**, verso il basso per ingrandire.
 - ⚠️ **Solo per il dito** (`pointerType === 'touch'`): col mouse ci sono la rotella e il doppio
   clic, e un trascinamento col tasto premuto deve restare pan. Un **secondo dito** annulla il
   gesto e passa la mano al pinch.
-- ⚠️⚠️ **Il banco è `.memo/scripts/prova-gesto-zoom.js`, e usa eventi touch VERI via CDP**: i
+- ⚠️⚠️ **Il banco è `prova-gesto-zoom.js`, in `.memo/scripts/` del repo dell'hub perché serve i due
+  siti, e usa eventi touch VERI via CDP**: i
   sintetici non bastano, perché il viewer chiama `setPointerCapture` a ogni `pointerdown` e
   quel metodo **rifiuta** un `pointerId` che il browser non conosce, quindi il gestore va in
   errore prima di fare qualunque cosa. Prova i **quattro** gesti insieme (pan, pinch, doppio
@@ -4173,7 +4177,8 @@ lungo sul FAB apre la ricerca; il tocco **breve** continua ad aprire il Pannello
   non aiuta nessuno. Chi arriva al tetto legge una riga che glielo dice.
 - ⚠️ **Il fuoco si dà DOPO l'animazione di entrata** (220ms): darlo subito, su iOS, fa salire
   la tastiera mentre la modale si muove, e l'entrata si vede a scatti.
-- ⚠️⚠️ **Il banco è `.memo/scripts/prova-ricerca-sito.js`, con eventi touch VERI via CDP**,
+- ⚠️⚠️ **Il banco è `prova-ricerca-sito.js`, in `.memo/scripts/` del repo dell'hub perché serve i
+  due siti, con eventi touch VERI via CDP**,
   come quello del gesto di zoom e per la stessa ragione: il tocco lungo vive su un
   `pointerdown` con `pointerType` `touch`, e un evento sintetico non lo sveglia. Prova i tre
   pezzi insieme (gesto del FAB, ricerca, filtro delle voci nascoste), perché si reggono a
@@ -4237,7 +4242,7 @@ che chi lo conosce si porta dietro dal telefono.
   toolbar, e la larghezza del Pannello la comanda la **card di legenda** (329,19). ⚠️ Il
   margine residuo è di **due** tasti: il terzo comincerebbe ad allargare il Pannello, e
   allora la misura va rifatta.
-- **Il banco è `.memo/scripts/prova-tasto-ricerca.js`**, e la prova che conta è quella del
+- **Il banco è `scripts/prova-tasto-ricerca.js`**, e la prova che conta è quella del
   baricentro: si rasterizza il glifo **letto dal DOM** e si pesano i pixel sull'alfa, perché
   nessuna proprietà CSS dice dove cade l'asse ottico. ⚠️ Il riferimento è **Riordina**, che è
   simmetrico: mediare con la luna sposterebbe la misura dal verso sbagliato (§ del
@@ -4890,7 +4895,8 @@ composito. Campionato dallo screenshot della pagina vera (2026-08-23, con `realf
     davvero: nella voce di Sparviero lo scudo dell'Arcimago e il simbolo maschile sono
     **adiacenti**. Segnalata all'utente con la misura e con la foto della fila; le forme
     restano diverse, e la scelta è sua.
-- **Come si rimisura**, se i fondi cambiano: `realfont.js` serve il sito, si porta il tema con
+- **Come si rimisura**, se i fondi cambiano: `realfont.js` (in `.memo/scripts/` del repo
+  dell'hub) serve il sito allo stesso indirizzo di produzione, sotto `earthsea/`, si porta il tema con
   `data-theme`, si ritaglia uno screenshot di 3x3 px sulla riga del nome e si legge il pixel
   centrale. ⚠️ Leggere `getComputedStyle` darebbe il gradiente, non il composito.
 
