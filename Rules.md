@@ -1044,8 +1044,9 @@ causare un bump di versione*). Vale per **tutti e due i siti gemelli**.
     sono lontani.
   - ⚠️⚠️ **Con le donne passate al magenta, il 2026-09-28, quel confronto non regge più**: la
     distanza fra le donne e il rosa antico è scesa da 0,10 a **0,078** nello scuro e **0,064** nel
-    chiaro, cioè sotto la soglia in cui due tinte si leggono come la stessa. Se il rosa antico
-    vada cambiato lo decide l'utente, e finché non decide resta quello in vigore.
+    chiaro, cioè sotto la soglia in cui due tinte si leggono come la stessa. ✅ **Il rosa antico
+    resta**, per scelta dell'utente presa guardando la pagina (*vanno benissimo con il rosa
+    antico attuale*): le due tabelle sono separate, e non si ripropone di cambiarlo.
   - **La deduzione vive in `familyOf`**, come per gli umani: il colore resta un valore solo nel
     dato (`cardcolor: 'apocrifo'`).
   - ⚠️ **Le intestazioni di sezione restano nella tinta maschile** (`--apo-rgb`): il titolo di un
