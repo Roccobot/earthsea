@@ -141,7 +141,14 @@ differenza da capire prima di toccare i colori.
   `cardcolor` vale `man` per ogni umano e diventa `woman` se `genere` è `f`. Così il colore non
   è un campo da tenere allineato al genere voce per voce.
 - ⚠️⚠️ **Le tinte in vigore sono quelle salvate dall'utente con l'editor dei colori**
-  (`cardColors` in `dati.js`): uomini turchese, donne viola, draghi rossi, animali verdi.
+  (`cardColors` in `dati.js`): uomini turchese, donne magenta, draghi rossi, animali verdi.
+  - ⚠️⚠️ **Le quattro tinte hanno la stessa chiarezza e la stessa saturazione in ogni tema**
+    (scelta dell'utente, 2026-09-28: *rendi tutti i colori ugualmente splendenti su tema scuro e
+    netti su tema chiaro*): chiarezza OKLCH 0,77 nello scuro e 0,50 nel chiaro, saturazione al
+    massimo che il gamut concede fino a un tetto comune, tonalità di ciascuna famiglia invariate.
+    Chi ne cambia una la riporta a quei due valori, o torna la famiglia 'spenta' accanto alle
+    altre, che è il difetto che l'utente ha visto sui draghi. ⚠️ Le tinte degli apocrifi, nella
+    seconda tabella, non sono state toccate.
   `cardColors` **vince** sul fallback di `index.html`, quindi una tinta si cambia là.
   - ⚠️ **Il fallback (`CARDCOLORS_FALLBACK`) oggi NON è allineato**: porta la tavolozza della
     `0.16` (uomini oltremare, donne turchese, draghi terracotta, animali gialli) e si usa solo se
@@ -154,16 +161,17 @@ differenza da capire prima di toccare i colori.
   `tipo` `Donna | Drago`, `tipo_color` `type-donnadrago|` e `cardcolor` `dragon`: un'etichetta
   propria sulla prima metà, la tinta dei draghi sulla card. ⚠️ **Quante siano si CONTA**
   (`dati.filter(x => /\|/.test(x.tipo))`): la nota che le dava chiuse a due è superata.
-  - ⚠️⚠️ **L'etichetta 'Donna' delle ibride è un'eccezione voluta dall'utente** (*un'eccezione
-    senza pari*), e la regola è che si **distingua da tutte le famiglie**: dice a colpo d'occhio
-    che la voce non è per intero in nessuna delle due categorie. L'etichetta `Drago` resta nella
-    tinta della card.
-    - ⚠️⚠️ **Oggi non si distingue più, e la tinta è da rifare su scelta dell'utente.** Era
-      stata scelta quando le donne erano turchesi; con le donne passate al viola la distanza
-      percettiva fra le due tinte (dE OKLab) è **0,046** nel tema chiaro e **0,124** nello
-      scuro, cioè sotto le soglie di § 'I badge e il genere' (0,10 si legge come lo stesso
-      colore, 0,16 si somigliano). L'utente sceglierà fra due o tre campioni lontani da tutte le
-      famiglie: i valori non si inventano, e finché lui non sceglie resta quella in vigore.
+  - ⚠️⚠️ **L'etichetta 'Donna' delle ibride ha la tinta delle DONNE** (scelta dell'utente,
+    2026-09-28: *sono etichette che dicono la stessa cosa e non è un male che siano simili, anzi
+    rendiamole semplicemente uguali*). Fino a quel giorno era un'eccezione con una tinta propria,
+    che doveva distinguersi da tutte le famiglie: quella regola è superata e non si rimette.
+    L'etichetta `Drago` resta nella tinta della card.
+    - **Com'è fatto**: `ccFamRules` in `index.src.html` scrive le terne della famiglia `woman`
+      anche su `.type-donnadrago` (`CC_FAM_ALIAS`), quindi un cambio dall'editor colori muove le
+      due 'Donna' insieme. L'anteprima dell'editor (`reinjectFamilyColors` in `admin.src.js`)
+      chiama la stessa funzione.
+    - ⚠️ **Il nome della classe resta `type-donnadrago`**: è nel dato (`tipo_color`) e nelle
+      Statistiche (`TYPE_LABEL`, 'Ibridi'), e cambiarlo toccherebbe il flusso dati per niente.
   - ⚠️ **Nello Schedario l'utente le marca come DONNE**, perché là la razza è a scelta
     esclusiva: il doppio tipo lo costruisce il sito, e un export con `uomo` su quelle voci è la
     metà di un dato che si completa qui, non un errore da segnalare.
@@ -172,9 +180,9 @@ differenza da capire prima di toccare i colori.
   - ⚠️ **`tipo_color` si applica per SEGMENTO, non per nome della voce**: il secondo segmento
     vuoto lascia il colore automatico di `tipoClass`. La whitelist `^type-[a-z-]*$` c'è perché
     il valore finisce in un attributo `class` senza escaping.
-  - ⚠️ **La classe dell'eccezione ridefinisce `--ccrgb` e `--cctxt`, non fondo, bordo e
+  - ⚠️ **La regola di `.type-donnadrago` ridefinisce `--ccrgb` e `--cctxt`, non fondo, bordo e
     colore**: la fonte unica di quelle tre proprietà resta `.rank-item .type-badge`, e basta
-    **una riga per tema**, perché un valore posato sull'elemento vince sull'eredità della card a
+    **una regola per tema**, perché un valore posato sull'elemento vince sull'eredità della card a
     prescindere dalla specificità.
     - ⚠️ **Lo sbaglio da non ripetere è misurabile su `.type-fallback`**, scritta all'altro modo
       (fondo e colore propri, selettore a una classe): dentro una card **perde** contro
@@ -1034,6 +1042,10 @@ causare un bump di versione*). Vale per **tutti e due i siti gemelli**.
   - ⚠️ **Il confronto che conta è quello che il lettore fa davvero scorrendo la pagina**, cioè con
     le donne della prima tabella, e non il più stretto, coi draghi, che aprono la prima tabella e
     sono lontani.
+  - ⚠️⚠️ **Con le donne passate al magenta, il 2026-09-28, quel confronto non regge più**: la
+    distanza fra le donne e il rosa antico è scesa da 0,10 a **0,078** nello scuro e **0,064** nel
+    chiaro, cioè sotto la soglia in cui due tinte si leggono come la stessa. Se il rosa antico
+    vada cambiato lo decide l'utente, e finché non decide resta quello in vigore.
   - **La deduzione vive in `familyOf`**, come per gli umani: il colore resta un valore solo nel
     dato (`cardcolor: 'apocrifo'`).
   - ⚠️ **Le intestazioni di sezione restano nella tinta maschile** (`--apo-rgb`): il titolo di un

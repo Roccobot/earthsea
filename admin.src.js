@@ -65,15 +65,10 @@ function ccDerivePair(base) {
 // Ri-inietta le sole terne --ccrgb per famiglia (dopo un edit colori in anteprima).
 function reinjectFamilyColors(){
   var old = document.getElementById('cc-fam-vars'); if (old) old.remove();
-  var css = [];
-  // ⚠️ Anche qui vanno le DUE terne: se l'anteprima dell'editor colori scrivesse
-  // solo --ccrgb, la riga del vero nome resterebbe al colore di prima.
-  Object.keys(CARDCOLORS.fam).forEach(function(k){
-    var f = CARDCOLORS.fam[k] || {};
-    css.push('.cc-' + k + '{--ccrgb:' + ccHexToTriplet(f.dark) + ';--cctxt:' + ccFamTxt(f.dark, 'dark') + '}');
-    css.push('html[data-theme="light"] .cc-' + k + '{--ccrgb:' + ccHexToTriplet(f.light) + ';--cctxt:' + ccFamTxt(f.light, 'light') + '}');
-  });
-  var s = document.createElement('style'); s.id = 'cc-fam-vars'; s.textContent = css.join('');
+  // ⚠️ The rules come from `ccFamRules` in index.src.html, the same function as the first
+  // injection: both triplets (without --cctxt the true name would keep the old colour) and
+  // the hybrids' label, which follows the women.
+  var s = document.createElement('style'); s.id = 'cc-fam-vars'; s.textContent = ccFamRules();
   document.head.appendChild(s);
 }
 
