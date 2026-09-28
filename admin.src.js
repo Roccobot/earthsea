@@ -632,7 +632,6 @@ function showAdminEditor() {
   // e la riga `if (!hf) continue;` le scartava: cercare 'Kalessin' nell'editor non dava
   // nessun risultato. In testa perché il primo campo che combacia è quello mostrato.
   var searchLayer=null, results=[], sel=0, lastQuery='', countEl, inputEl, listEl;
-  function clearHit(){ Array.prototype.slice.call(overlay.querySelectorAll('.admin-search-hit')).forEach(function(w){ w.classList.remove('admin-search-hit'); }); }
   var SEARCH_CAP = 100; // tetto alla LISTA renderizzata (query corte = centinaia di nodi); il conteggio resta totale
   function renderResults(q){
     var all = computeMatches(q); sel = 0; lastQuery = q;
@@ -666,9 +665,10 @@ function showAdminEditor() {
     if (card){
       var vh = overlay.clientHeight, hh = (header.offsetHeight||60);
       overlay.scrollTop = Math.max(0, card.offsetTop - Math.max(hh + 8, (vh - card.offsetHeight)/2));
-      clearHit();
       var fe = document.getElementById('ae-'+r.i+'-'+r.field);
-      if (fe){ var w=fe.closest('.admin-field'); if (w) w.classList.add('admin-search-hit');
+      // The reached field is shown by its selection alone: the gold ring inherited from Arda
+      // is gone (user's choice, 2026-09-28), the selected text already marks the spot.
+      if (fe){
         try { var spn=foldFind(String(fe.value), r.qf); if (spn){ fe.focus({preventScroll:true}); fe.setSelectionRange(spn[0], spn[1]); } } catch(e){}
       }
     }
