@@ -282,8 +282,8 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   (`Rules.md` § '📖 Le CITAZIONI nella card: testo Mondadori, nomi Nord').
 - **Un censimento sul corpus si chiude sul conto per file**, con la maiuscola quando la resa è
   una parola comune, mai su un `head` o un `tail`; e l'uscita di un banco si legge intera,
-  filtrando sui `KO` (`Rules.md` § '🎓 I DUE Kurremkarmerruk, e i titoli del giro delle dodici
-  richieste' e § '🏚️ Le voci di *The daughter of Odren*, nate senza edizione italiana').
+  filtrando sui `KO` (`Rules.md` § '📏 Come si misura il jitter senza farsi ingannare dal proprio
+  metro', dove vivono le trappole dei banchi).
 - **Anti-jitter**: al cambio lingua le card della lista non cambiano altezza, e su un componente
   (Pannello, Console, modali) non si muove niente sui due assi; la riserva vive su un contenitore
   senza sfondo né bordo. Si misura a Pannello chiuso, col locale forzato a `it-IT` e sullo stile
