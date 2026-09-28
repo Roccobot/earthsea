@@ -839,7 +839,9 @@ registro nel `Rules.md` dell'hub, § '🗣️ Registro: italiano corretto, non f
   sostituire.
 - **Badge `mago` più `arcimago`**; niente `maestro`, perché nessuna fonte gli dà uno dei nove
   uffici.
-- **L'origine `Roke` è residenza**: il testo non dice dove sia nato, e lo colloca là.
+- **L'origine è `Way`**, dalla `2.80`, scelta dell'utente dopo la verifica: il testo lo chiama
+  *Halkel di Way* / *Halkel of Way*, cioè ne dà la provenienza, che vale più della residenza a
+  Roke (§ 'Origine: significa NASCITA, e la residenza è solo un ripiego').
 - Perché il censimento l'aveva mancato, e come si tara un filtro sui falsi negativi: § 'Come si
   misura il jitter senza farsi ingannare dal proprio metro'.
 
@@ -2220,9 +2222,9 @@ aprire il Pannello.
   colore cablato mostrava 'Donna' in oro accanto a un vero nome di un'altra tinta.
 - **L'oro resta nei soli posti dove è voluto**: i **numeri del podio**, per la convenzione
   oro-argento-bronzo e non come tinta di tavolozza, e il **velo sulla card raggiunta** dalla ricerca,
-  per istruzione dell'utente (§ 'Il velo ORO sulla card raggiunta'). ⚠️ Nell'editor admin il campo
-  raggiunto dalla ricerca ha ancora un anello oro, residuo di Arda che il visitatore non vede: se va
-  tolto, è un ritocco a parte.
+  per istruzione dell'utente (§ 'Il velo ORO sulla card raggiunta'). ✅ L'anello oro sul campo
+  raggiunto dalla ricerca dell'editor admin, residuo di Arda, è uscito con la `2.80` (scelta
+  dell'utente: non serviva a niente): il campo lo segna già il testo selezionato.
 
 ## 🗺️ Origine: significa NASCITA, e la residenza è solo un ripiego
 
