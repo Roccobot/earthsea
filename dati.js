@@ -1,6 +1,8 @@
-var datiVersion = "2.77";
-// Colori delle due razze. ⚠️ Valori PROVVISORI: chiari e desaturati per scelta
-// dell'utente, ma da misurare sul gate di contrasto AA nei due temi.
+var datiVersion = "2.78";
+// Colori delle famiglie. Dalla 2.77 hanno la stessa chiarezza e la stessa saturazione in
+// ogni tema (scelta dell'utente), e l'etichetta 'Donna' delle ibride segue le donne: il
+// perché e il metodo vivono in Rules.md, § 'Le razze, e perché le tinte non contano come le
+// categorie'.
 // ⚠️ Questa riga VINCE sul fallback dentro index.html: è la configurazione salvata,
 // e al cambio di tavolozza (2026-08-21) i valori vecchi restavano attivi mentre il
 // fallback diceva un'altra cosa. Chi cambia una tinta la cambia QUI.
