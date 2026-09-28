@@ -114,7 +114,7 @@ erano tutti scritti ma sparsi, e chi inserisce una voce deve ricordarseli tutti.
 |---|---|
 | **Il nome** nelle due lingue, cercato in **tutte e tre** le edizioni | § 'Le due metà del dataset: l'italiano è dell'utente, l'inglese è mio' |
 | Una forma **inglese** fra i nomi alternativi italiani, e il doppione da evitare | § 'La metà inglese del nome: va in `nome_en`, non fra gli alternativi' |
-| **Il genere**, che si prova sull'INGLESE | § 'Dedurre il GENERE: la convenzione dei maghi, e le DUE eccezioni' |
+| **Il genere**, che si prova sull'INGLESE | § 'Dedurre il GENERE: la convenzione dei maghi, e le sue eccezioni' |
 | **L'origine**: nascita, ripiego sulla residenza, e nel campo va l'ISOLA | § 'Origine: significa NASCITA, e la residenza è solo un ripiego' |
 | **Il tipo**, e la parola da aggiungere al motore se è un animale | § 'Gli ANIMALI: una categoria, tante etichette' |
 | **I badge**, che non si deducono mai dalla scheda | § 'I badge e il genere' e § 'I TRE badge annunciati: il criterio di uno solo' |
@@ -263,7 +263,7 @@ Le voci degli animali sono verificate col grep sugli epub. Qui c'è solo quello 
   madre è `Grigina` (`madre` e `madre_en`). ⚠️ Con `genere` vuoto la genealogia stampa 'Figlio
   di', che è il ripiego del motore e non un dato.
 
-### 💬 Le citazioni degli animali: nove sì e quattro no, e la ragione di ognuno
+### 💬 Le citazioni degli animali: chi le ha, chi no, e perché
 
 ⚠️ **Il criterio dell'utente vale per tutte le voci, non solo per loro**: *nulla di
 obbligatorio: in assenza di citazioni significative, possono stare senza*. Il campo vuoto è una
@@ -284,7 +284,7 @@ obbligatorio: in assenza di citazioni significative, possono stare senza*. Il ca
   BRANO**: `Vaiavanti` è citato dai *Venti*, perché in *Un mago di Terramare* il cane c'è ma
   senza nome. Il precedente è `Orm`.
 
-### 🚻 Dedurre il GENERE: la convenzione dei maghi, e le DUE eccezioni
+### 🚻 Dedurre il GENERE: la convenzione dei maghi, e le sue eccezioni
 
 Regola editoriale dell'utente, nata da un problema che ricorre a ogni voce nuova: *a volte è
 difficile assumere il genere di un personaggio; ma le convenzioni di genere di Terramare vengono
@@ -330,7 +330,7 @@ in aiuto*.
   vero nome, e distinguere 'il testo dice che esiste' da 'il testo tace' è un cavillo che
   l'utente ha chiuso (canone, § 'Tutte le cose hanno un vero nome').
 - ⚠️ **Il maschile è la grammatica dell'epiteto**: il genere è dell'utente, ben fondato, ma è una
-  deduzione (§ 'Dedurre il GENERE: la convenzione dei maghi, e le DUE eccezioni').
+  deduzione (§ 'Dedurre il GENERE: la convenzione dei maghi, e le sue eccezioni').
 
 ### 👑 Akambar: il primo senza nome comune, e i due titoli
 
@@ -824,7 +824,7 @@ registro nel `Rules.md` dell'hub, § '🗣️ Registro: italiano corretto, non f
 - **La posizione l'ha chiesta l'utente**: subito dopo Ged, in testa alla fila degli Arcimaghi.
 - ⚠️⚠️ **Halkel è la fonte in-universo del vocabolario del potere**: creò il titolo di Arcimago,
   riformò i nove uffici di Roke e codificò in gerarchia `strega`, `stregone`, `mago`. La
-  convenzione di § 'Dedurre il GENERE: la convenzione dei maghi, e le DUE eccezioni' nasce dalle
+  convenzione di § 'Dedurre il GENERE: la convenzione dei maghi, e le sue eccezioni' nasce dalle
   sue regole (*Witchery was restricted to women*).
 - ⚠️ **La citazione italiana è di Nord**, come per `Salan`, perché Mondadori non stampa
   l'appendice (contro-prova fatta sul volume 5): la regola dei nomi Nord qui non ha niente da
@@ -1846,8 +1846,8 @@ di riferimento e `fitNoteRule`.
   - ⚠️ **'Titolo' e non 'Opera'**: accanto a *prima* si leggerebbe *opera prima*, cioè l'esordio di
     un autore, che qui non c'entra.
   - ⚠️ **La card finta non ha riserva bilingue**: se diventa lei il blocco più largo del Pannello,
-    il cambio lingua lo fa ballare in larghezza. Regge finché un altro blocco del Pannello resta più
-    largo di lei: chi allunga quel testo rimisura quel rapporto, non la sola altezza della riga.
+    il cambio lingua lo fa ballare in larghezza. Regge finché la riga dei filtri, che è anti-jitter per
+    costruzione, resta più larga di lei: chi allunga quel testo rimisura quel rapporto, non la sola altezza della riga.
 - ⚠️ **Usa le classi REALI** (`.rank-item`, `.rank-name`, `.rank-vero`, `.rank-subtitle`) e la
   stessa riga bipartita delle card: gli override di `.ctrl-cardleg` toccano solo le misure del
   contenitore **e la tinta**. Copiare gli stili nella legenda le farebbe mostrare una card che non
@@ -2853,7 +2853,7 @@ contesto. ⚠️ Quante voci l'abbiano si conta.
     la verifica.
 - ⚠️⚠️ **Una voce può NON averla, e allora si dice perché**: `Cenerino`, che in italiano non ha nome in
   nessuna delle due edizioni, e una citazione verificata non esiste; gli animali senza un passo proprio
-  (§ 'Le citazioni degli animali: nove sì e quattro no, e la ragione di ognuno'); `Mago Rosso di Ark` e
+  (§ 'Le citazioni degli animali: chi le ha, chi no, e perché'); `Mago Rosso di Ark` e
   `Keor`, esclusi a nome dall'utente. Chi siano si conta (`dati.filter(x => !x.citazione)`).
   - ⚠️⚠️ **`Cenerino` è una resa dell'utente, dichiarata come tale**: l'inglese lo attesta una volta
     sola (*Her brother, Littleash*), e il passo italiano è identico in Nord e in Mondadori (*Suo
