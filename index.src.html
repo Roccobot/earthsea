@@ -927,7 +927,7 @@ html[data-theme="light"] .rank-orig { border-left-color:rgba(22,36,44,0.16); }
    del vero nome, maiuscola e in tinta di famiglia. Nomi alternativi e titoli restano
    possibili, e continuano a stare nel sottotitolo.
    ⚠️ La regola si applica al `.rank-name-text`, NON a `.rank-name`: quel contenitore
-   ospita anche etichette e icone (rank-tipi/rank-flags via display:contents), e un
+   ospita anche etichette e icone (le scatole rank-tipi e rank-flags), e un
    `text-transform` messo là dentro renderebbe maiuscola anche l'etichetta 'Drago'. */
 .rank-name.name-vero > .rank-name-text {
   font-family:'Cinzel',serif; font-weight:900;
@@ -1981,7 +1981,7 @@ html[data-theme="light"] .ctrl-row:hover { background:rgba(104,144,168,0.12); }
    'voci del Pannello' di cui parla la nota di `.ctrl-row:hover`, e due hover diversi
    nello stesso riquadro si vedrebbero. */
 .ctrl-legend-row .leg-lbl-m { display:none; }  /* variante mobile: la accende la media query a 768px, vedi `ICON_LABEL_MOBILE` */
-.ctrl-legend-row .leg-lbl-s { display:none; }  /* ripiego sotto i 344px, vedi `ICON_LABEL_MINI` */
+.ctrl-legend-row .leg-lbl-s { display:none; }  /* versione corta sotto i 354px, vedi `ICON_LABEL_MINI` */
 .ctrl-legend-row:hover { background:rgba(255,255,255,0.09); }
 .ctrl-legend-row:focus-visible { outline:2px solid var(--gold-bright); outline-offset:1px; }
 /* La dissolvenza vive QUI, sullo stato di arrivo: accendere un filtro badge è un
@@ -2385,12 +2385,12 @@ html[data-theme="light"] .ctrl-scroll-hint .csh-tail { background:rgba(31,85,98,
   .ctrl-bottombar .ctrl-icon-btn { width:2rem; padding:0; }
   .ctrl-bottombar .ctrl-lang-btn { width:2rem; padding:0; }
 }
-/* ⚠️⚠️ LA TERZA FACCIA DELLA LEGENDA, sotto i 348px (2.51): accende i ripieghi di
+/* ⚠️⚠️ LA TERZA FACCIA DELLA LEGENDA, sotto i 354px: accende i ripieghi di
    `ICON_LABEL_MINI` e spegne la faccia di sopra, che è `.leg-lbl-m` dove esiste una
    variante mobile e `.leg-lbl-w` dove c'è il solo ripiego.
-   ⚠️⚠️ LA SOGLIA LA DETTA LA VOCE CHE CEDE PER PRIMA, ed è il `Signore dei Draghi`: col suo
-   testo normale ha 0,98px di margine a 348 e va a capo a 344, mentre le altre due
-   reggerebbero più giù. Non è un numero tondo perché non descrive uno schermo: descrive il
+   ⚠️⚠️ LA SOGLIA LA DETTA LA VOCE CHE CEDE PER PRIMA, e cambia coi testi: oggi è il `mago`
+   nella versione mobile, e la soglia in vigore è quella della media query qui sotto. Le
+   altre voci reggerebbero più giù. Non è un numero tondo perché non descrive uno schermo: descrive il
    punto in cui un testo smette di stare in una riga, e i telefoni veri (430, 412, 390, 375,
    360) sono tutti sopra. Chi la sposta rimisuri quel testo.
    ⚠️ Qui dentro NON c'è nessuna proprietà di spazio, e nella 2.51 c'erano: gap e fianchi più
@@ -3623,7 +3623,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.78</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.79</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
@@ -5754,6 +5754,10 @@ var CARDCOLORS_FALLBACK = {
   // (28, dai draghi) e i contrasti migliori (6,19 sul fondo card scuro, 5,10 sul chiaro,
   // AA pieno su entrambi). ⚠️ Dal viola delle donne, che è il confronto che il lettore fa
   // davvero scorrendo la pagina, dista 59 gradi; dal blu degli apocrifi maschi, 115.
+  // ⚠️⚠️ Le tinte di UOMINI, DONNE, DRAGHI e ANIMALI qui sotto sono la tavolozza vecchia, e
+  // si usano solo se `cardColors` manca da dati.js: quelle in vigore (dalla 2.77 tutte alla
+  // stessa luce, donne magenta) vivono là, e le distanze scritte sopra sono misurate sulle
+  // tinte di prima. Chi le confronta con la pagina guarda `cardColors`, non questo blocco.
   fam: {
     "man": { dark:"#9cb2f0", light:"#22449c" },
     "woman": { dark:"#6fd0d6", light:"#0c757e" },
@@ -6298,10 +6302,8 @@ var ICON_LABEL = {
 // l'etichetta si accorcia per stare in una riga, e come si accorcia lo decide lui.
 // ⚠️⚠️ E SI MISURA ALLA LARGHEZZA PIÙ STRETTA, non a quella in cui il difetto si è visto:
 // la prima variante, della 2.44, era tarata su 390 e cedeva a 360, cioè su quasi tutti gli
-// Android. Misurato coi font veri: l'italiano prende 236,20px e sta fino a 344px compreso,
-// l'inglese 217,78 e sta fino a 320.
-// ⚠️ A 320px l'italiano va a capo, ed è dichiarato: nessun telefono in produzione è così
-// stretto, e il testo è quello che l'utente ha chiesto.
+// Android. Sotto i 354px subentra la versione corta (`ICON_LABEL_MINI`), e con lei nessuna
+// voce di legenda va a capo fino a 320px, in nessuna delle due lingue.
 // ⚠️⚠️ L'INGLESE DEVE REGGERE ALMENO QUANTO L'ITALIANO, perché la sua metà non è
 // indipendente: la lingua non attiva resta nel DOM come fantasma (`.leg-measure`,
 // `visibility:hidden`) e OCCUPA SPAZIO, quindi una riga inglese a capo alza la pila anche
@@ -6312,11 +6314,11 @@ var ICON_LABEL_MOBILE = {
   it: { mago: "Mago (stregone educato a Roke o potentissima strega)" },
   en: { mago: "Mage (a sorcerer of Roke / a powerful witch)" }
 };
-// ⚠️⚠️ TERZA FACCIA, sotto i 348px (2.51): il ripiego delle tre voci che sugli schermi più
+// ⚠️⚠️ TERZA FACCIA, sotto i 354px: il ripiego delle tre voci che sugli schermi più
 // stretti vanno a capo nella loro versione normale. I testi sono dell'utente, alla lettera.
-// ⚠️⚠️ LA SOGLIA LA DETTA LA VOCE CHE CEDE PER PRIMA, e qui è il `Signore dei Draghi`: a 348
-// il suo testo pieno ha 0,98px di margine e a 344 va a capo, mentre le altre due reggerebbero
-// più giù. Perciò 347 e non 320: sotto quella larghezza la legenda passa tutta alla versione
+// ⚠️⚠️ LA SOGLIA LA DETTA LA VOCE CHE CEDE PER PRIMA, e cambia coi testi: oggi è il `mago`
+// nella versione mobile, e la soglia in vigore è quella della media query del CSS (353).
+// Perciò non 320: sotto quella larghezza la legenda passa tutta alla versione
 // corta, comprese le due voci che da sole starebbero ancora.
 // ⚠️⚠️ I TRE RIPIEGHI STANNO A 320px SENZA TOCCARE NIENT'ALTRO, e la 2.52 ha tolto le tre
 // proprietà di spazio che la 2.51 metteva in questa stessa media query (gap e fianchi più
@@ -7236,8 +7238,9 @@ function renderList() {
    applica ai candidati, verifica), niente lavoro per-card ripetuto. */
 function rankNameLines(el) {
   var tops = [];
-  // Anche i FIGLI di .rank-flags: su desktop il contenitore è display:contents
-  // e non genera rect propri (le icone non venivano contate).
+  // Anche i FIGLI di .rank-flags: fino alla 2.48 su desktop il contenitore era
+  // display:contents e non generava rect propri (le icone non venivano contate). Oggi è
+  // inline-flex a ogni larghezza, e contare anche i figli non cambia il risultato.
   var nodes = el.querySelectorAll('.rank-name-text, .rank-flags, .rank-flags > *, .rank-tipi .type-badge');
   for (var i = 0; i < nodes.length; i++) {
     var rects = nodes[i].getClientRects();
@@ -7549,8 +7552,8 @@ function alignVoci(){
 //      restava riservata perché liberandola le icone rientravano in riga e la card si
 //      accorciava di 23px in italiano soltanto (`Nemico di Morred` 156,3px contro i 180,8
 //      di `the Enemy of Morred`).
-//      ⚠️ Il rimedio si prova SOLO dove `.rank-flags` è un flex item vero, cioè sotto i
-//      480px: sopra è `display:contents` e la classe non avrebbe alcun effetto.
+//      ⚠️ Il rimedio si prova SOLO dove `.rank-flags` è un flex item vero: dalla 2.48 lo è a
+//      ogni larghezza, e il controllo su `display:contents` qui sotto resta come rete.
 // ⚠️ Senza la prova 1, misurato su sei larghezze: a 320px e a 360px tre card cambiano
 // altezza al cambio lingua (fino a 23px). Da 390px in su nessuna, ed è la ragione per cui
 // una soglia di larghezza sarebbe sembrata sufficiente: non lo è, perché la larghezza a
@@ -8973,7 +8976,7 @@ function controlPanelHTML() {
       // com'erano, quindi il markup cresce solo dove serve.
       // ⚠️ Le facce sono fino a TRE, e la classe della piena dipende da chi la spegne:
       // con una variante mobile è `.leg-lbl-d` (la spegne la soglia dei 768), con il solo
-      // ripiego è `.leg-lbl-w`, che resta accesa su desktop E su mobile e cade sotto i 344.
+      // ripiego è `.leg-lbl-w`, che resta accesa su desktop E su mobile e cade sotto i 354.
       // Scambiarle nasconderebbe il testo su tutto il mobile.
       var ILM = (ICON_LABEL_MOBILE[lang] || {})[k];
       var ILS = (ICON_LABEL_MINI[lang] || {})[k];

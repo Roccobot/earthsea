@@ -1,4 +1,4 @@
-var datiVersion = "2.78";
+var datiVersion = "2.79";
 // Colori delle famiglie. Dalla 2.77 hanno la stessa chiarezza e la stessa saturazione in
 // ogni tema (scelta dell'utente), e l'etichetta 'Donna' delle ibride segue le donne: il
 // perché e il metodo vivono in Rules.md, § 'Le razze, e perché le tinte non contano come le
@@ -17,12 +17,12 @@ var siteFlags = {"zoomBig":false,"senzanome":false,"glow":{"on":false,"all":true
 // inglese (nome_en, nomi_alternativi_en, appellativi_en) è ATTESTATA sulle fonti col grep,
 // non tradotta. Ogni scheda è passata da una verifica sugli epub; le divergenze trovate
 // NON sono state corrette d'ufficio: stanno nel brief e decide l'utente.
-// ⚠️ Il badge `nomeged` ('Custode del vero nome di Ged') è acceso sulle DIECI voci che il
+// ⚠️ Il badge `nomeged` ('Conobbe in vita il vero nome di Ged') è acceso sulle DIECI voci che il
 // canone elenca (`rules/Earthsea.md`, § 'Chi conobbe il vero nome di Sparviero'): Ogion,
 // Kurremkarmerruk, Veccia, Millefoglie, Goha, Arren, Therru, Dote, Orm Embar, Kalessin.
 // Quel file è la sua UNICA fonte: non si deduce dalle schede. Sparviero NON lo porta:
 // il badge marca chi ricevette in custodia il suo nome, non chi lo porta.
-// ⚠️ `arcimago` è acceso su Sparviero, Nemmerle e Gensher, i tre che le fonti nominano
+// ⚠️ `arcimago` è acceso su Halkel, Sparviero, Nemmerle e Gensher, i quattro che le fonti nominano
 // (`rules/Earthsea.md`, § 'Gli Arcimaghi che le fonti nominano'). Thorion NON lo porta:
 // fu Maestro delle Evocazioni e governò la scuola, ma non fu mai scelto Arcimago.
 // ⚠️ `signoredraghi` è acceso su Sparviero, Erreth-Akbe, Morred e Pannocchia (elenco
