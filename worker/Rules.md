@@ -37,7 +37,7 @@ diverse.
   conserva i commenti**.
 - ⚠️⚠️ **La riscrittura è diversa, e non è un vezzo**: Arda **ricostruisce** l'intero
   `dati.js` dai dati ricevuti; Terramare **sostituisce le sole righe che cambiano**. Il suo
-  `dati.js` porta 28 righe di commento fra le dichiarazioni (che cosa è attestato, il
+  `dati.js` contiene 28 righe di commento fra le dichiarazioni (che cosa è attestato, il
   criterio del badge `nomeged`, la fonte dei titoli inglesi), e ricostruendo il file il
   primo salvataggio admin le avrebbe cancellate tutte, in silenzio e senza errori. Il
   dataset è dichiarato NON verificato: quelle note sono la sua sola memoria.
@@ -89,7 +89,7 @@ la serratura si apriva proprio quando la chiave non era stata messa.
   `{"action":"auth","password":""}`. Se torna `ok:true` il secret non c'è **e** il Worker è
   fail-open. Sono due difetti diversi che quel test distingue da solo, e nessuno dei due si
   vede dalla dashboard.
-- **La spia lo dice da sé**: il GET diagnostico porta anche i booleani dei secret, `pw` e
+- **La spia lo dice da sé**: il GET diagnostico include anche i booleani dei secret, `pw` e
   `pat` su Terramare (dalla `rev` 2), più `gem` su Arda, che ha anche la chiave della
   traduzione (dalla `rev` 16). ⚠️ Booleani e basta: mai un pezzo del valore, mai la
   lunghezza. Prima quello stato era invisibile dall'esterno.

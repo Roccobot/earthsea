@@ -1,7 +1,7 @@
 # AGENTS.md: le regole di `Roccobot/earthsea`
 
 > **Cos'è questo file.** Quello che ogni agente legge all'avvio in questo repo: Codex, Cursor e
-> Antigravity lo leggono da sé, Claude Code lo importa da `CLAUDE.md`. Porta due blocchi: il
+> Antigravity lo leggono da sé, Claude Code lo importa da `CLAUDE.md`. Contiene due blocchi: il
 > **nucleo universale**, copiato da `rules/Core.md` di `Roccobot/tools` e da modificare solo là,
 > e il **nucleo del repo**, cioè le sue regole in una riga col rimando a `Rules.md`, che ne dà il
 > testo completo e il perché.
@@ -246,7 +246,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   versione: i soli CONTENUTI').
 - **Il Worker di questo sito non si scambia con quello di Arda**, che scrive su un altro repo:
   puntarlo da qui scriverebbe le voci di Terramare sopra il dataset di Arda, senza errori.
-  `dati.js` porta righe di commento che il Worker conserva; chi riscrive una riga dell'array
+  `dati.js` contiene righe di commento che il Worker conserva; chi riscrive una riga dell'array
   rimette la virgola finale e prova con
   `node -e "eval(require('fs').readFileSync('dati.js','utf8')); console.log(dati.length)"`
   (`Rules.md` § '🔐 Il proxy admin è SUO, e la separazione è la salvaguardia').
@@ -267,7 +267,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   `TYPE_LABEL` (`Rules.md` § '🐈 Gli ANIMALI: una categoria, tante etichette').
 - **I badge si assegnano da criteri scritti**: `nomeged`, `arcimago` e `signoredraghi` dai soli
   elenchi del canone o dell'utente, `veronoto` si ricava da `vero_nome` attraverso `haBadge`, e
-  `stregone` e `mago` non si portano mai insieme (`Rules.md` § '🏅 I badge e il genere' e
+  `stregone` e `mago` non si assegnano mai insieme (`Rules.md` § '🏅 I badge e il genere' e
   § '✅ I 19 confrontati con Wikipedia').
 - **Le citazioni seguono l'edizione 'Frankenstein'**: testo Mondadori coi nomi Nord e col
   vocabolario del potere di Nord (`mago`, mai `magio`), quindi per costruzione non sono verbatim
@@ -290,7 +290,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Anti-jitter**: al cambio lingua le card della lista non cambiano altezza, e su un componente
   (Pannello, Console, modali) non si muove niente sui due assi; la riserva vive su un contenitore
   senza sfondo né bordo. Si misura a Pannello chiuso, col locale forzato a `it-IT` e sullo stile
-  calcolato, perché le gemelle nascoste (`bil-m`, `tb-m`, `rc-m`) portano l'altra lingua
+  calcolato, perché le gemelle nascoste (`bil-m`, `tb-m`, `rc-m`) contengono l'altra lingua
   (`Rules.md` § '🪞 L'ANTI-JITTER, e perché una misura sola diceva zero mentre l'occhio vedeva
   muoversi' e § '🔤 La metà inglese del nome: va in `nome_en`, non fra gli alternativi').
 - **Pannello e Console sono due cose**: il Pannello è la modale del FAB coi filtri del
@@ -301,8 +301,8 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   `BADGE_ADJUST_UNITS`, i campi della ricerca): chi ne aggiunge uno al motore lo ricava dal
   dataset o da un elenco che il codice usa già (`Rules.md` § '🔍 La ricerca del sito, dal TOCCO
   LUNGO sul FAB').
-- **Le chiavi di `localStorage` portano il prefisso `earthsea-`**, perché l'origine
-  `roccobot.github.io` è la stessa di Arda (`Rules.md` § '🗄️ Le chiavi di `localStorage` portano
+- **Le chiavi di `localStorage` hanno il prefisso `earthsea-`**, perché l'origine
+  `roccobot.github.io` è la stessa di Arda (`Rules.md` § '🗄️ Le chiavi di `localStorage` hanno
   il prefisso `earthsea-`').
 - **Il logo vive in due posti**, `FAB_LOGO_D` (un elenco di tracciati) e `icons/Earthsea.svg`, e
   favicon e icone dell'app si rigenerano con `scripts/earthsea-icons.js`, che scrive anche i

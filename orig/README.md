@@ -1,11 +1,11 @@
 # I vettoriali delle icone badge di 'I Grandi di Terramare'
 
 ⚠️ **Sono i SORGENTI delle icone in uso, non proposte**: da questi nasce il markup in linea di
-`BADGE_ICON` e `GENDER_ICON` in [`index.src.html`](../index.src.html), e ogni file porta il
+`BADGE_ICON` e `GENDER_ICON` in [`index.src.html`](../index.src.html), e ogni file ha il
 nome della sua **icona**, non quello con cui è arrivato. Vivono in `orig/` alla radice del repo,
 come i backup di Arda in `bck/` (scelta dell'utente, 2026-09-27; fino ad allora erano in
 `.memo/sorgenti/earthsea-icons/` del repo dell'hub). Pages li pubblica, ma nessuna pagina li
-chiede: il sito porta gli SVG dentro l'HTML, quindi non pesano su chi lo visita.
+chiede: il sito include gli SVG dentro l'HTML, quindi non pesano su chi lo visita.
 
 ⚠️⚠️ **ESISTONO PERCHÉ UNO SI ERA GIÀ PERSO.** Fino alla `2.14` i vettoriali vivevano solo
 nello scratchpad della sessione che li aveva ricevuti, e lo scratchpad muore col container:
@@ -26,10 +26,10 @@ un disegno che arriva si salva subito.
    quindi si guarda il peso e si cerca il blob: se non c'è, il passo si salta.
 2. **Il `viewBox` si legge dal file** e si riporta nell'involucro del frammento, che lo
    dichiara: scriverne uno sbagliato mostra il disegno in scala errata e tagliato, **senza dare
-   alcun errore**. Oggi le dieci tavole sono tutte `256x256`, ma la `2.18` ne portò una da
+   alcun errore**. Oggi le dieci tavole sono tutte `256x256`, ma la `2.18` ne aveva una da
    `800x800`, quindi la lettura si fa a ogni invio.
 3. **Le tinte diventano variabili CSS** (`--si-<chiave>-<n>`, nell'ordine in cui le forme
-   compaiono), e i due blocchi di palette in `index.src.html` ne portano il valore per tema. Il
+   compaiono), e i due blocchi di palette in `index.src.html` ne dichiarano il valore per tema. Il
    criterio delle due palette vive nel `CLAUDE.md` di questo repo, § 'Le DUE PALETTE, una per
    tema, e il metro che le ha sbagliate tre volte'.
 
@@ -38,7 +38,7 @@ un disegno che arriva si salva subito.
 frammento solo perché il colore passa dalle variabili. Chi ne guarda uno solo vede metà della
 scelta.
 
-⚠️ **Un sorgente può portare una tinta che il sito NON usa**, e va saputo prima di fidarsi del
+⚠️ **Un sorgente può contenere una tinta che il sito NON usa**, e va saputo prima di fidarsi del
 file: `ArchmageOfRoke.svg` è arrivato con la `2.31` per la **forma**, e l'utente ha chiesto di
 tenere i due colori già in vigore (*i due colori (chiaro/scuro) devono rimanere gli stessi
 esistenti*). La fonte delle tinte resta sempre il blocco delle palette.

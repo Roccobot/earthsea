@@ -1,7 +1,7 @@
 # AGENTS.md: le regole di `worker/`
 
 > **Cos'è questo file.** Quello che ogni agente legge lavorando in `worker/`, accanto
-> all'`AGENTS.md` alla radice del repo, che porta già il nucleo universale e il nucleo del sito:
+> all'`AGENTS.md` alla radice del repo, che contiene già il nucleo universale e il nucleo del sito:
 > qui c'è il solo **nucleo del Worker**, una regola per riga col rimando a `worker/Rules.md`, che
 > ne dà il testo completo e il perché. Claude Code lo importa da `worker/CLAUDE.md`.
 
@@ -19,7 +19,7 @@
   `DATI_MIN` (5 qui, 50 su Arda), il bump di sola SlimVer e la riscrittura che conserva i
   commenti. Un difetto corretto in uno si cerca anche nell'altro (`worker/Rules.md`
   § '⚠️⚠️ I Worker sono DUE, e la separazione è la salvaguardia').
-- **La riscrittura sostituisce le sole righe che cambiano**, perché `dati.js` porta commenti che
+- **La riscrittura sostituisce le sole righe che cambiano**, perché `dati.js` contiene commenti che
   sono la memoria del dataset: una sostituzione che non trova la sua ancora rifiuta il
   salvataggio, e se dopo i commenti sono meno di prima il PUT non parte. Prima di toccare
   `rewriteDatiFile` si lancia `node worker/test-rewrite.mjs`, che la esercita sul `dati.js` vero
