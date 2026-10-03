@@ -7,8 +7,8 @@
 > `Rules.md` (il testo completo): Claude Code le carica tutte e due con le due righe qui sopra.
 > Qui resta solo quello che vale per Claude.
 
-- Il protocollo di avvio di Claude (permessi, hook, domande iniziali, brief) vive nel `CLAUDE.md`
-  del repo `roccobot.github.io`, che è l'hub.
+- Il protocollo di avvio di Claude (permessi, hook, domande iniziali, brief) vive in `Rules.md`
+  del repo `roccobot.github.io`, che è l'hub, § '🚀 Protocollo di avvio'.
 - Gli hook di `.claude/settings.json` chiamano il dispatcher `.memo/scripts/hooks.py` dell'hub,
   che fra l'altro confronta `datiVersion` col badge di `index.src.html` a inizio sessione e
   blocca il commit se differiscono.
