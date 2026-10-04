@@ -3121,6 +3121,11 @@ diversa, e non è un errore.
   trascinamento del bordo produceva due assestamenti completi.
   - ⚠️⚠️ **Dalla `2.82` il timer rimisura le card solo se la chiave è cambiata** (`chiaveReflow`:
     larghezza della lista e font), come su Arda; altrimenti ripareggia la sola intestazione.
+  - ⚠️⚠️ **E la chiave contiene anche la larghezza della FINESTRA** (`window.innerWidth`): sopra
+    la larghezza massima la lista resta ferma a 740 px, ma i corpi in `vw` e le soglie delle media
+    query (la colonna dell'origine cade sotto i 769) cambiano le righe lo stesso. Senza, il banco
+    anti-jitter scendendo da 900 a 800 e 768 px trovava due card che cambiavano altezza al cambio
+    lingua, sempre uguali anche con attese triple: il timer saltava una misura che serviva.
   - ⚠️⚠️ **E l'osservatore legge la larghezza con `clientWidth`, la stessa misura della chiave.**
     Fino alla `2.81` all'avvio leggeva il bordo esterno e nella notifica il solo contenuto
     (`contentRect`, senza padding): la prima notifica, che arriva sempre, vedeva la lista più
