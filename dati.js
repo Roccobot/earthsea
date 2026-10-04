@@ -1,4 +1,4 @@
-var datiVersion = "2.80";
+var datiVersion = "2.81";
 // Colori delle famiglie. Dalla 2.77 hanno la stessa chiarezza e la stessa saturazione in
 // ogni tema (scelta dell'utente), e l'etichetta 'Donna' delle ibride segue le donne: il
 // perché e il metodo vivono in Rules.md, § 'Le razze, e perché le tinte non contano come le
