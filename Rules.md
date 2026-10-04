@@ -3071,6 +3071,34 @@ diversa, e non è un errore.
 - **Le gemelle, le loro classi e le trappole del metro**: § 'Come si misura il jitter senza farsi
   ingannare dal proprio metro'.
 
+### 🧮 La misura gira A LOTTI, e le card in vista vengono prima
+
+- ⚠️⚠️ **Dalla `2.81` il lavoro per card si fa a lotti, un fotogramma per volta** (richiesta
+  dell'utente del 2026-10-04: *considero di primaria importanza il caricamento progressivo*). Sul
+  suo telefono la passata intera (`tightenNames`, le prove di `freeNames`, `optimizeBipartite`,
+  `alignVoci`) faceva un'attività da un secondo, ripetuta da tre a sei volte all'avvio e quattro
+  per ridimensionamento (Lighthouse sulla `2.62`: TBT 1580 ms, lavoro di stile e layout 1319 ms).
+- **Com'è fatto**: ogni funzione di riga riceve un **perimetro** (`scope`, un array di card) e
+  lavora solo su quello; `cardsDi` e `dentro` sono i due soli punti che leggono il DOM della lista.
+  `inLotti` ordina le card con `perVista` (prima quelle in vista, poi le altre per distanza dallo
+  schermo), fa il primo lotto (`LOTTO_PRIMO`, dodici) in modo sincrono e gli altri (`LOTTO`,
+  sedici) con `requestAnimationFrame`. Un lavoro nuovo annulla quello in corso. `reflowRows` e
+  `assestaRighe` senza perimetro passano da lì; con un perimetro lavorano su quel lotto.
+- ⚠️⚠️ **Le card dipendono dalla sola larghezza della lista, non l'una dall'altra**: è ciò che
+  rende i lotti corretti. Quello che è della pagina (`riservaTesta`, `pareggiaTitolo`, le linee
+  mediane) si fa una volta sola, fuori dai lotti.
+- ⚠️⚠️ **`reflowRows()` non è più sincrona sulle card fuori vista**: un banco o un editor che
+  misura subito dopo averla chiamata vede assestate le sole card in vista. Si aspetta (il banco di
+  certificazione aspetta 1,2 s per larghezza), o si passa un perimetro.
+- ⚠️ **Un solo timer per il ridimensionamento** (`pianificaReflow`, 150 ms): l'evento `resize` e il
+  `ResizeObserver` della lista lo condividono. Prima avevano due debounce (150 e 220 ms) e il
+  trascinamento del bordo produceva due assestamenti completi.
+- ⚠️ **L'animazione di comparsa è delle sole dodici card del primo lotto** (`.rk-in`): le altre
+  nascono fuori dallo schermo, e il ritardo a scalare era già saturo a dodici.
+- **La certificazione è la stessa dell'anti-jitter**: stato finale delle card identico a quello
+  della passata intera (classi e altezze, su quattordici larghezze da 1280 a 320) e zero card di
+  altezza diversa fra le due lingue, coi font reali.
+
 ### 🏷️ Le ETICHETTE non riservano più la larghezza
 
 - ⚠️⚠️ **Le etichette di tipo della lista non riservano più la larghezza dell'altra lingua**
@@ -3081,7 +3109,9 @@ diversa, e non è un errore.
   con lui** (`tightenNames`, le prove di `freeNames`, `nm-acapo`, `marcaIconeACapo`), così l'esito è lo
   stesso nelle due lingue. Alla fine di `reflowRows` e di `assestaRighe`, `etichetteNude` impone gli a
   capo decisi con lo slot (`et-giu`: il nome prende la riga intera; `ic-giu`: la prende il gruppo icone)
-  e accende `.et-nude` sulla lista, che toglie la gemella dal layout.
+  e accende `.et-nude` sulla **card**, che toglie la gemella dal layout. ⚠️ Fino alla `2.80` la classe
+  era sulla lista: dalla `2.81` la misura gira a lotti (§ 'La misura gira A LOTTI, e le card in vista
+  vengono prima'), e una classe sulla lista avrebbe rimesso lo slot a tutte le card a ogni lotto.
 - ⚠️⚠️ **Gli a capo imposti sono la regola dell'utente** (*se una lingua va a capo deve andare a capo
   anche l'altra*): il gruppo che scende occupa la stessa riga che occupava con lo slot, e con etichette
   più strette ci sta per forza, quindi non nasce una riga in più.

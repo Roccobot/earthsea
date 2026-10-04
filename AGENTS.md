@@ -292,7 +292,9 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   senza sfondo né bordo. Si misura a Pannello chiuso, col locale forzato a `it-IT` e sullo stile
   calcolato, perché le gemelle nascoste (`bil-m`, `tb-m`, `rc-m`) contengono l'altra lingua
   (`Rules.md` § '🪞 L'ANTI-JITTER, e perché una misura sola diceva zero mentre l'occhio vedeva
-  muoversi' e § '🔤 La metà inglese del nome: va in `nome_en`, non fra gli alternativi').
+  muoversi' e § '🔤 La metà inglese del nome: va in `nome_en`, non fra gli alternativi'). Dalla
+  `2.81` la misura gira a lotti, le card in vista per prime, e `reflowRows()` non è sincrona sulle
+  altre (`Rules.md` § '🧮 La misura gira A LOTTI, e le card in vista vengono prima').
 - **Pannello e Console sono due cose**: il Pannello è la modale del FAB coi filtri del
   visitatore, la Console è l'editor admin che salva in `dati.js` per tutti, e una richiesta che
   nomina l'una non si applica all'altra (`Rules.md` § '📍 Segno o parola nella colonna origine, e
