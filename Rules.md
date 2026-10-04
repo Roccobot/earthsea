@@ -1055,6 +1055,8 @@ del toast sono identici, e cambiarne uno solo li farebbe divergere in silenzio.
   non manda a capo un `\n`, e il divieto di `innerHTML` non si tocca nemmeno per un messaggio di
   due righe. Senza quella proprietà il testo finirebbe su una riga sola con uno spazio in mezzo,
   senza nessun errore.
+- **Dalla `2.85` il toast è una regione annunciata** (`role="status"`, `aria-atomic`): i lettori di
+  schermo leggono salvataggi ed errori senza spostare il fuoco. Vale anche sul sito gemello.
 
 ### 🔢 Chi bumpa la versione: i soli CONTENUTI
 
