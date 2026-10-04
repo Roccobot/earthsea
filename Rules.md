@@ -89,6 +89,30 @@
   dell'utente).
 - Il gemello 'I Grandi di Arda' ha lo stesso impianto: le due cose si cambiano insieme.
 
+## 🤖 Leggibile senza JavaScript e dagli agenti
+
+- ⚠️⚠️ **Dalla `2.84` la pagina generata contiene l'elenco delle voci in un `<noscript data-elenco>`**,
+  scritto dal minificatore (`elencoStatico` in `.github/scripts/minify.mjs`) leggendo `dati.js`:
+  nell'ordine della classifica, nome, tipo e opera della prima apparizione, con gli apocrifi in un
+  elenco a parte intitolato 'Personaggi apocrifi'. Le card nascono dallo script, e chi legge senza eseguirlo (un
+  agente, un motore che non esegue JavaScript) trovava una lista vuota.
+  - ⚠️ **Il workflow del minificatore gira anche quando cambia `dati.js`**, così l'elenco segue i
+    salvataggi admin del Worker; il commit del bot tocca i soli file generati.
+  - ⚠️⚠️ **La frase breve (`info`) non c'è, ed è misurato**: su Arda portava la pagina compressa da
+    20 a 35 KB, e la velocità viene prima. Le frasi complete sono in `dati.js`.
+  - ⚠️ **Il `<noscript>` sta FUORI da `#rank-list`**: dentro, la regola `#rank-list:empty ~ footer`
+    non nasconderebbe più il footer prima delle card, e il footer salterebbe all'arrivo della lista.
+  - **Lo stile è la classe `.elenco-statico`**, la colonna della lista coi colori del tema: senza, i
+    link erano blu sul fondo scuro e la classifica perdeva i numeri.
+- **I dati strutturati** (`application/ld+json` in testa) descrivono il sito come `Dataset`, con
+  `dati.js` come distribuzione; sono statici, e l'elenco non vi si ripete.
+- **`llms.txt` alla radice del repo** spiega i campi di `dati.js` agli agenti, in inglese: chi
+  aggiunge o cambia il significato di un campo lo aggiorna. L'indice dei progetti, `robots.txt` e
+  `sitemap.xml` vivono nella radice dell'hub, che è la radice del dominio.
+- ⚠️ **`hreflang` non si applica**: le due lingue vivono allo stesso indirizzo, e la lingua la sceglie
+  lo script.
+- Il gemello 'I Grandi di Arda' ha lo stesso impianto: le due cose si cambiano insieme.
+
 ## ⚠️⚠️ Stato: lo Schedario è IMPORTATO, e il dataset è verificato sulle fonti
 
 Il dataset contiene le schede dello **Schedario** compilate dall'utente, e ognuna è passata da una

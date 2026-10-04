@@ -19,6 +19,7 @@
 // sorgenti del loro progetto.
 import { transform } from 'esbuild';
 import fs from 'node:fs';
+import vm from 'node:vm';
 
 const DIR = (process.argv[2] || '').replace(/\/+$/, '');
 if (!DIR || !fs.existsSync(DIR + '/index.src.html')) { console.error('uso: node .github/scripts/minify.mjs <cartella con index.src.html>'); process.exit(1); }
@@ -56,9 +57,46 @@ const inLinea = parti.filter(p => p.tag === 'script' && !/\bsrc\s*=/.test(p.attr
 const principale = inLinea.sort((a, b) => b.corpo.length - a.corpo.length)[0];
 if (!principale || principale.corpo.length < 50000) { console.error('script principale non trovato nel sorgente'); process.exit(1); }
 
+// ── L'elenco leggibile SENZA JavaScript (15.74 / 2.84) ─────────────────────────────────────
+// Le card nascono dallo script, quindi chi legge la pagina senza eseguirlo (un agente, un
+// motore di ricerca che non esegue JS, un lettore senza JavaScript) trovava una lista vuota.
+// Il sorgente contiene un `<noscript data-elenco>` con la frase d'introduzione; qui ci si
+// aggiunge l'elenco ricavato da `dati.js`, nell'ordine della classifica: nome, tipo e opera della
+// prima apparizione. Gli apocrifi vanno in un elenco a parte, col titolo che il sorgente dichiara
+// in `data-titolo-apocrifi`.
+// ⚠️ La frase breve (`info`) NON c'è, ed è misurato: su Arda portava la pagina compressa da 20 a
+// 35 KB, e la velocità viene prima. Le frasi complete un agente le legge in `dati.js`, a cui
+// `llms.txt` rimanda; l'opera invece si ripete e si comprime quasi a zero.
+// ⚠️ L'elenco segue i salvataggi admin perché il workflow gira anche quando cambia `dati.js`.
+// ⚠️ Il testo arriva dai dati, quindi passa da `esc`: un nome con `<` resta testo.
+const esc = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function elencoStatico(markup) {
+  return markup.replace(/(<noscript\b[^>]*\bdata-elenco\b[^>]*>)([\s\S]*?)(<\/noscript>)/i, (tutto, apre, dentro, chiude) => {
+    if (!fs.existsSync(DIR + '/dati.js')) return tutto;
+    const ctx = {};
+    vm.runInNewContext(fs.readFileSync(DIR + '/dati.js', 'utf8') + '\n;this.__dati = dati;', ctx);
+    const dati = ctx.__dati || [];
+    const titoloApo = (apre.match(/data-titolo-apocrifi="([^"]*)"/) || [])[1] || '';
+    const voce = d => {
+      const nome = d.nome || d.vero_nome || '';
+      let s = '<li><b>' + esc(nome) + '</b>';
+      if (d.vero_nome && d.nome && d.vero_nome !== d.nome) s += ', vero nome ' + esc(d.vero_nome);
+      if (d.tipo) s += ' (' + esc(d.tipo) + ')';
+      if (d.fonte) s += ': ' + esc(d.fonte);
+      return s + '</li>';
+    };
+    const lista = v => '<ol>' + v.map(voce).join('') + '</ol>';
+    const principali = dati.filter(d => !d.apocrifo), apocrifi = dati.filter(d => d.apocrifo);
+    let html = dentro.replace(/<!--[\s\S]*?-->/g, '').trim() + lista(principali);
+    if (apocrifi.length && titoloApo) html += '<h2>' + esc(titoloApo) + '</h2>' + lista(apocrifi);
+    console.log(`elenco senza JavaScript: ${principali.length} voci, più ${apocrifi.length} a parte`);
+    return apre + '<div class="elenco-statico">' + html + '</div>' + chiude;
+  });
+}
+
 let out = '';
 for (const p of parti) {
-  if (p.markup !== undefined) { out += p.markup.replace(/<!--[\s\S]*?-->\n?/g, ''); continue; }
+  if (p.markup !== undefined) { out += elencoStatico(p.markup).replace(/<!--[\s\S]*?-->\n?/g, ''); continue; }
   const esterno = /\bsrc\s*=/.test(p.attr);
   const tipo = (p.attr.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1];
   const js = p.tag === 'script' && !esterno && (!tipo || /javascript|module/i.test(tipo));

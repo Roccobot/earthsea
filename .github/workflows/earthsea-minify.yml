@@ -8,6 +8,8 @@
 # file generati: non riattiva
 # questo workflow (il filtro sui percorsi lo esclude, e i push fatti col GITHUB_TOKEN non
 # fanno partire altri workflow), ma fa partire il deploy di Pages come ogni push.
+# Dalla 2.84 gira anche quando cambia dati.js: la pagina generata contiene l'elenco leggibile
+# senza JavaScript, ricavato dai dati, e deve seguire i salvataggi admin del Worker.
 name: Terramare, pagina minificata
 
 on:
@@ -16,6 +18,7 @@ on:
     paths:
       - 'index.src.html'
       - 'admin.src.js'
+      - 'dati.js'
       - '.github/scripts/minify.mjs'
       - '.github/workflows/earthsea-minify.yml'
   workflow_dispatch:

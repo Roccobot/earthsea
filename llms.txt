@@ -1,0 +1,27 @@
+# The World of Earthsea (Il mondo di Terramare)
+
+> A bilingual (Italian and English) ranking of the characters of Ursula K. Le Guin's Earthsea cycle, from people to dragons, with true names, places of origin, works and quotations. Made by Rocco Casadei (Roccobot).
+
+The page builds its cards with JavaScript. Without it, the page still contains the ranked list of names, types and first-appearance works in a `<noscript>` block. The complete data is in one file.
+
+## Data
+
+- [dati.js](https://roccobot.github.io/earthsea/dati.js): the whole dataset. A JavaScript file: `var datiVersion` is the site version, and `var dati = [ ... ]` holds one JSON object per line, in ranking order (the first entry is ranked first).
+
+Main fields of each entry (an `_en` suffix is the English version of the same field):
+
+- `nome`, `nome_en`: the use-name shown on the card. Empty for dragons and for characters known only by their true name.
+- `vero_nome`: the true name, in the Language of the Making (it has no English version, because true names are not translated).
+- `tipo`, `tipo_en`: person, dragon or animal species (several values are separated by `|`).
+- `origine`: the island of birth, or of residence when the birth place is unknown.
+- `nomi_alternativi`, `appellativi` (and `_en`): other names, and titles.
+- `padre`, `madre`: parents.
+- `genere`: `m` or `f`, empty when the texts do not say.
+- `fonte`, `fonte_en`: the work where the character first appears, with its year.
+- `citazione`, `citazione_en`: a quotation; `citazione_voce` names the speaker when it is someone else.
+- `apocrifo`: `true` for characters of the two 1964 prototype stories; the page lists them in a second table.
+- Other boolean keys (such as `mago`, `stregone`, `arcimago`, `signoredraghi`) are badges; the page legend explains each one.
+
+## Page
+
+- [Il mondo di Terramare](https://roccobot.github.io/earthsea/): the ranking, with filters by category, gender and badge, in Italian or English.
