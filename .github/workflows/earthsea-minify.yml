@@ -3,7 +3,9 @@
 # del codice servito. Dalla 2.71 genera anche admin.js da admin.src.js. I sorgenti sono i
 # soli file che si modificano.
 #
-# Il commit che produce è di github-actions[bot] e tocca il solo index.html: non riattiva
+# Dalla 2.82 genera anche app.js, lo script principale estratto dalla pagina e caricato
+# differito (vedi minify.mjs). Il commit che produce è di github-actions[bot] e tocca i soli
+# file generati: non riattiva
 # questo workflow (il filtro sui percorsi lo esclude, e i push fatti col GITHUB_TOKEN non
 # fanno partire altri workflow), ma fa partire il deploy di Pages come ogni push.
 name: Terramare, pagina minificata
@@ -39,13 +41,13 @@ jobs:
         run: node .github/scripts/minify.mjs .
       - name: Pubblica se è cambiato
         run: |
-          if git diff --quiet -- index.html admin.js && [ -z "$(git ls-files --others --exclude-standard admin.js)" ]; then
+          if git diff --quiet -- index.html admin.js app.js && [ -z "$(git ls-files --others --exclude-standard admin.js app.js)" ]; then
             echo "index.html già allineato al sorgente"
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html admin.js
+          git add index.html admin.js app.js
           git commit -m 'Terramare: index.html rigenerato dal sorgente'
           for i in 1 2 3 4; do
             git pull --rebase origin main && git push origin HEAD:main && exit 0
