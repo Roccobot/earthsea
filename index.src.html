@@ -40,6 +40,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=3">
 <!-- ⚠️ L'`apple-touch-icon` serve a iOS, che per l'icona NON guarda il manifest: senza
      questo tag l'aggiunta alla schermata Home prende uno screenshot della pagina. -->
+<!-- Dati strutturati per motori e agenti: il sito descritto come Dataset, col file dei dati
+     (`dati.js`) come distribuzione. Statici: l'elenco delle voci vive nel `<noscript data-elenco>`. -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Il mondo di Terramare", "alternateName": "The World of Earthsea", "description": "Classifica bilingue (italiano e inglese) dei personaggi del ciclo di Terramare di Ursula K. Le Guin, dagli uomini ai draghi, con veri nomi, origini, opere e citazioni. The great ones of the Earthsea archipelago, in Italian and English.", "url": "https://roccobot.github.io/earthsea/", "inLanguage": ["it", "en"], "isAccessibleForFree": true, "creator": {"@type": "Person", "name": "Rocco Casadei", "alternateName": "Roccobot", "url": "https://roccobot.me"}, "distribution": {"@type": "DataDownload", "contentUrl": "https://roccobot.github.io/earthsea/dati.js", "encodingFormat": "text/javascript"}}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="pwa/app-192.png">
 <meta name="apple-mobile-web-app-title" content="Earthsea Roccobot">
@@ -411,6 +414,13 @@ html { --col-max:740px; }
    divergerebbe al primo ritocco. */
 html { --card-gap:clamp(0.8rem,3vw,2rem); }
 .scroll { max-width:var(--col-max); margin:1.2rem auto 3rem; padding:0 1rem; }
+/* L'elenco per chi legge SENZA JavaScript (`<noscript data-elenco>`, lo riempie il minificatore):
+   la stessa colonna della lista e i colori del tema, perché senza stile i link restavano blu
+   sul fondo scuro e la classifica perdeva i numeri. Con JavaScript acceso non si vede mai. */
+.elenco-statico { max-width:var(--col-max); margin:1.2rem auto 3rem; padding:0 1rem; color:var(--parchment); line-height:1.5; }
+.elenco-statico a { color:var(--gold-bright); }
+.elenco-statico ol { list-style:decimal; padding-left:2.4em; margin:0.8rem 0; }
+.elenco-statico h2 { font-family:'Cinzel',serif; font-size:1.1rem; color:var(--gold-bright); margin:2rem 0 0.6rem; }
 .rank-item {
   position:relative;
   display:grid;
@@ -3650,7 +3660,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.83</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.84</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
@@ -3668,6 +3678,10 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 </header>
 
 <main class="scroll" id="rank-list"></main>
+<!-- L'elenco per chi legge senza JavaScript: il minificatore ci aggiunge le voci di `dati.js`
+     (`elencoStatico` in .github/scripts/minify.mjs). Sta FUORI da #rank-list, o la regola
+     `#rank-list:empty ~ footer` non nasconderebbe più il footer prima delle card. -->
+<noscript data-elenco data-titolo-apocrifi="Personaggi apocrifi"><p>Senza JavaScript resta l'elenco essenziale, nell'ordine della classifica. I dati completi, in italiano e in inglese, sono in <a href="dati.js">dati.js</a>, e <a href="llms.txt">llms.txt</a> ne spiega i campi.</p></noscript>
 <div class="print-running-header" aria-hidden="true"><span>Il mondo di Terramare</span><span>roccobot.me</span></div>
 
 <footer>
