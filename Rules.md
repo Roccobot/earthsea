@@ -66,6 +66,29 @@
   commento in testa allo script): i gestori scritti nel markup e gli accessi `window[nome]`
   restano validi.
 
+## 🔤 I caratteri sono in casa, e sono due famiglie
+
+- ⚠️⚠️ **Dalla `2.83` i caratteri vivono in `fonts/`**, dichiarati da un blocco `@font-face` in testa a
+  `index.src.html`, e Google Fonts non c'è più: il suo foglio di stile bloccava il primo disegno
+  sul telefono dell'utente per più di un secondo (report Lighthouse della `2.62` di Terramare,
+  1.310 ms). I file li scarica `.memo/scripts/fonts-fetch.mjs` dell'hub, sottoinsiemi latin e
+  latin-ext, con `font-display:swap`; la licenza è la SIL Open Font License 1.1.
+- ⚠️⚠️ **Le famiglie sono DUE, `Cinzel` ed `EB Garamond`**: `Cinzel Decorative` è uscito per scelta
+  dell'utente (A2, 2026-10-04), dopo il confronto coi file veri, perché le sole differenze erano gli
+  svolazzi delle maiuscole. Titolone e riga 'Roccobot presenta' sono in `Cinzel`, che la
+  pagina scaricava già per altri testi: tre file in meno e nessuno in più.
+  - ⚠️ **`Cinzel` è più stretto**: un titolo che con Decorative andava a capo può stare su una
+    riga, e il pareggio delle righe del titolone fra le due lingue resta il presidio contro il salto.
+  - ⚠️ **Il `padding-bottom:0.14em` del titolone resta** benché gli svolazzi bassi non ci siano
+    più: toglierlo cambierebbe l'altezza dell'intestazione, e la riserva è innocua.
+- **Si precaricano i due file che servono subito** (`Cinzel` latin per il titolone, `EB Garamond`
+  latin per le card); gli altri arrivano quando la pagina li usa, come decide `unicode-range`.
+- ⚠️⚠️ **La stella dei fregi (`✦`) è disegnata in SVG**, una maschera CSS col colore del testo, nella
+  riga sopra il titolo e ai lati del link del footer (classe `.stella`): nessun font del sito la
+  contiene, quindi la disegnava un carattere di sistema diverso su ogni telefono (via libera
+  dell'utente).
+- Il gemello 'I Grandi di Arda' ha lo stesso impianto: le due cose si cambiano insieme.
+
 ## ⚠️⚠️ Stato: lo Schedario è IMPORTATO, e il dataset è verificato sulle fonti
 
 Il dataset contiene le schede dello **Schedario** compilate dall'utente, e ognuna è passata da una

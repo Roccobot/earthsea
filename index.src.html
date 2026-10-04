@@ -44,9 +44,21 @@
 <link rel="apple-touch-icon" href="pwa/app-192.png">
 <meta name="apple-mobile-web-app-title" content="Earthsea Roccobot">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&amp;family=Cinzel:wght@400;600;700;900&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet">
+<!-- I caratteri sono in casa (dalla 2.83): prima arrivavano da Google Fonts, il cui foglio di stile
+     bloccava il primo disegno sul telefono per più di un secondo. Si precaricano i due file
+     che servono subito (titolone e testo delle card); gli altri arrivano quando la pagina li usa. -->
+<link rel="preload" href="fonts/Cinzel-400-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/EBGaramond-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Caratteri in casa (SIL Open Font License 1.1), scaricati da Google Fonts con
+   .memo/scripts/fonts-fetch.mjs dell'hub: sottoinsiemi latin e latin-ext, font-display swap. */
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/Cinzel-400-900-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/Cinzel-400-900-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'EB Garamond';font-style:italic;font-weight:400 800;font-display:swap;src:url(fonts/EBGaramond-400-800-italic-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'EB Garamond';font-style:italic;font-weight:400 800;font-display:swap;src:url(fonts/EBGaramond-400-800-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/EBGaramond-400-800-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'EB Garamond';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/EBGaramond-400-800-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+</style>
 <style>
 :root {
   /* ── Tavolozza 'Notte sull'Arcipelago' (scelta dell'utente, 2026-08-21) ──
@@ -264,12 +276,22 @@ html[data-theme="light"] .version-badge, html[data-theme="light"] .home-link { c
    (classe no-langswitch-mobile sull'html). Resta nel DOM e su desktop. */
 @media (max-width:768px) { html.no-langswitch-mobile .lang-switch { display:none; } }
 .crest {
-  font-family:'Cinzel Decorative',serif;
+  font-family:'Cinzel',serif;
   font-size:clamp(0.7rem,2vw,0.85rem);
   letter-spacing:0.45em; color:var(--gold);
   margin-bottom:0.9rem; text-transform:uppercase;
 }
-.crest::before,.crest::after { content:'✦'; margin:0 0.8em; color:var(--gold-bright); }
+.crest::before,.crest::after { content:''; margin:0 0.8em; color:var(--gold-bright); }
+/* ⚠️ La stella dei fregi (✦) è DISEGNATA, non un carattere (scelta dell'utente): nessuno dei
+   font del sito la contiene, quindi la disegnava un carattere di sistema diverso su ogni
+   telefono. La forma è una maschera e il colore è quello del testo (`currentColor`), quindi
+   segue il tema da sé; `.stella` è la stessa stella dentro il testo (il footer). */
+.crest::before,.crest::after,.stella {
+  display:inline-block; width:0.72em; height:0.72em; vertical-align:-0.02em;
+  background-color:currentColor;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C12.9 7.5 16.5 11.1 24 12C16.5 12.9 12.9 16.5 12 24C11.1 16.5 7.5 12.9 0 12C7.5 11.1 11.1 7.5 12 0Z'/%3E%3C/svg%3E"); mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C12.9 7.5 16.5 11.1 24 12C16.5 12.9 12.9 16.5 12 24C11.1 16.5 7.5 12.9 0 12C7.5 11.1 11.1 7.5 12 0Z'/%3E%3C/svg%3E");
+  -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
 .crest a { color:inherit; text-decoration:none; font-weight:bold; }
 /* ⚠️ SCHERMI STRETTISSIMI (0.78): sotto i 360px `ROCCOBOT PRESENTA` andava a capo mentre
    l'inglese `PRESENTS` stava su una riga, e l'intestazione cresceva di 17,9px al cambio
@@ -285,7 +307,7 @@ html[data-theme="light"] .version-badge, html[data-theme="light"] .home-link { c
   .crest::before, .crest::after { margin:0 0.5em; }
 }
 h1 {
-  font-family:'Cinzel Decorative',serif; font-weight:900;
+  font-family:'Cinzel',serif; font-weight:900;
   font-size:clamp(2.4rem,8vw,5.5rem); line-height:0.95;
   letter-spacing:0.02em;
   /* ⚠️⚠️ I DUE ALONI GRIGI SONO USCITI (0.37), e non sono da rimettere: erano
@@ -315,7 +337,7 @@ h1 {
   background:linear-gradient(180deg,#cfe8f5 0%,#5f9fd4 100%);
   -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   /* Con background-clip:text il gradiente riempie il testo solo entro il box di
-     riga; con line-height:0.95 gli svolazzi bassi di Cinzel Decorative (code di
+     riga; con line-height:0.95 gli svolazzi bassi di Cinzel Decorative, il carattere fino alla 2.82 (code di
      G/R/A) uscivano dal box e restavano trasparenti (parevano 'tagliati'). Un
      padding-bottom estende il box di riempimento verso il basso e li copre; il
      margin-bottom è ridotto della stessa quantità così lo spazio sotto non cambia. */
@@ -3628,7 +3650,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.82</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.83</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
@@ -3649,7 +3671,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <div class="print-running-header" aria-hidden="true"><span>Il mondo di Terramare</span><span>roccobot.me</span></div>
 
 <footer>
-  <p id="footer-links" style="color:var(--gold-bright);margin-bottom:1.5rem;">✦ <button type="button" id="res-link">Mappe</button> ✦</p>
+  <p id="footer-links" style="color:var(--gold-bright);margin-bottom:1.5rem;"><span class="stella" aria-hidden="true"></span> <button type="button" id="res-link">Mappe</button> <span class="stella" aria-hidden="true"></span></p>
   <p id="footer-text">Il potere, a Terramare, comincia da un nome.</p>
 </footer>
 
