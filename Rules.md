@@ -16,6 +16,16 @@
 > rimanda al nuovo indirizzo conservando parametri e ancora, per i link salvati e le app
 > installate; `res/` è rimasta dov'era, e i suoi indirizzi non sono cambiati.
 
+## 🪞 Il nucleo del funzionamento è lo stesso del sito gemello
+
+- ⚠️⚠️ **Regola dell'utente, 2026-10-04**: *il nucleo del funzionamento dei siti gemelli deve essere
+  uguale*. Fra 'I Grandi di Terramare' e 'I Grandi di Arda' cambiano la lore e il design; il
+  funzionamento di base (disegno e misura della lista, anti-jitter, caricamento, caratteri, ricerca,
+  salti, riordino, Pannello) è lo stesso, e una modifica a uno dei due si porta sull'altro nello
+  stesso giro.
+- ⚠️ **Le divergenze che esistono sono dichiarate nelle due regole**, con la ragione (per esempio la
+  colonna dell'origine, che Arda non ha): una divergenza non dichiarata è un difetto.
+
 ## ⚠️⚠️⚠️ SI MODIFICANO `index.src.html` E `admin.src.js`: `index.html` E `admin.js` SONO GENERATI
 
 - **Il sorgente commentato è `index.src.html`**: la pagina pubblicata, `index.html`, la genera la
@@ -87,6 +97,24 @@
   riga sopra il titolo e ai lati del link del footer (classe `.stella`): nessun font del sito la
   contiene, quindi la disegnava un carattere di sistema diverso su ogni telefono (via libera
   dell'utente).
+- ⚠️⚠️ **Dalla `2.95` il carattere che si vede prima dello scambio è TARATO su EB Garamond** (cura del
+  CLS, A4 dell'utente): due famiglie di ripiego, `EBG Ripiego T` (Times New Roman di macOS, iOS e
+  Windows, o Liberation Serif) ed `EBG Ripiego N` (Noto Serif di Android), con `size-adjust` e le
+  correzioni di ascendenti e discendenti, tondo e corsivo, subito dopo `EB Garamond` in tutte le
+  pile. Il report del telefono della `2.85` dava CLS 0,074, tutto sulla lista spostata dall'arrivo
+  del corsivo.
+  - **I valori si misurano nel browser, non dalle tabelle del file**: la larghezza dei testi della
+    pagina (sottotitolo, introduzione, venti citazioni) nei due caratteri, e `size-adjust` è il loro
+    rapporto. Dalle tabelle veniva 93,5% per Times, nel browser 94%.
+  - ⚠️ **Il corsivo di Times è a 90,8% e non a 91,3%, ed è una scelta**: a 412px, la larghezza che
+    Lighthouse simula, il sottotitolo inglese col ripiego superava il riquadro di un pixel e mezzo, e
+    la riserva dell'intestazione cresceva di una riga allo scambio. ⚠️ Una taratura è una media:
+    qualche citazione al limite cambia ancora riga, ma sotto il bordo dello schermo, dove lo
+    spostamento non entra nel CLS.
+  - ⚠️ **Noto Serif è misurato sulla versione di Google Fonts**, che può differire di poco da quella
+    di un telefono: la conferma la dà il report di un Android vero.
+  - **La prova è `swap-probe`** (nello scratchpad della sessione): la geometria dell'intestazione e
+    delle prime card col carattere vero e con EB Garamond bloccato.
 - Il gemello 'I Grandi di Arda' ha lo stesso impianto: le due cose si cambiano insieme.
 
 ## 🤖 Leggibile senza JavaScript e dagli agenti
@@ -3187,6 +3215,44 @@ diversa, e non è un errore.
 - **La certificazione è la stessa dell'anti-jitter**: stato finale delle card identico a quello
   della passata intera (classi e altezze, su quattordici larghezze da 1280 a 320) e zero card di
   altezza diversa fra le due lingue, coi font reali.
+
+### 📜 Le card nascono mentre si scorre: il disegno A TRATTI
+
+- ⚠️⚠️ **Dalla `2.95` la lista si disegna a tratti** (proposta dell'utente, 2026-10-04: *l'anti-jitter
+  è una contromisura visuale, e non ha senso applicarla a ciò che non si vede*): `renderList` disegna
+  le prime `LOTTO_PRIMO` card, e una sentinella alta zero in coda alla lista (`.rank-tratto`) ne
+  aggiunge altrettante quando arriva a una schermata e mezza dal fondo. Ogni tratto si misura da
+  solo (`aggiungiTratto`), perché le card dipendono dalla sola larghezza della lista.
+  - ⚠️ **Lo stato che passa da una card all'altra vive in `_tr`** (il numero, la sezione degli
+    apocrifi), così il disegno si ferma e riprende: `emettiCarta` è il corpo di quello che era il
+    ciclo di `renderList`.
+  - ⚠️ **L'osservatore non richiama da solo se la sentinella, spostata in giù, è ancora vicina**: si
+    stacca e si riattacca a ogni tratto, e la prima notifica dice com'è adesso.
+  - ⚠️ **Il secondo colpo dell'assestamento si dà al solo tratto**: l'assestamento di tutta la lista
+    a ogni tratto costerebbe sempre di più man mano che si scorre.
+- ⚠️⚠️ **La lista INTERA si disegna con `disegnaTutto`**, e la vogliono in cinque: il salto in fondo
+  (FAB, tasto desktop, `Ctrl`/`Cmd`+Freccia giù, con l'indicatore d'attesa che l'utente ha posto
+  come condizione), `Cmd`/`Ctrl`+`F` (la ricerca del browser vede solo quello che c'è), il parametro
+  **`?d=full`** (`d` di dataset, scelto dall'utente), il riordino e l'area admin.
+  - **L'indicatore d'attesa è un anello nei colori dei dischi del FAB** (`.attesa-disegno`), e gira con
+    una `transform`, che il compositore anima anche mentre il disegno occupa il filo principale; resta
+    almeno 300 ms, perché un lampo più breve si legge come un difetto.
+  - ⚠️ **`Cmd`/`Ctrl`+`F` non ferma il browser**: la sua barra si apre come sempre, e trova le card
+    che arrivano subito dopo. ⚠️ Che la barra conti anche quelle dipende dal browser: va provato, e
+    `?d=full` resta la via sicura.
+- ⚠️ **La ricerca del sito disegna fino alla voce e un tratto dopo** (`disegnaFinoA`), così la card
+  arriva al centro con qualcosa sotto; una voce fuori dai filtri si svela come prima.
+- ⚠️⚠️ **Un ridisegno rifà almeno le card che c'erano** (cambio lingua, filtri): il cambio lingua a
+  metà pagina non accorcia la pagina sotto il dito.
+- ⚠️ **Il footer compare in fondo al tratto disegnato** e scende a ogni tratto: l'utente l'ha messo
+  in conto, e lo prova sul telefono.
+- **La certificazione**: le card disegnate scorrendo sono identiche a quelle della lista intera
+  (altezza e classi della riga del nome), il cambio lingua a metà pagina non muove la card in cima né
+  cambia altezze, e il banco anti-jitter sulla lista intera (`?d=full`) dà lo stesso stato del blocco
+  F, su quattordici larghezze. Il banco è `tratti-jitter.js` nello scratchpad della sessione.
+- ⚠️⚠️ **Un banco che misura la lista intera va lanciato con `?d=full`**: senza, trova le sole card
+  disegnate, e conclude che la lista è più corta di quello che è.
+- Il gemello 'I Grandi di Arda' ha lo stesso impianto: le due cose si cambiano insieme.
 
 ### 🏷️ Le ETICHETTE non riservano più la larghezza
 

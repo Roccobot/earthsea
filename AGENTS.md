@@ -228,6 +228,12 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   **copia adattata** di 'I Grandi di Arda', e i commenti che parlano di Tolkien si toccano solo
   quando si tocca quel codice (`Rules.md` § '🧹 Residui del motore di provenienza (debito
   dichiarato)').
+- **Il nucleo del funzionamento è lo stesso di 'I Grandi di Arda'** (regola dell'utente): cambiano
+  lore e design, e una modifica al funzionamento si porta sull'altro sito nello stesso giro
+  (`Rules.md` § '🪞 Il nucleo del funzionamento è lo stesso del sito gemello').
+- **La lista si disegna a tratti mentre si scorre** (dalla `2.95`), e la lista intera la disegna
+  `disegnaTutto` (salto in fondo, `Cmd`/`Ctrl`+`F`, `?d=full`, riordino, admin); un banco che misura la
+  lista intera usa `?d=full` (`Rules.md` § '📜 Le card nascono mentre si scorre: il disegno A TRATTI').
 - **Ramo principale `main`**. Le regole trasversali (go-live, deploy, controlli) vivono nell'hub
   `Roccobot/roccobot.github.io`, e questo repo non le sostituisce (riquadro in testa a
   `Rules.md`).
