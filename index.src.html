@@ -65,6 +65,8 @@
 @font-face{font-family:'EBG Ripiego T';font-style:italic;src:local('Times New Roman Italic'),local('TimesNewRomanPS-ItalicMT'),local('Times-Italic'),local('Liberation Serif Italic'),local('LiberationSerif-Italic');size-adjust:90.8%;ascent-override:110.9%;descent-override:32.8%;line-gap-override:0%;}
 @font-face{font-family:'EBG Ripiego N';font-style:normal;src:local('Noto Serif'),local('NotoSerif'),local('NotoSerif-Regular');size-adjust:79.9%;ascent-override:126%;descent-override:37.3%;line-gap-override:0%;}
 @font-face{font-family:'EBG Ripiego N';font-style:italic;src:local('Noto Serif Italic'),local('NotoSerif-Italic');size-adjust:80.1%;ascent-override:125.7%;descent-override:37.2%;line-gap-override:0%;}
+@font-face{font-family:'Cinzel Ripiego T';font-style:normal;src:local('Times New Roman'),local('TimesNewRomanPSMT'),local('Times'),local('Times-Roman'),local('Liberation Serif'),local('LiberationSerif');size-adjust:134%;ascent-override:72.8%;descent-override:27.8%;line-gap-override:0%;}
+@font-face{font-family:'Cinzel Ripiego N';font-style:normal;src:local('Noto Serif'),local('NotoSerif'),local('NotoSerif-Regular');size-adjust:115%;ascent-override:84.9%;descent-override:32.3%;line-gap-override:0%;}
 </style>
 <style>
 :root {
@@ -314,7 +316,11 @@ html[data-theme="light"] .version-badge, html[data-theme="light"] .home-link { c
   .crest::before, .crest::after { margin:0 0.5em; }
 }
 h1 {
-  font-family:'Cinzel',serif; font-weight:900;
+  /* ⚠️ Il titolone ha un ripiego TARATO su Cinzel, come EB Garamond (vedi le `@font-face` in testa):
+     senza, il suo testo saliva di 5-11px all'arrivo del carattere vero. È tarato sul solo titolo,
+     perché il rapporto di larghezza fra Cinzel e un serif comune cambia molto fra maiuscole e
+     minuscole (fra 1 e 1,4), e il titolo era il solo testo in Cinzel che si spostava. */
+  font-family:'Cinzel','Cinzel Ripiego T','Cinzel Ripiego N',serif; font-weight:900;
   font-size:clamp(2.4rem,8vw,5.5rem); line-height:0.95;
   letter-spacing:0.02em;
   /* ⚠️⚠️ I DUE ALONI GRIGI SONO USCITI (0.37), e non sono da rimettere: erano
@@ -3678,7 +3684,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.95</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.96</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
