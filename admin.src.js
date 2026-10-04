@@ -252,6 +252,8 @@ function showAdminEditor() {
   const overlay = document.createElement('div');
   overlay.className = 'admin-overlay';
   document.documentElement.classList.add('admin-open');
+  // L'area admin lavora sulla lista intera (riordino, colori per card): si disegna tutta.
+  disegnaTutto();
 
   const header = document.createElement('div');
   header.className = 'admin-header';
