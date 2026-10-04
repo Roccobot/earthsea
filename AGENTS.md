@@ -231,8 +231,9 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Ramo principale `main`**. Le regole trasversali (go-live, deploy, controlli) vivono nell'hub
   `Roccobot/roccobot.github.io`, e questo repo non le sostituisce (riquadro in testa a
   `Rules.md`).
-- **Si modificano `index.src.html` e `admin.src.js`**: `index.html` e `admin.js` li genera e li
-  committa la GitHub Action `.github/workflows/earthsea-minify.yml`, e una modifica fatta là la
+- **Si modificano `index.src.html` e `admin.src.js`**: `index.html`, `app.js` (lo script
+  principale, differito dalla `2.82`) e `admin.js` li genera e li committa la GitHub Action
+  `.github/workflows/earthsea-minify.yml`, e una modifica fatta là la
   cancella il build successivo. Nelle note 'index.html' vuol dire il sorgente, e una funzione
   nuova dell'amministrazione va in `admin.src.js` (`Rules.md` § '⚠️⚠️⚠️ SI MODIFICANO
   `index.src.html` E `admin.src.js`: `index.html` E `admin.js` SONO GENERATI').

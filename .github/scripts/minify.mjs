@@ -37,13 +37,39 @@ while ((m = re.exec(src))) {
 }
 parti.push({ markup: src.slice(ultimo) });
 
+// ── Caricamento differito (15.72 / 2.82): lo script principale esce in `app.js` ──────────
+// Nel sorgente lo script principale è in linea in fondo al body, dopo `<script src="dati.js">`
+// sincrono: il parser si ferma su `dati.js` (616 KB su Arda, 210 su Terramare) e il primo disegno aspetta tutti e
+// due. Nel generato `dati.js` prende `defer` e lo script principale va in un file `app.js`,
+// anch'esso `defer`: il browser li scarica mentre legge il resto, li esegue in quest'ordine a
+// documento completo, e la pagina si disegna prima. Il sorgente resta com'è, e aperto da sé
+// funziona uguale (gli script sono già in fondo al body, quindi il DOM è completo lo stesso).
+// ⚠️ `app.js` resta uno script CLASSICO, non un modulo: funzioni e `let` di primo livello
+// restano globali, che è ciò che `admin.js` e i gestori nel markup si aspettano.
+// ⚠️ L'indirizzo ha la VERSIONE del sito (`?v=`), letta dal badge del sorgente: a ogni versione
+// il browser scarica il file nuovo, e un `index.html` nuovo non gira mai con un `app.js` vecchio
+// preso dalla cache. `dati.js` non la prende: lo riscrive il Worker a ogni salvataggio, e questo
+// file non gira in quel momento.
+const VER = (src.match(/vb-v">v<\/span>([0-9.]+)/) || [])[1] || String(Date.now());
+const APP_OUT = DIR + '/app.js';
+const inLinea = parti.filter(p => p.tag === 'script' && !/\bsrc\s*=/.test(p.attr));
+const principale = inLinea.sort((a, b) => b.corpo.length - a.corpo.length)[0];
+if (!principale || principale.corpo.length < 50000) { console.error('script principale non trovato nel sorgente'); process.exit(1); }
+
 let out = '';
 for (const p of parti) {
   if (p.markup !== undefined) { out += p.markup.replace(/<!--[\s\S]*?-->\n?/g, ''); continue; }
   const esterno = /\bsrc\s*=/.test(p.attr);
   const tipo = (p.attr.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1];
   const js = p.tag === 'script' && !esterno && (!tipo || /javascript|module/i.test(tipo));
-  if (p.tag === 'style' || js) {
+  if (p === principale) {
+    const r = await transform(p.corpo, { loader: 'js', minify: true, legalComments: 'none', charset: 'utf8' });
+    fs.writeFileSync(APP_OUT, '// FILE GENERATO da index.src.html con .github/scripts/minify.mjs: si modifica il sorgente, mai questo file.\n' + r.code);
+    out += '<script src="app.js?v=' + VER + '" defer></script>';
+    console.log(`script principale -> ${APP_OUT}: ${r.code.length.toLocaleString('it-IT')} caratteri`);
+  } else if (esterno && /\bsrc\s*=\s*["']?dati\.js/.test(p.attr) && !/\bdefer\b/.test(p.attr)) {
+    out += '<script' + p.attr + ' defer></script>';
+  } else if (p.tag === 'style' || js) {
     const r = await transform(p.corpo, { loader: p.tag === 'style' ? 'css' : 'js', minify: true, legalComments: 'none', charset: 'utf8' });
     out += '<' + p.tag + p.attr + '>' + r.code.trim() + '</' + p.tag + '>';
   } else {

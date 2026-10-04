@@ -40,6 +40,24 @@
 - **Chi prova in locale** lancia `node .github/scripts/minify.mjs .` dalla radice (con esbuild
   installato); `index.src.html` si apre anche da sé, perché le sue risorse hanno gli stessi
   percorsi.
+- ⚠️⚠️ **Dalla `2.82` il generato carica gli script DIFFERITI, e lo script principale vive in
+  `app.js`** (caricamento progressivo, priorità dell'utente del 2026-10-04). Nel sorgente lo
+  script principale resta in linea dopo `<script src="dati.js">` sincrono; nel generato `dati.js`
+  ha `defer` e lo script principale esce in `app.js`, anch'esso `defer`, con la versione del sito
+  nell'indirizzo (`app.js?v=2.82`, letta dal badge del sorgente), così un `index.html` nuovo non
+  gira mai con un `app.js` vecchio preso dalla cache. L'Action committa anche `app.js`.
+  - ⚠️ **`app.js` è uno script classico, non un modulo**: funzioni e `let` di primo livello restano
+    globali, come li aspettano `admin.js` e i gestori nel markup. Il sorgente aperto da sé funziona
+    uguale, perché i suoi script sono già in fondo al body.
+  - ⚠️ **`dati.js` non prende il `?v=`**: lo riscrive il Worker a ogni salvataggio, quando il
+    minificatore non gira, e il flusso dati non si tocca.
+  - ⚠️ **Il minificatore riconosce lo script principale come il più lungo di quelli in linea**
+    (sopra i 50.000 caratteri) e si ferma con errore se non lo trova.
+  - ⚠️⚠️ **Lighthouse col throttling SIMULATO punisce il differimento** (misurato su Arda: da 69 a
+    57, primo disegno da 2,7 a 6,1 s), mentre nel browser il primo disegno arriva a 340 ms anche con
+    gli script ritardati di quattro secondi (sonda `fcp-probe.js`): la simulazione vede nel
+    tracciato non rallentato un primo disegno tardo e ci somma il download degli script. Fa fede
+    il throttling `devtools`, che è quello dei report del telefono dell'utente.
 - ⚠️ **Il badge di ripiego della versione si scrive nel sorgente**, e `datiVersion` resta in
   `dati.js`: un bump tocca `index.src.html` e `dati.js`, e `index.html` lo segue col build.
   L'hook dell'hub (`.memo/scripts/hooks.py`) confronta i due numeri a inizio sessione e blocca
@@ -3081,9 +3099,17 @@ diversa, e non è un errore.
 - **Com'è fatto**: ogni funzione di riga riceve un **perimetro** (`scope`, un array di card) e
   lavora solo su quello; `cardsDi` e `dentro` sono i due soli punti che leggono il DOM della lista.
   `inLotti` ordina le card con `perVista` (prima quelle in vista, poi le altre per distanza dallo
-  schermo), fa il primo lotto (`LOTTO_PRIMO`, dodici) in modo sincrono e gli altri (`LOTTO`,
-  sedici) con `requestAnimationFrame`. Un lavoro nuovo annulla quello in corso. `reflowRows` e
+  schermo), fa il primo lotto (`LOTTO_PRIMO`, dodici) in modo sincrono e tutte le altre card in
+  un solo `requestAnimationFrame`. Un lavoro nuovo annulla quello in corso. `reflowRows` e
   `assestaRighe` senza perimetro passano da lì; con un perimetro lavorano su quel lotto.
+  - ⚠️⚠️ **I lotti sono DUE, e la misura che l'ha deciso è di Lighthouse** (throttling
+    `devtools`, mobile): coi lotti piccoli (sedici card, con lotto adattivo fra 4 e 32) su Arda
+    il tempo di blocco raddoppiava (TBT 5.720 ms contro 2.480-3.000 della passata intera) e qui
+    l'interattività passava da 9,5 a 13,3 s, perché ogni lotto paga da capo il layout
+    dell'intera lista. Con due lotti il blocco torna a quello della passata intera e le card in
+    vista restano pronte subito. **Misura scartata: il lotto adattivo**, che non è codice da
+    rimettere. Il dettaglio dei numeri vive nel `Rules.md` di `Roccobot/arda`, § '↕️ Anti-jitter
+    al cambio lingua', voce sui lotti.
 - ⚠️⚠️ **Le card dipendono dalla sola larghezza della lista, non l'una dall'altra**: è ciò che
   rende i lotti corretti. Quello che è della pagina (`riservaTesta`, `pareggiaTitolo`, le linee
   mediane) si fa una volta sola, fuori dai lotti.
@@ -3093,6 +3119,15 @@ diversa, e non è un errore.
 - ⚠️ **Un solo timer per il ridimensionamento** (`pianificaReflow`, 150 ms): l'evento `resize` e il
   `ResizeObserver` della lista lo condividono. Prima avevano due debounce (150 e 220 ms) e il
   trascinamento del bordo produceva due assestamenti completi.
+  - ⚠️⚠️ **Dalla `2.82` il timer rimisura le card solo se la chiave è cambiata** (`chiaveReflow`:
+    larghezza della lista e font), come su Arda; altrimenti ripareggia la sola intestazione.
+  - ⚠️⚠️ **E l'osservatore legge la larghezza con `clientWidth`, la stessa misura della chiave.**
+    Fino alla `2.81` all'avvio leggeva il bordo esterno e nella notifica il solo contenuto
+    (`contentRect`, senza padding): la prima notifica, che arriva sempre, vedeva la lista più
+    stretta del padding e rifaceva l'intera catena di misura all'avvio, per niente. Trovato con
+    una sonda che conta le chiamate della catena: le passate complete all'avvio sono scese da
+    quattro a due (la `2.80` ne faceva tre). Due misure della stessa cosa prese in due modi
+    diversi non si confrontano.
 - ⚠️ **L'animazione di comparsa è delle sole dodici card del primo lotto** (`.rk-in`): le altre
   nascono fuori dallo schermo, e il ritardo a scalare era già saturo a dodici.
 - **La certificazione è la stessa dell'anti-jitter**: stato finale delle card identico a quello
