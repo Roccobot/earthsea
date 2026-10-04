@@ -7872,15 +7872,22 @@ function perVista(carte) {
   for (i = 0; i < fuori.length; i++) dentroV.push(fuori[i].c);
   return dentroV;
 }
+// ⚠️ IL LOTTO È ADATTIVO: si misura quanto dura e si dimezza sopra i 35 ms, si raddoppia sotto i
+// 12 (fra 4 e 32 card). Un lotto fisso di sedici costava sul mobile simulato più dei 50 ms oltre i
+// quali un'attività conta come blocco, e Lighthouse lo misurava (Arda: TBT da 40 a 280 ms con
+// il lotto fisso), mentre sul desktop sedici card erano pochissime.
 function inLotti(carte, lavoro, fine) {
   if (_lottiRaf) cancelAnimationFrame(_lottiRaf);
   _lottiRaf = 0;
-  var ordinate = perVista(carte), i = 0;
-  function passo(n) {
-    var fetta = ordinate.slice(i, i + n);
+  var ordinate = perVista(carte), i = 0, n = LOTTO;
+  function passo(quante) {
+    var fetta = ordinate.slice(i, i + quante), t0 = performance.now(), durata;
     i += fetta.length;
     if (fetta.length) lavoro(fetta);
-    if (i < ordinate.length) _lottiRaf = requestAnimationFrame(function(){ _lottiRaf = 0; passo(LOTTO); });
+    durata = performance.now() - t0;
+    if (durata > 35 && n > 4) n = Math.max(4, n >> 1);
+    else if (durata < 12 && n < 32) n = Math.min(32, n << 1);
+    if (i < ordinate.length) _lottiRaf = requestAnimationFrame(function(){ _lottiRaf = 0; passo(n); });
     else if (fine) fine();
   }
   passo(LOTTO_PRIMO);
