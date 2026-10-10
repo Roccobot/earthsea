@@ -4,8 +4,8 @@
 > (<https://roccobot.github.io/earthsea/>): che cosa è deciso, che cosa è provvisorio, e le
 > trappole nate dal fatto che il motore è una **copia adattata** di 'I Grandi di Arda'. Vale per
 > **tutti gli agenti**: il nucleo, cioè ogni regola in una riga, vive in `AGENTS.md`, e questo
-> file ne dà il testo completo e il perché. Claude Code lo carica da sé, perché `CLAUDE.md` lo
-> importa.
+> file ne dà il testo completo e il perché. Dal 2026-10-10 nessun agente lo carica da sé, Claude
+> Code compreso: si legge per intero prima di lavorare su una cosa di cui parla.
 > ⚠️ **Fino al 2026-09-27 questo testo era il `CLAUDE.md` del repo**: una nota che nomina il
 > `CLAUDE.md` di questo repo (in note vecchie, in `dati.js`, in `index.src.html`, in
 > `orig/README.md`) parla di questo file.
