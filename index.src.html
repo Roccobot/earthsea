@@ -3684,7 +3684,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.96</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.97</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
@@ -5365,6 +5365,22 @@ function titoloSborda(host, spazio) {
   return false;
 }
 
+// ⚠️⚠️ LA DECISIONE SI RICORDA, E NON SI RIFÀ SE NIENTE DI CIÒ DA CUI DIPENDE È CAMBIATO (dalla 2.97,
+// portata da 'I Grandi di Arda' 15.88): ogni prova scrive il titolo e lo misura, cioè chiede al
+// browser un'impaginazione completa, e all'avvio la funzione girava tre volte (in `setLang`, in
+// `reflowRows` subito dopo il disegno delle card, a font caricati). Su Arda, in tre corse di
+// Lighthouse, il riflusso forzato attribuito a lei è sceso da 154-247 ms a 0-44. La chiave contiene
+// quello che cambia la larghezza utile o la tipografia del titolo: la larghezza della pagina senza
+// barra di scorrimento, la lingua, i font caricati, lo zoom XL e la colonna della vista divisa
+// (`--dockw`). ⚠️ Chi riscrive il titolo (`setLang`) azzera la chiave, o con la stessa lingua il
+// titolo resterebbe senza pareggio.
+var _titoloChiave = '';
+function chiaveTitolo() {
+  var n = 0, st = 'loaded', r = document.documentElement;
+  if (document.fonts) { st = document.fonts.status; document.fonts.forEach(function(f){ if (f.status === 'loaded') n++; }); }
+  return [r.clientWidth, currentLang, st, n, r.classList.contains('zoom-big'), r.style.getPropertyValue('--dockw')].join('|');
+}
+
 // ⚠️ La misura dell'ALTRA lingua si fa SUL TITOLO STESSO, non su un clone: la
 // tipografia del titolone vive in regole appese a `#title`, quindi un clone senza
 // quell'id renderebbe con un altro carattere e misurerebbe un'altra cosa. Le
@@ -5375,6 +5391,9 @@ function pareggiaTitolo() {
   if (!h1 || !host || typeof i18n === 'undefined' || typeof currentLang === 'undefined') return;
   var mia = currentLang, altra = mia === 'it' ? 'en' : 'it';
   if (!i18n[mia] || !i18n[altra]) return;
+  var chiave = chiaveTitolo();
+  if (chiave === _titoloChiave) return;
+  _titoloChiave = chiave;
   var st = getComputedStyle(h1);
   var spazio = h1.getBoundingClientRect().width - parseFloat(st.paddingLeft) - parseFloat(st.paddingRight);
   var scelta = -1;
@@ -5433,6 +5452,7 @@ function setLang(lang) {
   document.querySelector('#lang-switch .ls-face').textContent = lang === 'it' ? 'EN' : 'IT';
   scriviCrest(lang);
   scriviTitolo(document.getElementById('title-link'), i18n[lang].title, lang, -1);
+  _titoloChiave = '';
   pareggiaTitolo();
   // Le altre tre righe sono testo piano, quindi `textContent` basta e chiude il caso.
   document.getElementById('subtitle').textContent = i18n[lang].subtitle;
