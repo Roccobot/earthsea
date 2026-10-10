@@ -2472,8 +2472,8 @@ Schedario che lo alimenta.
     ricerca, perché `fold` normalizza in NFD e quel carattere non decompone in `-`.
   - **Il criterio si calcola sul valore RESO**, non sul campo italiano, o l'inglese ricadrebbe nel
     ramo sbagliato. ✅ Non tocca l'anti-jitter: l'altezza della card la governa il blocco dei nomi.
-- Ⓘ **Nel `dati.js` di Arda `paese` c'è ancora**: toglierlo è una modifica al flusso dati di quel
-  sito, cioè una modifica pesante, e nessuno l'ha chiesta.
+- Ⓘ **In Arda `paese` è stato tolto anche lui**, su richiesta dell'utente: il `Rules.md` di
+  `Roccobot/arda`, § '🧹 Il campo paese è uscito dal dataset'.
 
 ## 🌐 Le due metà del dataset: l'italiano è dell'utente, l'inglese è mio
 
@@ -2933,8 +2933,9 @@ Quasi ogni campo di testo ha il gemello `_en` (`nome`/`nome_en`, `nomi_alternati
    proverebbe l'implementazione, non il comportamento.
 
 - **I 'no' contano quanto i 'sì'**: a metà corsa il FAB non annuncia ancora il salto, un rimbalzo
-  piccolo non gira il chevron, e su desktop non succede niente. Il banco serve i due siti, e il sito
-  da provare lo sceglie `PROVA_SITO`.
+  piccolo non gira il chevron, e su desktop non succede niente. ⚠️ **Il banco non è committato**:
+  viveva nello scratchpad di una sessione (`prova-salto-fab.js`, coi due siti scelti da `PROVA_SITO`),
+  e chi rimette mano al motore lo ricostruisce da questa sezione.
 
 ### 🕳️ Che cosa se n'è andato con la colonna
 
