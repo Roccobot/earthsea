@@ -236,52 +236,39 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 ## 🧭 Il nucleo di `earthsea`
 
 - **Che cos'è**: 'I Grandi di Terramare', la classifica dei personaggi del ciclo di Terramare,
-  pubblicata da Pages su <https://roccobot.github.io/earthsea/>. Dalla `2.76` vive in questo
-  repo, e in `top/` resta solo la paginetta che rimanda al nuovo indirizzo. Il motore è una
-  **copia adattata** di 'I Grandi di Arda', e i commenti che parlano di Tolkien si toccano solo
-  quando si tocca quel codice (`Rules.md` § '🧹 Residui del motore di provenienza (debito
-  dichiarato)').
+  pubblicata da Pages su <https://roccobot.github.io/earthsea/>. Il motore è una **copia
+  adattata** di 'I Grandi di Arda', e i commenti che parlano di Tolkien si toccano solo quando si
+  tocca quel codice (`Rules.md` § '🧹 Residui del motore di provenienza (debito dichiarato)').
 - **Il nucleo del funzionamento è lo stesso di 'I Grandi di Arda'** (regola dell'utente): cambiano
   lore e design, e una modifica al funzionamento si porta sull'altro sito nello stesso giro
   (`Rules.md` § '🪞 Il nucleo del funzionamento è lo stesso del sito gemello').
 - **La lista si disegna a tratti mentre si scorre** (dalla `2.95`), e la lista intera la disegna
   `disegnaTutto` (salto in fondo, `Cmd`/`Ctrl`+`F`, `?d=full`, riordino, admin); un banco che misura la
   lista intera usa `?d=full` (`Rules.md` § '📜 Le card nascono mentre si scorre: il disegno A TRATTI').
-- **Ramo principale `main`**. Le regole trasversali (go-live, deploy, controlli) vivono nell'hub
-  `Roccobot/roccobot.github.io`, e questo repo non le sostituisce (riquadro in testa a
-  `Rules.md`).
-- **Si modificano `index.src.html` e `admin.src.js`**: `index.html`, `app.js` (lo script
-  principale, differito dalla `2.82`) e `admin.js` li genera e li committa la GitHub Action
-  `.github/workflows/earthsea-minify.yml`, e una modifica fatta là la
-  cancella il build successivo. Nelle note 'index.html' vuol dire il sorgente, e una funzione
-  nuova dell'amministrazione va in `admin.src.js` (`Rules.md` § '⚠️⚠️⚠️ SI MODIFICANO
-  `index.src.html` E `admin.src.js`: `index.html` E `admin.js` SONO GENERATI').
-- **Versione SlimVer, con la fonte unica in `var datiVersion` in testa a `dati.js`**: il badge in
-  `index.src.html` è il ripiego e va tenuto allineato, quindi un bump tocca i due file. La
-  pubblicazione si verifica leggendo `datiVersion` su <https://roccobot.github.io/earthsea/dati.js>
-  (`Rules.md` § '🔢 Versione').
-- **L'editor admin scrive `dati.js` da sé**, attraverso il Worker `earthsea-admin-proxy` di
-  `worker/`, e bumpa `+0,01` sui soli salvataggi dei testi; riordino, colori, flag di sito e
-  micro-aggiustamenti passano `keepVersion` e non bumpano (`Rules.md` § '🔢 Chi bumpa la
-  versione: i soli CONTENUTI').
-- **Il Worker di questo sito non si scambia con quello di Arda**, che scrive su un altro repo:
-  puntarlo da qui scriverebbe le voci di Terramare sopra il dataset di Arda, senza errori.
-  `dati.js` contiene righe di commento che il Worker conserva; chi riscrive una riga dell'array
-  rimette la virgola finale e prova con
-  `node -e "eval(require('fs').readFileSync('dati.js','utf8')); console.log(dati.length)"`
-  (`Rules.md` § '🔐 Il proxy admin è SUO, e la separazione è la salvaguardia').
-- **Modifiche pesanti, da concordare prima**: il flusso dati (`dati.js` e il Worker) è fra i casi
-  pesanti per regola dell'hub (il suo `Rules.md` § '🌿 Branch, allineamento e push').
+- **Ramo principale `main`**; le regole trasversali vivono nell'hub, e il flusso dati (`dati.js`
+  e il Worker) è una modifica pesante, da concordare prima (il suo `Rules.md` § '🌿 Branch,
+  allineamento e push').
+- **Si modificano `index.src.html` e `admin.src.js`**: `index.html`, `app.js` e `admin.js` li
+  genera l'Action `earthsea-minify.yml`, e una modifica fatta là la cancella il build dopo
+  (`Rules.md` § '⚠️⚠️⚠️ SI MODIFICANO `index.src.html` E `admin.src.js`: `index.html` E
+  `admin.js` SONO GENERATI').
+- **Versione SlimVer, fonte unica `var datiVersion` in `dati.js`**, col badge di
+  `index.src.html` come ripiego allineato; si verifica su
+  <https://roccobot.github.io/earthsea/dati.js> (`Rules.md` § '🔢 Versione'). L'editor admin
+  bumpa `+0,01` sui soli salvataggi dei testi (`Rules.md` § '🔢 Chi bumpa la versione: i soli
+  CONTENUTI').
+- **Il Worker di questo sito non si scambia con quello di Arda**, o le voci di Terramare finiscono
+  sul dataset di Arda senza errori; i commenti di `dati.js` si conservano, e una riga riscritta si
+  prova col comando di quella sezione (`Rules.md` § '🔐 Il proxy admin è SUO, e la separazione è
+  la salvaguardia').
 - **Il dataset è dell'utente**: le divergenze fra i suoi dati e le fonti non si correggono
   d'ufficio, si chiedono **una per una** e senza cercare una regola generale. Le posizioni chieste
   nella forma *X dopo Y* si applicano per nome, mai per indice, e la classifica si conta in
   pagina, dove gli apocrifi hanno una numerazione propria (`Rules.md` § '⚠️⚠️ Stato: lo
   Schedario è IMPORTATO, e il dataset è verificato sulle fonti').
-- **Una voce nuova segue l'indice dei passi**: nome cercato nelle tre edizioni, genere provato
-  sull'**inglese** (l'italiano lo impone per grammatica), origine come nascita con la residenza
-  come ripiego normale e nel campo l'**isola**, badge mai dedotti dalla scheda, citazione
-  verificata, posizione chiesta al vicinato. Nasce sempre regolare, perché la tabella degli
-  apocrifi è chiusa (`Rules.md` § '🧾 Come nasce una VOCE NUOVA: l'indice dei passi').
+- **Una voce nuova segue l'indice dei passi** (nome, genere provato sull'inglese, origine, badge,
+  citazione, posizione), e nasce sempre regolare (`Rules.md` § '🧾 Come nasce una VOCE NUOVA:
+  l'indice dei passi').
 - **Un animale di una specie nuova entra in `TIPI_ANIMALE` nelle due lingue**, o la sua card
   finisce fra gli uomini senza nessun errore; una classe-etichetta nuova va anche in
   `TYPE_LABEL` (`Rules.md` § '🐈 Gli ANIMALI: una categoria, tante etichette').
@@ -289,32 +276,24 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   elenchi del canone o dell'utente, `veronoto` si ricava da `vero_nome` attraverso `haBadge`, e
   `stregone` e `mago` non si assegnano mai insieme (`Rules.md` § '🏅 I badge e il genere' e
   § '✅ I 19 confrontati con Wikipedia').
-- **Le citazioni seguono l'edizione 'Frankenstein'**: testo Mondadori coi nomi Nord e col
-  vocabolario del potere di Nord (`mago`, mai `magio`), quindi per costruzione non sono verbatim
-  di nessuna edizione. Si sceglie la più corta fra le valide, senza `[...]` agli estremi, e la
-  firma si riempie solo se parla un altro (`Rules.md` § '📖 Le CITAZIONI nella card: testo
+- **Le citazioni seguono l'edizione 'Frankenstein'**: testo Mondadori coi nomi Nord (`mago`, mai
+  `magio`), la più corta fra le valide (`Rules.md` § '📖 Le CITAZIONI nella card: testo
   Mondadori, nomi Nord' e § '🧟 Un testo che nessuna edizione ha, e la ragione per cui va bene').
 - **Le due metà del dataset**: l'italiano lo sceglie l'utente, l'inglese si prende dalle fonti.
   Una forma inglese fra i nomi alternativi italiani copre l'altra edizione e non si ripete in
   `nomi_alternativi_en`, e `vero_nome` non ha un gemello `_en` (`Rules.md` § '🌐 Le due metà del
   dataset: l'italiano è dell'utente, l'inglese è mio').
-- **Le scelte editoriali dichiarate vincono sulle fonti**: un audit che confronti il dataset col
-  canone (`rules/Earthsea.md` di `Roccobot/tools`) troverà divergenze volute, come `Tuaho`, i
-  badge di `Hega`, `Olmo` e Tenar e i nomi Nord nelle citazioni, e non sono difetti. Prima di
-  correggere una forma assente dalle fonti si controlla se è una scelta dell'utente
-  (`Rules.md` § '📖 Le CITAZIONI nella card: testo Mondadori, nomi Nord').
-- **Un censimento sul corpus si chiude sul conto per file**, con la maiuscola quando la resa è
-  una parola comune, mai su un `head` o un `tail`; e l'uscita di un banco si legge intera,
-  filtrando sui `KO` (`Rules.md` § '📏 Come si misura il jitter senza farsi ingannare dal proprio
-  metro', dove vivono le trappole dei banchi).
-- **Anti-jitter**: al cambio lingua le card della lista non cambiano altezza, e su un componente
-  (Pannello, Console, modali) non si muove niente sui due assi; la riserva vive su un contenitore
-  senza sfondo né bordo. Si misura a Pannello chiuso, col locale forzato a `it-IT` e sullo stile
-  calcolato, perché le gemelle nascoste (`bil-m`, `tb-m`, `rc-m`) contengono l'altra lingua
-  (`Rules.md` § '🪞 L'ANTI-JITTER, e perché una misura sola diceva zero mentre l'occhio vedeva
-  muoversi' e § '🔤 La metà inglese del nome: va in `nome_en`, non fra gli alternativi'). Dalla
-  `2.81` la misura gira a lotti, le card in vista per prime, e `reflowRows()` non è sincrona sulle
-  altre (`Rules.md` § '🧮 La misura gira A LOTTI, e le card in vista vengono prima').
+- **Le scelte editoriali dichiarate vincono sulle fonti** (`Tuaho`, alcuni badge, i nomi Nord):
+  un audit che le segnala sbaglia, e prima di correggere una forma assente dalle fonti si
+  controlla se è una scelta dell'utente (`Rules.md` § '📖 Le CITAZIONI nella card: testo
+  Mondadori, nomi Nord').
+- **Un censimento sul corpus si chiude sul conto per file**, mai su un `head`, e l'uscita di un
+  banco si legge intera (`Rules.md` § '📏 Come si misura il jitter senza farsi ingannare dal
+  proprio metro').
+- **Anti-jitter**: al cambio lingua niente si muove, né le card né i componenti; si misura a
+  Pannello chiuso, col locale `it-IT` e sullo stile calcolato (`Rules.md` § '🪞 L'ANTI-JITTER, e
+  perché una misura sola diceva zero mentre l'occhio vedeva muoversi'), e la misura gira a lotti
+  (`Rules.md` § '🧮 La misura gira A LOTTI, e le card in vista vengono prima').
 - **Pannello e Console sono due cose**: il Pannello è la modale del FAB coi filtri del
   visitatore, la Console è l'editor admin che salva in `dati.js` per tutti, e una richiesta che
   nomina l'una non si applica all'altra (`Rules.md` § '📍 Segno o parola nella colonna origine, e
