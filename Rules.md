@@ -50,6 +50,11 @@
 - **Chi prova in locale** lancia `node .github/scripts/minify.mjs .` dalla radice (con esbuild
   installato); `index.src.html` si apre anche da sé, perché le sue risorse hanno gli stessi
   percorsi.
+  - **`esbuild` è nel registro `docs/Dependencies.json`** dal 2026-10-15 (scelta F1a di Rocco):
+    la sua versione si legge dal comando del workflow di minificazione, e lo script unico del repo
+    del sito la confronta con l'ultima ogni lunedì, aprendo la issue `Dipendenze da leggere` quando
+    ce n'è una nuova. Una versione nuova si legge, e si prova sulla pagina generata, prima di
+    cambiare il workflow (`Roccobot.md` § '🔗 Le dipendenze si seguono').
 - ⚠️⚠️ **Dalla `2.82` il generato carica gli script DIFFERITI, e lo script principale vive in
   `app.js`** (caricamento progressivo, priorità dell'utente del 2026-10-04). Nel sorgente lo
   script principale resta in linea dopo `<script src="dati.js">` sincrono; nel generato `dati.js`

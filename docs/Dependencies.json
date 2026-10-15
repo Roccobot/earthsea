@@ -1,0 +1,8 @@
+{
+  "_about": "What Terramare takes from elsewhere, at which version, and where its new versions appear. check-dependencies.py of roccobot.github.io (.memo/scripts) compares the version in use, read where it is set, with the latest published, every Monday too; a newer one is read for what is worth bringing in before it is taken (Roccobot.md, 'Le dipendenze si seguono').",
+  "dependencies": [
+    {"name": "esbuild", "kind": "build", "source": "npm", "package": "esbuild",
+     "in_use": {"file": ".github/workflows/earthsea-minify.yml", "pattern": "esbuild@(\\d+\\.\\d+\\.\\d+)"},
+     "into": "the published page, made from its commented source by .github/scripts/minify.mjs (index.html, admin.js, app.js)"}
+  ]
+}
