@@ -1432,7 +1432,7 @@ che lo precede... Centra di conseguenza sullo stesso asse anche le icone badge*.
 - ⚠️ **L'asse misurato e l'occhio divergono**: con una riga tutta maiuscola il riferimento
   percettivo non è la metà delle maiuscole. Chi rimisura col vecchio criterio troverà i valori
   dell'utente 'scentrati', e non lo sono.
-- ⚠️⚠️ **Sopra i 480px il centraggio lo fa il FLEX da solo**, e i nudge venuti da Arda erano il
+- ⚠️⚠️ **Sopra i 480px la centratura la fa il FLEX da solo**, e i nudge venuti da Arda erano il
   difetto (la risalita di 2px delle etichette e il `top:-0.03em` di icone e simbolo di genere). Là
   il nome è in Cinzel, che siede in alto; qui è in EB Garamond, e la compensazione lavorava al
   contrario. È la famiglia di difetti delle unità dei badge: un valore giusto per un altro font.
@@ -1828,7 +1828,7 @@ dimensione.
   - ⚠️ **Il divisore si rimisura a ogni logo nuovo**, e tenere il numero vecchio non rompe niente e
     sbaglia in silenzio: la bbox con la `getBBox` dei tracciati, il cerchio con la riga più larga
     di un render a grandezza di viewBox. Mai dai valori nominali.
-  - ⚠️ **Il centraggio ottico si fa a monte, nel file**, come l'utente ha fatto con questo logo, e
+  - ⚠️ **La centratura ottica si fa a monte, nel file**, come l'utente ha fatto con questo logo, e
     mai spostando il canvas (icone as-is).
 
 ## 🖼️ L'anteprima social (Open Graph)
