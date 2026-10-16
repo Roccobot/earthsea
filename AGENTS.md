@@ -275,7 +275,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   `disegnaTutto` (salto in fondo, `Cmd`/`Ctrl`+`F`, `?d=full`, riordino, admin); un banco che misura la
   lista intera usa `?d=full` (`Rules.md` § '📜 Le card nascono mentre si scorre: il disegno A TRATTI').
 - **Ramo principale `main`**; le regole trasversali vivono nell'hub, e il flusso dati (`dati.js`
-  e il Worker) è una modifica pesante, da concordare prima (il suo `Rules.md` § '🌿 Branch,
+  e il Worker) è una modifica pesante, da concordare prima (il `Rules.md` dell'hub § '🌿 Branch,
   allineamento e push').
 - **Si modificano `index.src.html` e `admin.src.js`**: `index.html`, `app.js` e `admin.js` li
   genera l'Action `earthsea-minify.yml`, e una modifica fatta là la cancella il build dopo
