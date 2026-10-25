@@ -1960,8 +1960,8 @@ tinte del sito è **l'unica** dentro la finestra del 3:1 su **entrambe** le sue 
 **Il Pannello contiene la legenda dell'anatomia di una card**: una card con le stesse classi di quelle
 vere, dove ogni riga dichiara che cos'è (`Nome d'uso`, `Vero nome`, `Nomi alternativi | Titoli
 e onorificenze`, e il titolo della prima apparizione). Ha preso il posto della nota sui nomi
-ereditata da Arda, che dopo la riorganizzazione diceva il falso, e con lei sono usciti la lineetta
-di riferimento e `fitNoteRule`.
+ereditata da Arda, che dopo la riorganizzazione diceva il falso (dettagli in `docs/Removed.md`
+§ '📝 La nota sui nomi del Pannello').
 
 - ⚠️⚠️ **L'ORDINE delle righe è quello delle card vere**: nome d'uso, vero nome, nomi alternativi e
   titoli, e per ultima l'opera della prima apparizione. Con le classi reali è l'unico modo in cui
@@ -2446,7 +2446,8 @@ Schedario che lo alimenta.
   dell'origine geografica. La metà `origine_en` si riempie solo dove le due lingue divergono, e dove
   manca la resa ripiega sull'italiano.
 - ⚠️⚠️ **`paese` non c'è più**: era un residuo del motore di provenienza, vuoto su tutte le voci e
-  senza lettori (§ 'Residui del motore di provenienza (debito dichiarato)'). ⚠️ **La trappola è già
+  senza lettori (§ 'Residui del motore di provenienza (debito dichiarato)'; dettagli in
+  `docs/Removed.md` § '🗺️ Il campo `paese`'). ⚠️ **La trappola è già
   scattata**: un campo vuoto su tutte le voci e senza lettori **somiglia a un campo libero**, e ci è
   finita un'origine. Chi ha un dato e non trova dove metterlo **crea il campo col nome che gli
   spetta**: non lo infila in un residuo, e non lo lascia fuori dal dataset.
@@ -2658,7 +2659,8 @@ Quasi ogni campo di testo ha il gemello `_en` (`nome`/`nome_en`, `nomi_alternati
   `min-height` c'è più: l'altezza del tag a filtro spento la riserva il tag fantasma (§ 'Il tag del
   filtro è in FONDO, e il suo spazio lo riserva un fantasma').
 - ✅ **I controlli rimossi non tornano**, perché con poche categorie non dicevano niente: la testata
-  'CATEGORIE', i tasti Tutti e Solo, `.ctrl-btn-m`, la nota mobile, le chiavi i18n `cat` e `all`.
+  'CATEGORIE' e i tasti Tutti e Solo (dettagli in `docs/Removed.md` § '🎛️ I controlli del Pannello
+  ereditati da Arda').
   ⚠️ L'utente ha deciso che i tasti non tornano **nemmeno con tre categorie**, quindi chi li
   riproponesse perché 'ora l'aritmetica regge' rifarebbe un giro chiuso.
 - **Nella legenda dei badge la riga mostra la SOLA etichetta**: `legLbl` taglia alla prima `': '`, e
