@@ -1381,8 +1381,10 @@ canale): una conversione senza perdita vuole un encoder vero e il confronto pixe
   `object-fit`, su tavole di proporzioni diverse e su disegni poi cambiati. **Il meccanismo resta,
   e non è codice morto**: l'editor ci scrive i valori che l'utente sceglie, e lo zero è il punto da
   cui si ricomincia.
-  - Con loro sono cadute `GENDER_BASE` e le due `transform` dei simboli di genere: le tavole ora
-    sono quadrate come tutte le altre.
+  - Con loro sono cadute le misure proprie dei simboli di genere: le tavole ora sono quadrate come
+    tutte le altre, `GENDER_BASE` resta con le stesse dimensioni per i due sessi (`0.92em`, come le
+    altre icone) e le due `transform` non ci sono più (i valori di prima sono in `docs/Removed.md`
+    § '🚻 Le misure proprie dei simboli di genere').
 - **Com'è fatto**: l'editor regola per ogni **unità** quattro numeri (`ml`, `mr`, `ny`, `sc`), li
   applica iniettando regole su `.bi-<id>` e li salva in `badgeAdjust` dentro `dati.js`. Il Worker
   accetta `badgeAdjust` validandone la forma, e lo preserva quando il salvataggio non lo manda.
@@ -1522,7 +1524,8 @@ il primo della fila.
 ### 🐲 I TRE badge annunciati: il criterio di uno solo
 
 I badge sono `signoredraghi`, `maestro` e `arcimago`. Le proposte scartate e la storia dei disegni
-sono nella storia git del repo dell'hub; qui c'è ciò che vale oltre il disegno.
+sono nella storia git del repo dell'hub (come si recuperano: `docs/Removed.md` § '🎨 Le proposte e
+i disegni dei badge, nella storia dell'hub'); qui c'è ciò che vale oltre il disegno.
 
 - ⚠️⚠️ **La coppia di Roke ha una tinta sola**, perché le forme (un libro e uno scudo) non si
   somigliano, e la distinzione la fa il profilo. La regola di prima, due tinte, valeva per due
@@ -2617,9 +2620,9 @@ Quasi ogni campo di testo ha il gemello `_en` (`nome`/`nome_en`, `nomi_alternati
 
 ## 🔎 Ⓘ Il filtro 'solo chi ha un vero nome noto' è USCITO
 
-- **La casella è uscita**, per istruzione dell'utente, e con lei il suo stato forzato; **resta
-  `veroNomeNoto`**, che regge il badge `veronoto` (§ 'Il settimo badge: il vero nome rivelato dai
-  testi canonici').
+- **La casella è uscita**, per istruzione dell'utente, e con lei il suo stato forzato (dettagli in
+  `docs/Removed.md` § '🔎 La casella dei soli veri nomi noti'); **resta `veroNomeNoto`**, che regge il
+  badge `veronoto` (§ 'Il settimo badge: il vero nome rivelato dai testi canonici').
 - ⚠️⚠️ **La lezione vale per qualunque casella futura**: una casella che in un certo stato può **solo
   svuotare** la lista, o che **non può togliere niente**, non è un filtro, e mente su ciò che
   promette. Era il caso dei due estremi del dataset: coi soli animali accesi svuotava la lista, coi
@@ -2739,9 +2742,10 @@ Quasi ogni campo di testo ha il gemello `_en` (`nome`/`nome_en`, `nomi_alternati
   voci è dell'utente (§ "L'ordine delle voci nella Console").
   - ⚠️ **È spenta di base, accesa dalla classe `fx-deco`**, come ogni altro effetto: un flag che non
     arriva lascia il Pannello pulito.
-- ⚠️⚠️ **`jumpx` non esiste più**: regolava lo scostamento dei tasti di salto su mobile, e con la
-  colonna che su mobile ha ceduto il posto al glifo del FAB non governava più niente. Una manopola che
-  non fa niente è codice morto. Ⓘ **Le sue lezioni valgono per qualunque manopola futura**:
+- ⚠️⚠️ **`jumpx` non esiste più**: con la colonna dei tasti di salto che su mobile ha ceduto il posto
+  al glifo del FAB non governava più niente, e una manopola che non fa niente è codice morto (dettagli
+  in `docs/Removed.md` § '↔️ La manopola `jumpx`, lo scostamento dei tasti di salto'). Ⓘ **Le sue
+  lezioni valgono per qualunque manopola futura**:
   1. **il valore statico nel CSS è lo stato SPENTO, non il default**: col default là, spegnere la
      manopola non riportava i tasti a filo;
   2. **l'anteprima viene da `injectFxRules`**, che gli slider richiamano a ogni `input`, e un timer di
