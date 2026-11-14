@@ -232,7 +232,12 @@ header { text-align:center; padding:2.2rem 1.5rem 1.4rem; position: relative; }
    `!important`, quindi anche col puntatore sopra il numero resta sfumato. */
 .version-badge { transition: opacity 0.12s linear; }
 html.scrolled .version-badge { opacity: 0; pointer-events: none; }
-.version-badge:hover, .home-link:hover { opacity: 1; }
+/* ⚠️⚠️ KEYBOARD FOCUS (Roccobot.md, 'La navigazione con la tastiera non si vede', owner's
+   choice Ambito-01, 2026-11-13): no ring, ever. The control reached with Tab takes its
+   HOVER style, so every `:hover` of a control is written together with `:focus-visible`
+   and `outline:none`, never `outline:none` alone. Bench: scripts/test-keyboard-focus.js. */
+.version-badge:hover, .home-link:hover,
+.version-badge:focus-visible, .home-link:focus-visible { opacity: 1; outline: none; }
 /* ⚠️ Nel chiaro il colore è più scuro di `--gold` perché l'opacità 0.7 resta: con
    `--gold` il testo dava 3,18:1 (Lighthouse, 2.67), con questo 4,6. Si scurisce il
    colore e non si alza l'opacità, che qui ha già due regole in gioco (lo scorrimento e
@@ -276,10 +281,11 @@ html[data-theme="light"] .version-badge, html[data-theme="light"] .home-link { c
 }
 .lang-switch > .ls-face, .lang-switch > .ls-measure { grid-area: 1 / 1; }
 .lang-switch > .ls-measure { visibility: hidden; pointer-events: none; }
-.lang-switch:hover {
+.lang-switch:hover, .lang-switch:focus-visible {
   background: var(--gold);
   color: var(--ink);
   transform: scale(1.05);
+  outline: none;
 }
 /* Cambio lingua nascosto su mobile quando il flag langSwitchMobile è spento
    (classe no-langswitch-mobile sull'html). Resta nel DOM e su desktop. */
@@ -358,6 +364,14 @@ h1 {
   margin-bottom:calc(0.5rem - 0.14em);
 }
 #title a { color:inherit; text-decoration:none; -webkit-text-fill-color:inherit; cursor:pointer; }
+/* The title link and the crest link had no hover style, so the keyboard would have had no
+   sign at all: mouse and Tab now brighten them a little, the same discreet change in both
+   themes. A filter keeps the colours of the gradient, and on the title it goes on the h1,
+   which paints the gradient (the link has a transparent fill, a filter on it changes
+   nothing). See the keyboard focus note at `.home-link:hover`. */
+#title:has(#title-link:hover), #title:has(#title-link:focus-visible),
+.crest a:hover, .crest a:focus-visible { filter:brightness(1.25); }
+#title-link:focus-visible, .crest a:focus-visible { outline:none; }
 /* ── Anti-jitter del TITOLONE: le due lingue sullo stesso numero di righe ───────
    Regola gemella di quella di 'I Grandi di Arda', e il gemellaggio è il punto: i
    due siti condividono il motore, e una regola messa da una parte sola divergerebbe
@@ -1415,7 +1429,7 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
    portava il segno prugna a 2,93 *imponendo il bianco*: il bianco è arrivato comunque, e
    quell'argomento è decaduto. */
 #ctrl-fab.fab-btn { background:#3072a1; border:none; color:#ffffff; box-shadow:0 3px 14px rgba(0,0,0,0.45); }
-#ctrl-fab.fab-btn:hover { background:#3a85b9; border:none; }
+#ctrl-fab.fab-btn:hover, #ctrl-fab.fab-btn:focus-visible { background:#3a85b9; border:none; }
 /* Finezze FAB. Tap (apertura): piccolo rimbalzo sull'asse Z (si schiaccia 'sotto
    il dito' e rimbalza). Chiusura del Pannello: il FAB cresce dalle dimensioni
    ridotte a quelle normali, in sincrono col Pannello. Regia: toggleControlPanel. */
@@ -1510,9 +1524,9 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
 .ctrl-cols { display:contents; }
 .ctrl-toolbar { display:flex; align-items:center; justify-content:center; gap:0.55rem; margin-bottom:0.7rem; }
 .ctrl-toolbar .ctrl-lang-btn { height:2rem; width:2rem; padding:0; border-radius:6px; background:rgba(104,144,168,0.12); border:1px solid rgba(104,144,168,0.32); color:var(--parchment); font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.1em; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
-.ctrl-toolbar .ctrl-lang-btn:hover { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); }
+.ctrl-toolbar .ctrl-lang-btn:hover, .ctrl-toolbar .ctrl-lang-btn:focus-visible { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); outline:none; }
 .ctrl-icon-btn { width:2rem; height:2rem; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; background:rgba(104,144,168,0.12); border:1px solid rgba(104,144,168,0.32); color:var(--parchment); cursor:pointer; padding:0; transition:background 0.15s,border-color 0.15s; }
-.ctrl-icon-btn:hover { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); }
+.ctrl-icon-btn:hover, .ctrl-icon-btn:focus-visible { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); outline:none; }
 .ctrl-icon-btn svg { width:1.15rem; height:1.15rem; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 /* Tasto Riordina attivo (stato ×, modalità riordino in corso): segnala che il click scarta.
    ⚠️ Dalla 1.00 usa la tinta della SELEZIONE e non più l'oro (istruzione dell'utente): era
@@ -1529,7 +1543,7 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
    e non viene sostituita, che era il rischio di scrivere qui un colore solo. Il
    `border-color` non si tocca per la stessa ragione: è la spia dello stato, non un effetto
    di hover. */
-.ctrl-icon-btn.ctrl-reorder-btn.is-active:hover { background:linear-gradient(rgba(255,255,255,0.14),rgba(255,255,255,0.14)),var(--sel-on-bg); }
+.ctrl-icon-btn.ctrl-reorder-btn.is-active:hover, .ctrl-icon-btn.ctrl-reorder-btn.is-active:focus-visible { background:linear-gradient(rgba(255,255,255,0.14),rgba(255,255,255,0.14)),var(--sel-on-bg); }
 /* Stato 'link copiato' del tasto condividi (✓ + tinta oro). Il 2° selettore
    (specificità 0,3,0) vince anche sulla regola .ctrl-bottombar .ctrl-icon-btn
    della barra mobile. */
@@ -1584,7 +1598,9 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
 /* Il FAB (tasto del Pannello, un <button>): cliccandolo resta focusato e alla prima
    pressione di un tasto il browser mostra il proprio anello di focus (il bordo blu
    attorno al tondo). Come per il Pannello lo togliamo (è rumore, non un vero aiuto
-   di navigazione): il Pannello resta apribile da tastiera anche col tasto 'P'. */
+   di navigazione): il Pannello resta apribile da tastiera anche col tasto 'P'.
+   Since Ambito-01 (2026-11-13) the keyboard sign of the FAB is its hover background,
+   written with `#ctrl-fab.fab-btn:hover` and `.fab-btn:hover`. */
 #ctrl-fab:focus, #ctrl-fab:focus-visible { outline:none; }
 .ctrl-panel.open { opacity:1; visibility:visible; transform:translateY(0) scale(1); }
 /* Chiusura desktop (popover): fade out puro sul posto (niente transform,
@@ -1648,7 +1664,7 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
   /* Logo dello stesso colore del numero di versione accanto (var --gold-bright,
      theme-aware): il path usa fill="currentColor", che eredita questo color. */
   #ctrl-panel .ctrl-logo { display:inline-flex; align-items:center; line-height:0; color:var(--gold-bright); opacity:0.9; transition:opacity 0.2s; }
-  #ctrl-panel .ctrl-logo:hover { opacity:1; }
+  #ctrl-panel .ctrl-logo:hover, #ctrl-panel .ctrl-logo:focus-visible { opacity:1; outline:none; }
   #ctrl-panel .ctrl-logo svg { width:1.5rem; height:1.5rem; display:block; }
   #ctrl-panel .ctrl-ver-desk {
     white-space:nowrap;
@@ -1656,7 +1672,7 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
     color:var(--gold-bright); opacity:0.9; cursor:pointer; user-select:none;
     transition:opacity 0.2s;
   }
-  #ctrl-panel .ctrl-ver-desk:hover { opacity:1; }
+  #ctrl-panel .ctrl-ver-desk:hover, #ctrl-panel .ctrl-ver-desk:focus-visible { opacity:1; outline:none; }
   /* Come per la versione mobile: in tema chiaro blu piu scuro per superare
      il 4.7:1 percepito dopo opacity .9 (stesso difetto di contrasto). */
   html[data-theme="light"] #ctrl-panel .ctrl-ver-desk { color:var(--gold-bright); }
@@ -1741,12 +1757,14 @@ html[data-theme="light"] .cc-animale{--ccrgb:133,101,8}
    righe, ed è la deroga che l'utente ha previsto (*più opaco se necessario affinché si
    veda meglio*): su un bottone di 32px il velo leggero delle righe si perderebbe, perché
    la superficie è un ventesimo di quella di una riga.
-   ⚠️ E il focus da tastiera ora ha un OUTLINE vero: prima l'inversione oro faceva da
-   segnale e `outline:none` era sostenibile, ma un fondo appena schiarito non basta a dire
-   'sono qui', e toglierlo senza rimpiazzo avrebbe peggiorato l'accessibilità per un
-   ritocco di tinta. */
-.ctrl-sheet-close:hover { background:rgba(255,255,255,0.20); }
-.ctrl-sheet-close:focus-visible { background:rgba(255,255,255,0.20); outline:2px solid rgba(154,192,216,0.9); outline-offset:2px; }
+   ⚠️ The keyboard focus has NO outline since Ambito-01 (2026-11-13): it takes the hover
+   background, like every control (see the keyboard focus note at `.home-link:hover`). The
+   2px outline that lived here until 2.98 is the ring the owner's rule removes. */
+.ctrl-sheet-close:hover, .ctrl-sheet-close:focus-visible { background:rgba(255,255,255,0.20); outline:none; }
+/* Light theme: on the white bar the white veil made the button fade into the bar instead
+   of lighting it, for the mouse and for the keyboard alike, so here it takes the hover of
+   the other buttons of the bar. */
+html[data-theme="light"] .ctrl-sheet-close:hover, html[data-theme="light"] .ctrl-sheet-close:focus-visible { background:rgba(104,144,168,0.28); }
 .ctrl-section { margin-bottom:1.1rem; }
 .ctrl-section:last-child { margin-bottom:0; }
 .ctrl-h {
@@ -1973,14 +1991,16 @@ html[data-theme="light"] .ctrl-cardleg .cardleg-tag { background:#267d71; }
    guadagna (contrasto da **8,84** a **9,51**). ⚠️ Alzarla a `0.11` pareggerebbe la
    luminanza esatta del marrone: è la misura SCARTATA, perché la parità con un valore
    che si stava togliendo non è un obiettivo. */
-.ctrl-row:hover { background:rgba(255,255,255,0.09); }
+/* The checkbox reached with Tab lights its whole ROW with the hover background (`:has`),
+   since Ambito-01 (2026-11-13): until 2.98 a 2px ring was drawn around the little box. */
+.ctrl-row:hover, .ctrl-row:has(input:focus-visible) { background:rgba(255,255,255,0.09); }
 /* Tema chiaro: il bianco traslucido sparirebbe sul fondo chiaro, quindi qui serve un
    valore proprio (translucido freddo), gemello dell'override della legenda. */
-html[data-theme="light"] .ctrl-row:hover { background:rgba(104,144,168,0.12); }
+html[data-theme="light"] .ctrl-row:hover, html[data-theme="light"] .ctrl-row:has(input:focus-visible) { background:rgba(104,144,168,0.12); }
 /* Nascosta ma FOCALIZZABILE (display:none la toglieva dal giro del Tab:
-   filtri non azionabili da tastiera). Il focus si disegna sul quadratino. */
+   filtri non azionabili da tastiera). The keyboard sign is the row background above. */
 .ctrl-row input { position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; clip-path:inset(50%); overflow:hidden; white-space:nowrap; }
-.ctrl-row input:focus-visible + .ctrl-chk { outline:2px solid var(--gold-bright); outline-offset:2px; }
+.ctrl-row input:focus-visible { outline:none; }
 .ctrl-chk {
   width:1.05rem; height:1.05rem; border-radius:5px; border:1.5px solid rgba(154,192,216,0.6);
   flex-shrink:0; position:relative; transition:background 0.15s,border-color 0.15s;
@@ -2042,22 +2062,28 @@ html[data-theme="light"] .ctrl-row:hover { background:rgba(104,144,168,0.12); }
    nello stesso riquadro si vedrebbero. */
 .ctrl-legend-row .leg-lbl-m { display:none; }  /* variante mobile: la accende la media query a 768px, vedi `ICON_LABEL_MOBILE` */
 .ctrl-legend-row .leg-lbl-s { display:none; }  /* versione corta sotto i 354px, vedi `ICON_LABEL_MINI` */
-.ctrl-legend-row:hover { background:rgba(255,255,255,0.09); }
-.ctrl-legend-row:focus-visible { outline:2px solid var(--gold-bright); outline-offset:1px; }
+/* Keyboard focus = hover, no ring (Ambito-01, 2026-11-13; until 2.98 a 2px outline). */
+.ctrl-legend-row:hover, .ctrl-legend-row:focus-visible { background:rgba(255,255,255,0.09); outline:none; }
 /* La dissolvenza vive QUI, sullo stato di arrivo: accendere un filtro badge è un
    cambio di stato e beneficia del fade; spegnerlo torna istantaneo (vale la
    transizione della regola base, che non ne ha). Il passaggio del puntatore non
    transita mai, in nessuno dei due versi. */
 .ctrl-legend-row.on { background:var(--sel-bg); border-color:var(--sel-bd); transition:background 0.15s,border-color 0.15s; }
-html[data-theme="light"] .ctrl-legend-row:hover { background:rgba(58,88,120,0.10); }
+html[data-theme="light"] .ctrl-legend-row:hover, html[data-theme="light"] .ctrl-legend-row:focus-visible { background:rgba(58,88,120,0.10); }
 html[data-theme="light"] .ctrl-legend-row.on { background:rgba(58,88,120,0.12); border-color:rgba(58,88,120,0.55); }
+/* A switched-on row had no hover at all (`.on` wins over `:hover`, same specificity, later),
+   so the keyboard would have had no sign on it. Same cure as the Reorder button and the
+   badge tag: the hover veil laid OVER the state with a two-stop gradient, so the state
+   colour stays underneath and the border, the sign of the state, is not touched. */
+.ctrl-legend-row.on:hover, .ctrl-legend-row.on:focus-visible { background:linear-gradient(rgba(255,255,255,0.09),rgba(255,255,255,0.09)),var(--sel-bg); }
+html[data-theme="light"] .ctrl-legend-row.on:hover, html[data-theme="light"] .ctrl-legend-row.on:focus-visible { background:linear-gradient(rgba(58,88,120,0.10),rgba(58,88,120,0.10)),rgba(58,88,120,0.12); }
 /* Riga-badge DISABILITATA ('filtro a risultati 0'): quel badge non ha portatori
    nelle categorie attive. Attenuata; resta CLICCABILE ma il clic non filtra, fa
    solo la 'scossina' (leg-shake) come feedback 'non selezionabile'. aria-disabled
    per gli screen reader. Si riabilita da sé al cambio categorie (la legenda si
    ricostruisce a ogni filtro). */
 .ctrl-legend-row.leg-disabled { opacity:0.32; cursor:not-allowed; }
-.ctrl-legend-row.leg-disabled:hover { background:transparent; }
+.ctrl-legend-row.leg-disabled:hover, .ctrl-legend-row.leg-disabled:focus-visible { background:transparent; }
 @keyframes leg-shake { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-3px)} 40%,60%{transform:translateX(3px)} }
 .ctrl-legend-row.leg-shake { animation:leg-shake 0.34s cubic-bezier(0.36,0.07,0.19,0.97) both; }
 @media (prefers-reduced-motion:reduce) { .ctrl-legend-row.leg-shake { animation:none; } }
@@ -2117,13 +2143,13 @@ html[data-theme="light"] .ctrl-legend-row.on { background:rgba(58,88,120,0.12); 
 .ctrl-badge-tag .tag-num-m { visibility:hidden; pointer-events:none; }
 /* Stesso velo bianco del tasto Riordina acceso, e per la stessa ragione: il fondo oro è
    lo stato (filtro badge attivo), l'hover lo schiarisce e basta. */
-.ctrl-badge-tag:hover { background:linear-gradient(rgba(255,255,255,0.12),rgba(255,255,255,0.12)),var(--sel-bg); }
+.ctrl-badge-tag:hover, .ctrl-badge-tag:focus-visible { background:linear-gradient(rgba(255,255,255,0.12),rgba(255,255,255,0.12)),var(--sel-bg); outline:none; }
 /* × in EB Garamond, più grande del testo: line-height azzerata (il glifo siede
    alto sulla baseline). La centratura verticale fine è affidata al transform
    per-elemento sopra (.tag-x translateY), non più a un top negativo. */
 .ctrl-badge-tag .tag-x { font-size:1.05rem; line-height:0; font-family:'EB Garamond','EBG Ripiego T','EBG Ripiego N',serif; display:inline-flex; align-items:center; }
 html[data-theme="light"] .ctrl-badge-tag { border-color:rgba(58,88,120,0.6); background:rgba(58,88,120,0.10); color:#2a4a68; }
-html[data-theme="light"] .ctrl-badge-tag:hover { background:rgba(58,88,120,0.18); }
+html[data-theme="light"] .ctrl-badge-tag:hover, html[data-theme="light"] .ctrl-badge-tag:focus-visible { background:rgba(58,88,120,0.18); }
 /* Il testo della riga va a capo se serve (permesso dell'utente, 2026-08-21);
    l'icona no, e resta incolonnata perché è flex:none. */
 .ctrl-legend-row span { white-space:normal; }
@@ -2444,6 +2470,15 @@ html[data-theme="light"] .ctrl-scroll-hint .csh-tail { background:rgba(31,85,98,
   }
   .ctrl-bottombar .ctrl-icon-btn { width:2rem; padding:0; }
   .ctrl-bottombar .ctrl-lang-btn { width:2rem; padding:0; }
+  /* The rule above overrides the desktop hover of these buttons (same specificity, later),
+     so a narrow window used with the keyboard had no sign: Tab gives them the desktop hover
+     style (keyboard focus note at `.home-link:hover`). The mouse gets it only where a real
+     hover exists, or a tap on a phone would leave the button lit. `:not(.ctrl-share-done)`
+     keeps the gold of the 'link copied' state, as it does on desktop. */
+  .ctrl-bottombar .ctrl-icon-btn:not(.ctrl-share-done):focus-visible, .ctrl-bottombar .ctrl-lang-btn:focus-visible { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); outline:none; }
+  @media (hover:hover) {
+    .ctrl-bottombar .ctrl-icon-btn:not(.ctrl-share-done):hover, .ctrl-bottombar .ctrl-lang-btn:hover { background:rgba(104,144,168,0.28); border-color:rgba(154,192,216,0.6); }
+  }
 }
 /* ⚠️⚠️ LA TERZA FACCIA DELLA LEGENDA, sotto i 354px: accende i ripieghi di
    `ICON_LABEL_MINI` e spegne la faccia di sopra, che è `.leg-lbl-m` dove esiste una
@@ -2685,7 +2720,7 @@ body.is-dragging .rank-item * { pointer-events:none; }
 .fab-container { position:fixed;bottom:2rem;right:2rem;z-index:150;display:flex;flex-direction:column;gap:0.6rem;align-items:flex-end; }
 .fab-item { position:relative;display:flex;align-items:center;gap:0.5rem; }
 .fab-btn { width:3rem;height:3rem;border-radius:50%;background:rgba(60,95,150,0.82);border:1.5px solid rgba(154,192,216,0.75);color:#e8f2ff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform 0.15s,background 0.15s,border-color 0.15s,opacity 0.15s;flex-shrink:0;padding:0; }
-.fab-btn:hover { background:rgba(80,130,210,0.88);border-color:rgba(180,215,255,0.9);transform:scale(1.08); }
+.fab-btn:hover, .fab-btn:focus-visible { background:rgba(80,130,210,0.88);border-color:rgba(180,215,255,0.9);transform:scale(1.08);outline:none; }
 .fab-btn svg { width:1.35rem;height:1.35rem;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round; }
 .fab-btn.fab-unlocked { border-color:rgba(90,200,110,0.55);background:rgba(30,80,50,0.45); }
 /* align-items:flex-start + margin:auto sul box (dalla v12.65) invece di
@@ -2737,22 +2772,23 @@ body.is-dragging .rank-item * { pointer-events:none; }
 }
 .fab-modal-box p { margin:0 0 0.9rem;font-size:0.82rem;color:var(--parchment);opacity:0.65;line-height:1.4; }
 .fab-modal-box input[type=password], .fab-modal-box input[type=text] { width:100%;box-sizing:border-box;padding:0.5rem 0.7rem;background:rgba(0,0,0,0.4);border:1px solid rgba(104,144,168,0.4);border-radius:6px;color:var(--parchment);font-size:0.9rem;outline:none;transition:border-color 0.15s; }
-.fab-modal-box input[type=password]:focus, .fab-modal-box input[type=text]:focus { border-color:rgba(154,192,216,0.8); }
+/* Ⓘ A text field has no focus sign but its caret (Ambito-01, 2026-11-13): the brighter
+   border that `:focus` drew here until 2.98 was a ring, and it is gone. */
 .fab-modal-charname { font-family:'Cinzel',serif;font-size:0.95rem;letter-spacing:0.04em;color:var(--parchment);margin-bottom:0.5rem; }
 .fab-modal-close { position:absolute;top:0.45rem;right:0.55rem;background:none;border:none;color:var(--parchment);opacity:0.4;font-size:1.2rem;cursor:pointer;line-height:1;padding:0 0.2rem; }
-.fab-modal-close:hover { opacity:1; }
+.fab-modal-close:hover, .fab-modal-close:focus-visible { opacity:1; outline:none; }
 .fab-modal-confirm { display:block;width:100%;margin-top:0.8rem;padding:0.5rem 0;background:rgba(104,144,168,0.15);border:1px solid rgba(104,144,168,0.4);border-radius:6px;color:var(--parchment);font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.1em;cursor:pointer;transition:background 0.15s,border-color 0.15s; }
-.fab-modal-confirm:hover { background:rgba(104,144,168,0.3);border-color:rgba(154,192,216,0.65); }
+.fab-modal-confirm:hover, .fab-modal-confirm:focus-visible { background:rgba(104,144,168,0.3);border-color:rgba(154,192,216,0.65);outline:none; }
 /* Salva: evidenziato (blu). Pending: tasto 'Chiudi modalità ordinamento' in
    riordino, colore d'attenzione (qualcosa in sospeso, non ancora salvato). */
 .fab-modal-confirm.is-primary { background:rgba(56,120,196,0.88);border-color:rgba(120,176,238,0.95);color:#fff; }
-.fab-modal-confirm.is-primary:hover { background:rgba(72,140,216,0.98);border-color:rgba(150,196,248,1); }
+.fab-modal-confirm.is-primary:hover, .fab-modal-confirm.is-primary:focus-visible { background:rgba(72,140,216,0.98);border-color:rgba(150,196,248,1); }
 .fab-modal-confirm.is-pending { background:rgba(210,178,92,0.18);border-color:var(--gold);color:var(--gold-bright); }
-.fab-modal-confirm.is-pending:hover { background:rgba(210,178,92,0.3);border-color:var(--gold-bright); }
+.fab-modal-confirm.is-pending:hover, .fab-modal-confirm.is-pending:focus-visible { background:rgba(210,178,92,0.3);border-color:var(--gold-bright); }
 html[data-theme="light"] .fab-modal-confirm.is-primary { background:#3a78c0;border-color:#3a78c0;color:#fff; }
-html[data-theme="light"] .fab-modal-confirm.is-primary:hover { background:#3369ab;border-color:#3369ab; }
+html[data-theme="light"] .fab-modal-confirm.is-primary:hover, html[data-theme="light"] .fab-modal-confirm.is-primary:focus-visible { background:#3369ab;border-color:#3369ab; }
 html[data-theme="light"] .fab-modal-confirm.is-pending { background:rgba(190,140,30,0.14);border-color:#b8860b;color:#8a6508; }
-html[data-theme="light"] .fab-modal-confirm.is-pending:hover { background:rgba(190,140,30,0.24);border-color:#9a6f08; }
+html[data-theme="light"] .fab-modal-confirm.is-pending:hover, html[data-theme="light"] .fab-modal-confirm.is-pending:focus-visible { background:rgba(190,140,30,0.24);border-color:#9a6f08; }
 .fab-modal-confirm .fmc-main { display:block; }
 .fab-modal-confirm .fmc-sub { display:block;font-family:'EB Garamond','EBG Ripiego T','EBG Ripiego N',serif;font-weight:normal;font-size:0.64rem;letter-spacing:0.01em;text-transform:none;opacity:0.72;margin-top:0.15rem;line-height:1.2; }
 /* Modale di conferma scarto riordino: domanda centrata, pulsanti a due righe
@@ -2777,9 +2813,17 @@ html[data-theme="light"] .fab-modal-confirm.is-pending:hover { background:rgba(1
 html[data-theme="light"] .info-note-box .info-note-final { background:rgba(180,30,45,0.10); border-color:rgba(180,45,55,0.42); color:#3a1518; }
 html[data-theme="light"] .info-note-box .info-note-ico svg { stroke:#b53030; }
 .fab-modal-confirm.is-danger { background:rgba(170,40,40,0.16);border-color:rgba(212,84,84,0.7);color:#f08a8a; }
-.fab-modal-confirm.is-danger:hover { background:rgba(170,40,40,0.28);border-color:rgba(232,104,104,0.92); }
+.fab-modal-confirm.is-danger:hover, .fab-modal-confirm.is-danger:focus-visible { background:rgba(170,40,40,0.28);border-color:rgba(232,104,104,0.92); }
 html[data-theme="light"] .fab-modal-confirm.is-danger { background:rgba(180,30,30,0.10);border-color:rgba(190,60,60,0.6);color:#a82020; }
-html[data-theme="light"] .fab-modal-confirm.is-danger:hover { background:rgba(180,30,30,0.18);border-color:#9a1c1c; }
+html[data-theme="light"] .fab-modal-confirm.is-danger:hover, html[data-theme="light"] .fab-modal-confirm.is-danger:focus-visible { background:rgba(180,30,30,0.18);border-color:#9a1c1c; }
+/* Colour editor (admin.src.js): its menus and its restore button had no hover, and the
+   browser drew its ring around them. Mouse and Tab now light them, with no ring (keyboard
+   focus note at `.home-link:hover`): the menus are native and white in both themes, so
+   they darken a little; the restore button lights its border, because a filter would
+   alter the two saved colours it shows. */
+.cc-sel:hover, .cc-sel:focus-visible { filter:brightness(0.92); outline:none; }
+.cc-restore { border:1px solid rgba(128,128,128,0.5); }
+.cc-restore:hover, .cc-restore:focus-visible { border-color:rgba(128,128,128,0.95); outline:none; }
 /* ── STAMPA / EXPORT PDF (doExport forza il tema chiaro) ── */
 .print-running-header { display:none; }
 @media print {
@@ -2818,6 +2862,9 @@ html.admin-open body > *:not(.admin-overlay):not(.fab-modal-overlay):not(#earths
 .admin-btn { font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.06em;padding:0 1.2rem;border-radius:4px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;min-height:44px;display:inline-flex;align-items:center;justify-content:center; }
 .admin-btn-back { background:none;border:1px solid rgba(104,144,168,0.4);color:var(--parchment-dim); }
 .admin-btn-save { background:rgba(30,80,50,0.5);border:1px solid rgba(90,200,110,0.5);color:#88e8a0; }
+/* The two header buttons had no hover style, so the keyboard would have had no sign: mouse
+   and Tab now brighten them a little (keyboard focus note at `.home-link:hover`). */
+.admin-btn:hover, .admin-btn:focus-visible { filter:brightness(1.25); outline:none; }
 .admin-cards { max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:1.2rem;padding-bottom:4rem; }
 .admin-card { border:1px solid rgba(104,144,168,0.18);border-radius:6px;padding:1rem 1rem 1.2rem;background:var(--ink); }
 .admin-rank-num { text-align:center;font-family:'Cinzel',serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:var(--gold-deep);letter-spacing:0.05em;margin-bottom:0.7rem; }
@@ -2831,7 +2878,7 @@ html.admin-open body > *:not(.admin-overlay):not(.fab-modal-overlay):not(#earths
 .admin-label { font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--gold);opacity:0.75; }
 .admin-label-en { text-align:right; }
 .admin-trans-btn { align-self:flex-end;margin-top:0.18rem;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.06em;color:var(--gold);background:rgba(60,95,150,0.18);border:1px solid rgba(154,192,216,0.3);border-radius:0.3rem;padding:0.12rem 0.5rem;cursor:pointer;opacity:0.8; }
-.admin-trans-btn:hover { opacity:1; }
+.admin-trans-btn:hover, .admin-trans-btn:focus-visible { opacity:1; outline:none; }
 .admin-trans-btn:disabled { opacity:0.5;cursor:default; }
 .admin-mono-grid { display:grid;grid-template-columns:1fr 1fr;gap:0.6rem 1.4rem; }
 .admin-flags-row { display:flex;flex-wrap:wrap;gap:0.5rem 0.9rem;padding:0.6rem 0 0.2rem;margin-top:0.5rem;border-top:1px solid rgba(104,144,168,0.15); }
@@ -2840,20 +2887,21 @@ html.admin-open body > *:not(.admin-overlay):not(.fab-modal-overlay):not(#earths
    e delle modali (v13.44). Erano le caselle NATIVE con `accent-color`, quindi il
    segno lo disegnava il sistema operativo (pesante e diverso su ognuno).
    ⚠️ I margini restano quelli dell'UA: azzerarli stringerebbe la griglia dei 22
-   badge, che è tarata su quelle spaziature. Il focus da tastiera ha un anello
-   proprio, perché con appearance:none quello nativo sparisce col disegno. */
+   badge, che è tarata su quelle spaziature. The keyboard focus takes the hover border,
+   with no ring (Ambito-01, 2026-11-13; until 2.98 a 2px outline). */
 .admin-flag-chk input { width:15px;height:15px;cursor:pointer;flex-shrink:0;
   appearance:none;-webkit-appearance:none;position:relative;border-radius:4px;
   border:1.5px solid rgba(154,192,216,0.6);background:transparent;
   transition:background 0.15s,border-color 0.15s; }
-.admin-flag-chk input:hover { border-color:rgba(154,192,216,0.95); }
+.admin-flag-chk input:hover, .admin-flag-chk input:focus-visible { border-color:rgba(154,192,216,0.95); outline:none; }
 .admin-flag-chk input:checked { background:var(--gold);border-color:var(--gold-bright); }
+/* A ticked box had no hover (the `:checked` border wins), so mouse and Tab brighten it. */
+.admin-flag-chk input:checked:hover, .admin-flag-chk input:checked:focus-visible { filter:brightness(1.2); }
 .admin-flag-chk input:checked::after {
   content:'';position:absolute;left:50%;top:47%;
   width:0.26rem;height:0.5rem;
   border-style:solid;border-color:var(--ink);border-width:0 2px 2px 0;
   transform:translate(-50%,-50%) rotate(45deg); }
-.admin-flag-chk input:focus-visible { outline:2px solid var(--gold-bright);outline-offset:2px; }
 .admin-flag-chk img { font-size:1.467rem; } /* 1.35rem / 0.92em */
 /* Editor admin: qui i badge sono icona-soltanto (niente testo), quindi l'allineamento
    non segue la pagina vera. Le .status-icon sono inline-block+vertical-align:middle
@@ -2865,7 +2913,8 @@ html.admin-open body > *:not(.admin-overlay):not(.fab-modal-overlay):not(#earths
   .admin-flags-row { display:grid;grid-template-columns:repeat(12,1fr);gap:0.6rem 0.3rem;justify-items:start; }
 }
 .admin-input,.admin-textarea { background:var(--ink-deep);border:1px solid var(--gold-deep);border-radius:4px;color:var(--parchment);font-family:'EB Garamond','EBG Ripiego T','EBG Ripiego N',serif;font-size:1rem;padding:0.45rem 0.6rem;outline:none;box-sizing:border-box;width:100%;transition:border-color 0.15s;-webkit-appearance:none;appearance:none; }
-.admin-input:focus,.admin-textarea:focus { border-color:var(--gold-bright); }
+/* Ⓘ A text field has no focus sign but its caret (Ambito-01, 2026-11-13): the brighter
+   border that `:focus` drew here until 2.98, in both themes, was a ring. */
 .admin-textarea { resize:vertical;min-height:5rem; }
 /* Campo modificato nella sessione corrente: bordo/anello arancio ben visibile
    + etichetta accesa, per ritrovare a colpo d'occhio cosa si è toccato prima
@@ -3009,7 +3058,7 @@ html[data-theme="light"] .admin-field.admin-modified .admin-label { color:#c75b1
    basso a destra, su desktop e mobile (la media query mobile ne ritocca la posizione). */
 .admin-nav { display:flex; flex-direction:column; gap:0.35rem; position:fixed; right:1rem; bottom:1.3rem; z-index:330; }
 .admin-nav-btn { width:2.5rem;height:2.5rem;border-radius:50%;background:rgba(60,95,150,0.32);border:1px solid rgba(154,192,216,0.32);color:rgba(232,242,255,0.82);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:background 0.15s,transform 0.1s; }
-.admin-nav-btn:hover { background:rgba(80,130,210,0.5); }
+.admin-nav-btn:hover, .admin-nav-btn:focus-visible { background:rgba(80,130,210,0.5); outline:none; }
 .admin-nav-btn:active { background:rgba(80,130,210,0.5);transform:scale(0.94); }
 .admin-nav-btn svg { width:1.15rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round; }
 /* Indicatore di caricamento incrementale (nell'header sticky) */
@@ -3066,9 +3115,9 @@ html[data-theme="light"] .admin-search-box { background:#ffffff; }
    fondo). Il contenitore gestisce solo il fade di comparsa (opacity 0->1). */
 .jump-fab { width:2.2rem;height:2.2rem;border-radius:50%;background:var(--jump-bg);border:1px solid transparent;color:var(--jump-ink);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0.5;transition:filter 0.15s,background 0.15s,opacity 0.15s; }
 /* :focus-visible accanto a :hover, il tasto a fuoco da tastiera va a piena
-   opacità come quello sotto il puntatore: a 0.5 (l'opacità di riposo su desktop,
-   v9.58) anche l'anello di focus risulterebbe smorzato. */
-.jump-fab:hover, .jump-fab:focus-visible { filter:brightness(1.1); opacity:1; }
+   opacità come quello sotto il puntatore. Since Ambito-01 (2026-11-13) this IS the
+   keyboard sign, with no ring (note at `.home-link:hover`). */
+.jump-fab:hover, .jump-fab:focus-visible { filter:brightness(1.1); opacity:1; outline:none; }
 .jump-fab svg { width:1.05rem;height:1.05rem;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round; }
 /* Padding destro quando le maniglie di trascinamento sono visibili.
    ⚠️⚠️ SOLO sulle card SENZA la colonna dell'origine (2.48): la maniglia è
@@ -3223,7 +3272,7 @@ html[data-theme="light"] .lang-switch {
     border-color: var(--gold);
     color: var(--gold-bright);
   }
-html[data-theme="light"] .lang-switch:hover { background: var(--gold); color: var(--ink); }
+html[data-theme="light"] .lang-switch:hover, html[data-theme="light"] .lang-switch:focus-visible { background: var(--gold); color: var(--ink); }
 html[data-theme="light"] .rank-item {
     background: rgba(224,236,252,0.16);
     border: 1px solid rgba(80,110,150,0.22);
@@ -3294,7 +3343,7 @@ html[data-theme="light"] .modal-close {
     border-color: #4a7090;
     color: #253d58;
   }
-html[data-theme="light"] .modal-close:hover { background: #3a5878; color: #f6f6fa; }
+html[data-theme="light"] .modal-close:hover, html[data-theme="light"] .modal-close:focus-visible { background: #3a5878; color: #f6f6fa; }
 html[data-theme="light"] footer { border-top-color: rgba(58,88,120,0.25); }
 html[data-theme="light"] footer p { color: var(--parchment-dim); }
 /* Etichette di razza nel tema chiaro: scure quanto serve sul fondo marmo. */
@@ -3327,7 +3376,7 @@ html[data-theme="light"] #res-link, html[data-theme="light"] #notes-link { color
    ⚠️ I tasti salto chiari restano al `#1f5562` di Arda: erano fra le rese offerte e non
    sono una svista da 'sanare' allineandola. */
 html[data-theme="light"] #ctrl-fab { background:#267d71; border-color:rgba(38,125,113,0.55); color:#ffffff; }
-html[data-theme="light"] #ctrl-fab:hover { background:#339487; border-color:rgba(51,148,135,0.8); }
+html[data-theme="light"] #ctrl-fab:hover, html[data-theme="light"] #ctrl-fab:focus-visible { background:#339487; border-color:rgba(51,148,135,0.8); }
 /* Desktop tema chiaro: versione A col teal del FAB chiaro (eredita blur/border
    dalla regola base). */
 /* ⚠️ Anche qui la TONALITÀ è quella del FAB (`#267d71`), ma la LUMINOSITÀ è quella che
@@ -3366,7 +3415,6 @@ html[data-theme="light"] .admin-header { background:#eef1f8;border-bottom-color:
 html[data-theme="light"] .admin-card { background:#ffffff;border-color:rgba(58,88,120,0.18);box-shadow:0 1px 4px rgba(20,30,60,0.06); }
 html[data-theme="light"] .admin-rank-num { color:#253d58; }
 html[data-theme="light"] .admin-input, html[data-theme="light"] .admin-textarea { background:#ffffff;border-color:rgba(58,88,120,0.3);color:#12141e; }
-html[data-theme="light"] .admin-input:focus, html[data-theme="light"] .admin-textarea:focus { border-color:#4a7090;background:#f8faff; }
 html[data-theme="light"] .admin-btn-back { border-color:rgba(58,88,120,0.4);color:#253d58; }
 html[data-theme="light"] .admin-btn-save { background:rgba(20,100,50,0.12);border-color:rgba(30,140,70,0.5);color:#1a6832; }
 /* Footer 'Resources and maps': solo il testo è cliccabile, i ✦ restano decorativi */
@@ -3684,7 +3732,7 @@ var FEATURES = { genderLegendPill: false, langSwitchMobile: false, oneRing: 'A',
 <body>
 <header>
   <div class="brand-corner">
-    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.98</span>
+    <a class="home-link" href="https://roccobot.me" target="_blank" rel="noopener">roccobot.me</a><span class="version-badge"><span class="vb-v">v</span>2.99</span>
   </div>
   <button class="lang-switch" id="lang-switch" aria-label="Switch language"><span class="ls-face">EN</span><span class="ls-measure" aria-hidden="true">EN</span></button>
   <div class="crest" id="crest">Roccobot presenta</div>
