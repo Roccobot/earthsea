@@ -1086,7 +1086,10 @@ function injectFxEditorCss(){
     '.fx-gear{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;',
     'padding:0;background:none;border:1px solid rgba(140,145,160,0.4);border-radius:6px;color:inherit;',
     'cursor:pointer;opacity:0.75;transition:opacity 0.15s,border-color 0.15s}',
-    '.fx-gear:hover{opacity:1;border-color:rgba(140,145,160,0.75)}',
+    // Keyboard focus = hover, never a ring (Roccobot.md, 'La navigazione con la tastiera
+    // non si vede', owner's choice Ambito-01, 2026-11-13; note at `.home-link:hover` in
+    // index.src.html, bench scripts/test-keyboard-focus.js).
+    '.fx-gear:hover,.fx-gear:focus-visible{opacity:1;border-color:rgba(140,145,160,0.75);outline:none}',
     // 0.62em (non 0.5): a 0.5em il corpo scendeva a ~7.6px, illeggibile e sotto
     // la soglia di contrasto per il testo piccolo.
     '.fxp-pill{display:inline-block;font-size:0.62em;font-weight:400;letter-spacing:0.03em;',
@@ -1103,13 +1106,15 @@ function injectFxEditorCss(){
     // disegnata in ::after (due lati di un rettangolo ruotati di 45°, il modo
     // classico di ottenere un segno di spunta pulito senza SVG né font).
     // Vincoli rispettati: il bersaglio di tocco resta la label da 24px (v12.75),
-    // il focus da tastiera resta visibile (outline proprio) e il contrasto del
-    // segno sul fondo acceso è ampiamente sopra il 3:1 richiesto per gli elementi
-    // non testuali. `accent-color` non basterebbe: cambia la tinta, non la forma.
+    // il focus da tastiera resta visibile (since Ambito-01 with the hover style, no
+    // ring) e il contrasto del segno sul fondo acceso è ampiamente sopra il 3:1
+    // richiesto per gli elementi non testuali. `accent-color` non basterebbe: cambia
+    // la tinta, non la forma.
     '#fx-modal input[type=checkbox],#fab-modal input[type=checkbox]{appearance:none;-webkit-appearance:none;',
     'position:relative;flex:none;width:1.05rem;height:1.05rem;margin:0;border-radius:4px;cursor:pointer;',
     'border:1.5px solid rgba(140,145,160,0.75);background:transparent;transition:background 0.15s,border-color 0.15s}',
-    '#fx-modal input[type=checkbox]:hover,#fab-modal input[type=checkbox]:hover{border-color:rgba(160,180,205,0.95)}',
+    '#fx-modal input[type=checkbox]:hover,#fab-modal input[type=checkbox]:hover,',
+    '#fx-modal input[type=checkbox]:focus-visible,#fab-modal input[type=checkbox]:focus-visible{border-color:rgba(160,180,205,0.95);outline:none}',
     '#fx-modal input[type=checkbox]:checked,#fab-modal input[type=checkbox]:checked{',
     'background:rgba(122,166,205,0.95);border-color:rgba(122,166,205,0.95)}',
     'html[data-theme="light"] #fx-modal input[type=checkbox]:checked,html[data-theme="light"] #fab-modal input[type=checkbox]:checked{',
@@ -1117,10 +1122,11 @@ function injectFxEditorCss(){
     '#fx-modal input[type=checkbox]:checked::after,#fab-modal input[type=checkbox]:checked::after{content:"";position:absolute;',
     'left:50%;top:47%;width:0.3rem;height:0.56rem;border:solid #fff;border-width:0 2px 2px 0;',
     'transform:translate(-50%,-50%) rotate(45deg)}',
-    // Focus da tastiera: anello proprio, perché con appearance:none quello nativo
-    // sparisce insieme al disegno della casella.
-    '#fx-modal input[type=checkbox]:focus-visible,#fab-modal input[type=checkbox]:focus-visible{',
-    'outline:2px solid rgba(154,192,216,0.95);outline-offset:2px}',
+    // A TICKED box had no hover (the `:checked` border wins, same specificity, later), so
+    // the keyboard would have had no sign on it: mouse and Tab brighten its fill a little.
+    // Until 2.98 the focus drew a 2px ring here instead.
+    '#fx-modal input[type=checkbox]:checked:hover,#fab-modal input[type=checkbox]:checked:hover,',
+    '#fx-modal input[type=checkbox]:checked:focus-visible,#fab-modal input[type=checkbox]:checked:focus-visible{filter:brightness(1.2)}',
     // Riga o sezione SPENTA (v12.95): la sua casella di controllo è spenta, quindi
     // le impostazioni non si applicano. Semitrasparente e non modificabile, ma
     // l'opacità resta 0.5 e non meno: sotto, il testo scenderebbe fuori soglia di
@@ -1166,7 +1172,14 @@ function injectFxEditorCss(){
     // 24px minimi di WCAG 2.2 (2.5.8). Il track resta visivamente com'era, cresce
     // solo la zona sensibile.
     '.fxk-row input[type=range]{grid-column:1/3;width:100%;height:24px;margin:0}',
-    '.fxk-row .fxk-note{grid-column:1/3;font-size:0.72rem;opacity:0.62;line-height:1.35;margin:-0.15rem 0 0}'
+    '.fxk-row .fxk-note{grid-column:1/3;font-size:0.72rem;opacity:0.62;line-height:1.35;margin:-0.15rem 0 0}',
+    // Slider, menu and colour well had no hover of their own, and the browser drew its
+    // focus ring around them: mouse and Tab now light the border of menu and well like
+    // the checkboxes, and brighten the slider, with no ring (Ambito-01, note at the
+    // `.fx-gear` rule). The well keeps its colour: a filter would misrepresent it.
+    '.fxk-row .fxk-sel:hover,.fxk-row .fxk-sel:focus-visible,',
+    '.fxk-row .fxk-col:hover,.fxk-row .fxk-col:focus-visible{border-color:rgba(160,180,205,0.95);outline:none}',
+    '.fxk-row input[type=range]:hover,.fxk-row input[type=range]:focus-visible{filter:brightness(1.15);outline:none}'
   ].join('');
   document.head.appendChild(st);
 }
@@ -2218,8 +2231,11 @@ function baInjectEditorCss(){
   var css = [
     '.ba-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 0.7rem;}',
     '.ba-chip{position:relative;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid rgba(128,128,128,0.35);border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:0.8rem;cursor:pointer;white-space:nowrap;}',
-    '.ba-chip:hover{border-color:rgba(128,128,128,0.6);}',
+    // Keyboard focus = hover, no ring (Ambito-01, note at the `.fx-gear` rule).
+    '.ba-chip:hover,.ba-chip:focus-visible{border-color:rgba(128,128,128,0.6);outline:none;}',
     '.ba-chip.on{border-color:#c8a24a;box-shadow:inset 0 0 0 1px #c8a24a;background:rgba(200,162,74,0.14);}',
+    // The selected chip had no hover (its border wins): mouse and Tab deepen its veil.
+    '.ba-chip.on:hover,.ba-chip.on:focus-visible{background:rgba(200,162,74,0.26);}',
     '.ba-grp{font-size:0.62rem;font-weight:700;background:#c8a24a;color:#1a1a1a;border-radius:20px;padding:0 5px;}',
     '.ba-selhead{font-size:0.86rem;margin:0 0 0.7rem;}',
     // Corpo: campi a SINISTRA (colonna stretta), anteprime a DESTRA (impilate).
@@ -2241,7 +2257,10 @@ function baInjectEditorCss(){
     'html[data-theme="light"] .ba-fline input[type=range]::-webkit-slider-thumb{background:#2e4145;}',
     'html[data-theme="light"] .ba-fline input[type=range]::-moz-range-thumb{background:#2e4145;}',
     '.ba-reset{margin-top:0.55rem;font-size:0.74rem;background:none;border:none;color:inherit;opacity:0.7;cursor:pointer;text-decoration:underline;padding:0;}',
-    '.ba-reset:hover{opacity:1;}',
+    '.ba-reset:hover,.ba-reset:focus-visible{opacity:1;outline:none;}',
+    // The slider had no hover and no focus sign (`outline:none` alone): mouse and Tab
+    // brighten it a little.
+    '.ba-fline input[type=range]:hover,.ba-fline input[type=range]:focus-visible{filter:brightness(1.2);}',
     // Anteprime impilate (scuro sopra, chiaro sotto), un po piu grandi.
     '.ba-pvgrid{display:flex;flex-direction:column;gap:10px;}',
     // Anteprima a dimensione REALE (font 1.5rem, badge 0.92em, gap 0.32em come
@@ -2268,6 +2287,9 @@ function baInjectEditorCss(){
     // Tabella riepilogo SEMPRE visibile in basso: riempie lo spazio residuo della
     // modale (flex:1) e scorre da sola; la modale non scrolla (niente doppio scroll).
     '.ba-tablewrap{flex:1 1 auto;min-height:0;margin-top:0.8rem;border:1px solid rgba(128,128,128,0.3);border-radius:9px;overflow:auto;}',
+    // A scroll box, not a control: the browser makes it focusable and rings it at the first
+    // key, and the ring goes, as on `#ctrl-panel` (the arrows still scroll it).
+    '.ba-tablewrap:focus,.ba-tablewrap:focus-visible{outline:none;}',
     '.ba-table{width:100%;border-collapse:collapse;font-size:0.74rem;}',
     '.ba-table th,.ba-table td{padding:5px 9px;text-align:right;border-bottom:1px solid rgba(128,128,128,0.22);white-space:nowrap;font-variant-numeric:tabular-nums;}',
     '.ba-table th:first-child,.ba-table td:first-child{text-align:left;}',
@@ -2568,6 +2590,10 @@ function showColorStats(initState) {
       row.tabIndex = 0; row.setAttribute('role', 'button'); row.setAttribute('aria-label', o.name + ', ' + o.n);
       var chev = document.createElement('span'); chev.textContent = ' ›'; chev.style.cssText = 'opacity:0.5;font-weight:700;'; cnt.appendChild(chev);
       var hoverBg = theme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.07)';
+      // The focus lights the row like the mouse does (the two listeners below), so the
+      // browser ring goes: keyboard focus = hover, never a ring (Ambito-01, note at the
+      // `.fx-gear` rule).
+      row.style.outline = 'none';
       var on = function(){ row.style.background = hoverBg; }, off = function(){ row.style.background = ''; };
       row.addEventListener('mouseenter', on); row.addEventListener('mouseleave', off);
       row.addEventListener('focus', on); row.addEventListener('blur', off);
@@ -2904,7 +2930,7 @@ function showColorEditor(initState) {
   function buildFamilies(root){
     var lbl = document.createElement('p'); lbl.style.cssText = 'font-size:0.82rem;margin:0 0 0.3rem;';
     lbl.textContent = it ? 'Famiglia:' : 'Family:';
-    var sel = document.createElement('select'); sel.style.cssText = 'width:100%;padding:0.4rem;'; sel.setAttribute('aria-label', it ? 'Famiglia colore' : 'Colour family'); famSelectEl = sel;
+    var sel = document.createElement('select'); sel.className = 'cc-sel'; sel.style.cssText = 'width:100%;padding:0.4rem;'; sel.setAttribute('aria-label', it ? 'Famiglia colore' : 'Colour family'); famSelectEl = sel;
     Object.keys(CARDCOLORS.fam).sort().forEach(function(k){ var o = document.createElement('option'); o.value = k; o.textContent = k + ' (' + famCount(k) + ')'; sel.appendChild(o); });
     var panel = document.createElement('div');
     root.appendChild(lbl); root.appendChild(sel); root.appendChild(panel);
@@ -2930,8 +2956,11 @@ function showColorEditor(initState) {
     var srow = document.createElement('div'); srow.style.cssText = 'display:flex;align-items:center;justify-content:flex-end;gap:0.45rem;flex-wrap:wrap;margin:1.1rem 0 0.6rem;font-size:0.74rem;opacity:0.85;';
     srow.appendChild(document.createTextNode(it?'Ultimo salvato (clic per ripristinare):':'Last saved (click to restore):'));
     var restoreBtn = document.createElement('button');
+    // The border lives in the class `.cc-restore` (index.src.html), with its hover and
+    // keyboard focus: an inline border would win over both.
+    restoreBtn.className = 'cc-restore';
     restoreBtn.title = it?'Ripristina l\'ultimo colore salvato (chiaro e scuro)':'Restore the last saved colour (light and dark)';
-    restoreBtn.style.cssText = 'display:inline-flex;gap:3px;align-items:center;border:1px solid rgba(128,128,128,0.5);border-radius:6px;cursor:pointer;padding:2px 4px;background:transparent;';
+    restoreBtn.style.cssText = 'display:inline-flex;gap:3px;align-items:center;border-radius:6px;cursor:pointer;padding:2px 4px;background:transparent;';
     [saved.light, saved.dark].forEach(function(hx){ var s = document.createElement('span'); s.style.cssText = 'width:20px;height:16px;border-radius:3px;display:inline-block;background:' + hx + ';'; restoreBtn.appendChild(s); });
     restoreBtn.onclick = function(){ ctrl.set(saved.dark, saved.light); showToast(it?'✓ Ripristinato colore salvato':'✓ Restored saved colour', false); };
     srow.appendChild(restoreBtn);
@@ -2951,7 +2980,7 @@ function showColorEditor(initState) {
     }, true);
     // 3) Sposta per tipo → questa famiglia
     var h3 = mkH(''); h3.replaceChildren(it ? 'Sposta un tipo in ' : 'Move a type into ', nodo('strong', null, fam));
-    var selT = document.createElement('select'); selT.style.cssText = 'width:100%;padding:0.35rem;'; selT.setAttribute('aria-label', it ? 'Tipo da spostare' : 'Type to move');
+    var selT = document.createElement('select'); selT.className = 'cc-sel'; selT.style.cssText = 'width:100%;padding:0.35rem;'; selT.setAttribute('aria-label', it ? 'Tipo da spostare' : 'Type to move');
     // La destinazione è SEMPRE la famiglia in cima (fam). Nella option mostriamo
     // il tipo + la sua famiglia ATTUALE (senza freccia, che faceva sembrare la
     // option stessa una destinazione) + il conteggio voci.
@@ -3011,6 +3040,9 @@ function showColorEditor(initState) {
     var baseInput = document.createElement('input'); baseInput.type = 'color'; baseInput.setAttribute('aria-label', it ? 'Selettore colore' : 'Colour picker');
     baseInput.value = ccTheme() === 'light' ? initLight : initDark;
     baseInput.style.cssText = 'position:absolute;width:0;height:0;opacity:0;pointer-events:none;';
+    // Invisible helper of the 'Pick colour' button, which opens it: out of the Tab order,
+    // or the keyboard stops on a control nobody can see.
+    baseInput.tabIndex = -1;
     var chooseBtn = document.createElement('button'); chooseBtn.className = 'fab-modal-confirm';
     chooseBtn.style.cssText = 'width:auto;padding:0.5rem 1.1rem;font-size:0.85rem;display:inline-flex;align-items:center;gap:0.5rem;';
     var baseSw = document.createElement('span'); baseSw.style.cssText = 'width:18px;height:18px;border-radius:4px;border:1px solid rgba(128,128,128,0.5);display:inline-block;background:' + baseInput.value + ';';

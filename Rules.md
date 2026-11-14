@@ -2222,9 +2222,10 @@ aprire il Pannello.
 - **Il campo di ricerca non ha anello di fuoco** (istruzione dell'utente), e non è una perdita di
   accessibilità: su un campo di testo l'indicatore nativo è il **caret**, e i browser trattano i
   campi di testo come sempre `focus-visible`, quindi l'anello compariva anche aprendo col dito o col
-  mouse.
-- ⚠️⚠️ **Non si estende ai RISULTATI**: `.ss-hit:focus-visible` resta, perché è l'unico indicatore
-  della riga raggiunta col Tab.
+  mouse. Dal 2026-11-13 vale per ogni campo di testo del sito (§ 'La navigazione con la tastiera
+  non si vede').
+- ⚠️⚠️ **I RISULTATI hanno un segno, ma non un anello**: `.ss-hit:focus-visible` prende il fondo
+  del passaggio del mouse, ed è l'unico indicatore della riga raggiunta col Tab.
 - ⚠️⚠️ **La prova sui risultati vuole un TAB VERO, non `.focus()`**: su un bottone `:focus-visible`
   scatta solo dalla tastiera, e il fuoco dato da programma lascia il fondo trasparente. Sul campo,
   invece, `.focus()` basta.
@@ -2730,8 +2731,9 @@ Quasi ogni campo di testo ha il gemello `_en` (`nome`/`nome_en`, `nomi_alternati
     solo `background`: un colore solo sostituirebbe lo stato. Il `border-color` non si tocca.
   - ⚠️ **Le opacità del velo NON sono uguali, e non è una svista**: più piccola la superficie, più
     denso il velo.
-  - ⚠️ **Il pulsante di chiusura della sheet ha un outline vero sul focus**: perso il fondo pieno,
-    togliere il segnale senza rimpiazzarlo avrebbe peggiorato l'accessibilità.
+  - ⚠️ **Il pulsante di chiusura della sheet non ha più l'anello sul focus** (scelta `Ambito-01`
+    dell'utente, 2026-11-13): raggiunto col Tab prende il fondo del passaggio del mouse, come ogni
+    comando (§ 'La navigazione con la tastiera non si vede').
 - ⚠️ **I colori dei rettangoli (`CAT_COLOR`) sono una tavolozza a sé**, non quella delle card: chi
   cambia i colori delle card non cambia anche questi per coerenza.
 
@@ -3798,6 +3800,34 @@ motore.
   apocrifi').
 - ⚠️ **I file passati in chat non sopravvivono alla sessione**: un disegno che serve e non è nel repo va
   richiesto all'utente.
+
+## ⌨️ La navigazione con la tastiera non si vede
+
+- ⚠️⚠️ **Nessun anello attorno al comando raggiunto col Tab, e nessun link 'salta al contenuto'**
+  (`Roccobot.md` § '⌨️ La navigazione con la tastiera non si vede'; scelta `Ambito-01`
+  dell'utente, 2026-11-13, che la applica subito anche a questo sito, area admin compresa): il
+  comando prende lo stile del passaggio del mouse, così la tastiera ha comunque un segno (WCAG
+  2.4.7).
+- **Come si scrive**: ogni `:hover` di un comando ha accanto `:focus-visible` e `outline:none`,
+  mai `outline:none` da solo; un campo di testo ha il solo caret, e il bordo acceso dal `:focus`
+  nei campi dell'area admin è uscito con la `2.99`. La nota nel codice è sopra `.home-link:hover`.
+- ⚠️ **Dove il passaggio del mouse non cambiava niente, il segno è nato per tutti e due i gesti**:
+  un filtro `brightness` sul titolone (sull'`h1`, che dipinge il gradiente), sul link del crest,
+  sui tasti dell'intestazione dell'editor admin, sulle caselle spuntate e sugli slider dell'area
+  admin; un velo sopra lo stato sulle righe di legenda accese e sui chip scelti dei
+  micro-aggiustamenti; il bordo acceso su menu e campi colore della Console e sul tasto di
+  ripristino dell'editor colori. Su mobile i tasti della barra del Pannello hanno il segno col
+  solo Tab, perché un tocco lascerebbe acceso l'hover. Nel tema chiaro la chiusura della sheet
+  prende il fondo dei tasti vicini: il velo bianco, sulla barra bianca, faceva sparire il tasto
+  nella barra invece di accenderlo.
+- ⚠️ **Un segno scritto nel CSS può non vedersi**, quindi il banco confronta anche i pixel del
+  comando a riposo e col fuoco, oltre agli stili.
+- ⚠️ **Un contenitore che scorre non è un comando** (`#ctrl-panel`, la tabella dei
+  micro-aggiustamenti): perde l'anello e non ha bisogno di un segno.
+- **Il banco è `scripts/test-keyboard-focus.js`**, sulla pagina GENERATA e coi Tab veri: pagina,
+  Pannello, ricerca, mappe, visualizzatore e le schermate dell'area admin, coi due temi a 1280 e
+  390px; confronta lo stile calcolato di ogni comando a riposo, sotto il mouse e col fuoco.
+- Il gemello 'I Grandi di Arda' applica la stessa regola nel suo repo.
 
 ## 🔢 Versione
 
